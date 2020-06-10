@@ -1,0 +1,238 @@
+
+/* Import fonts from googlefonts */
+
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Gugi&family=Roboto&family=Sofia&display=swap');
+
+/* Setting up global variable */
+
+
+
+:root{
+  --light-grey:#2b3032a1;
+  --prinmary-color:rgb(145, 205, 232);
+  --border: #2b303218;
+  --text-color:#333;
+  --roboto:"Roboto",sans-serif;
+  --sofia:"Sofia",cursive;
+  --gugi:"Gugi",cursive;
+
+}
+
+.primary-color {
+  color: var(--prinmary-color);
+}
+
+.bg-primary-color {
+  background-color: var(--prinmary-color) !important;
+}
+
+.text-color {
+  color: var(--text-color);
+}
+
+.font-roboto {
+  font-family: var(--roboto);
+}
+
+.lightblue {
+  color: lightblue;
+}
+/* Base page--------------------------------- */
+header {
+  background-color: var(--prinmary-color);
+  font-family: var(--roboto);
+  font-weight: 500;
+  margin-top:0;
+  padding: 0px;
+}
+
+header .site-address{
+  font-family: var(--Roboto);
+  font-size: 0.9em;
+  color: rgb(0, 0, 0);
+  
+  
+}
+
+header .site-address li{
+  list-style: none;
+	display: inline-block;
+  padding-left:20px;
+}
+
+
+header .header-links{
+  margin-top: 0px;
+  position: relative;
+  list-style: none;
+  padding: 0px;
+}
+
+header .header-links li{
+  list-style: none;
+	display: inline-block;
+  padding-left:20px;
+}
+
+header a {
+  font-size: 1.1em;
+  text-decoration: none;
+  color: black;
+}
+
+header .fa{
+  color:black;
+}
+
+
+.container-fluid .dropdown-menu,
+.container-fluid .dropdown-toggle,
+.container-fluid .dropdown-item
+{
+   font-size: 0.9em;
+   color:black;
+   background-color: var(--prinmary-color);
+   /* border: 1px solid; */
+   min-height: 10px;;
+}
+
+.navbar {
+     background-color: var(--prinmary-color);
+     min-height: 10px;
+     margin-top:5px;
+     
+}
+
+.jumbotron {
+  background-image: url("http://localhost:8000/static/images/Private-Universities-in-Sri-Lanka.jpg")
+}
+
+.logo{
+  background-color: var(--prinmary-color);
+}
+
+.search-box{
+  display:none;
+  background-color: cornflowerblue;
+  /* height:100px; */
+  align-items: center;
+  /* width:50%; */
+  /* margin-right:-10%; */
+}
+
+.search-box .search-button-bar{
+  /* border: 1px solid; */
+  float: right;
+  text-align: right;
+}
+/* Home page ... List courses------------------------------------------------- */
+.inner{
+  overflow: hidden;
+  transition: all 1.5s ease;
+  z-index: inherit;
+}
+
+.inner:hover{
+  transform: scale(1.5) translateZ(0px);
+  z-index:2;
+}
+
+
+
+/* control image height */
+.card-img-top-250 {
+    max-height: 250px;
+    overflow:hidden;
+}
+
+
+
+/* carousal */
+
+.avatar-circle {
+  width: 75x;
+  height: 75px;
+  background-color:  var(--text-color);
+  text-align: center;
+   border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%; 
+}
+
+.initials {
+  position: relative;
+  top: 20px; /* 25% of parent */
+  font-size: 35px; /* 50% of parent */
+  line-height: 35px; /* 50% of parent */
+  color: #fff;
+  /* font-family: "Courier New", monospace; */
+  font-weight: bold;
+}
+
+
+/* Footer Navbar */
+
+footer .navbar .nav-item {
+  text-align: left;
+  padding:0px;
+  margin:0px;
+}
+
+footer .navbar .nav-item .nav-link{
+  text-orientation: none;
+  color:rgb(83, 82, 82);
+  font-size: 13px;
+
+  
+}
+footer .navbar .nav-item .nav-link:hover{
+  color:rgb(255, 253, 253);
+}
+
+footer .jumbotron-fluid{
+  background-color: rgb(155, 218, 240);
+}
+body {
+    margin:0;
+    font-family:'Roboto', sans-serif;
+    font-weight:400;
+    color:rgb(99, 96, 96);
+}
+
+
+.search-filters ul li{
+  list-style: none;
+}
+
+.form-check{
+  padding-top: 5px;
+  /* color:red; */
+}
+
+.form-check-label{
+  font-size: small;
+}
+
+.filter-heading{
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.image{
+  height:12rem;
+  margin-top:10px;
+  position: relative;
+}
+
+.search-list .img-thumbnail {
+  width:300px;
+  height:150px;
+}
+
+.fa-star-o , .fa-star-half-o{
+  color:red;
+}
+
+.extra_details {
+  font-size: 12px;
+}

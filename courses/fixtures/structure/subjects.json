@@ -1,0 +1,189 @@
+[
+{
+  "model": "courses.subject",
+  "pk": 1,
+  "fields": {
+    "title": "Software Engineering",
+    "slug": "software-engineering"
+  }
+},
+{
+  "model": "courses.subject",
+  "pk": 2,
+  "fields": {
+    "title": "Computer Science",
+    "slug": "computer-science"
+  }
+},
+{
+  "model": "courses.subject",
+  "pk": 3,
+  "fields": {
+    "title": "Machine Learning",
+    "slug": "machine-learning"
+  }
+},
+{
+  "model": "courses.subject",
+  "pk": 4,
+  "fields": {
+    "title": "Database Management",
+    "slug": "database-management"
+  }
+},
+{
+  "model": "courses.subject",
+  "pk": 5,
+  "fields": {
+    "title": "Neural Networks",
+    "slug": "neural-networks"
+  }
+},
+{
+  "model": "courses.course",
+  "pk": 1,
+  "fields": {
+    "owner": 1,
+    "subject": 2,
+    "title": "Basics of Computer Science",
+    "slug": "basics-computer-science",
+    "overview": "If you're looking to learn the theory that makes great programmers, you've come to the right place! This course is perfect for anyone interested in learning the fundamentals to Computer Science Theory. \r\n\r\nNo Previous Experience Necessary! \r\n\r\nComputer science and technology are often thought of as things only for \"analytical minds\". I believe however that technology and it's theory are for everyone. So I designed this course to teach each topic in a variety of easy to digest ways. Through these multiple reinforcing steps, I believe anyone can follow along and succeed!",
+    "created": "2020-05-27T10:58:40.691Z"
+  }
+},
+{
+  "model": "courses.course",
+  "pk": 2,
+  "fields": {
+    "owner": 1,
+    "subject": 4,
+    "title": "Database Management Systems - MySQL",
+    "slug": "database-management-systems-mysql",
+    "overview": "Before you start proceeding with this DBMS course, it is recommended that you have a good understanding of basic computer concepts such as primary memory, secondary memory, and data structures and algorithms.",
+    "created": "2020-05-27T11:00:22.077Z"
+  }
+},
+{
+  "model": "courses.course",
+  "pk": 3,
+  "fields": {
+    "owner": 1,
+    "subject": 4,
+    "title": "MySQL Database Management System using MySQL. MySQL for ALL!",
+    "slug": "mysql-database-management-system-using-mysql-mysql-all",
+    "overview": "MySQL runs on anything from modest hardware all the way up to enterprise servers, and its performance rivals any database system put up against it. It offers the power of a relational database in a package that's easy to set up and administer, and this course will provide all the tools you need to get started.\r\n\r\nIn this course, you'll learn methodically, systematically, and simply\u2013in 50 short, quick lessons that will each take very less to complete.\r\n\r\nThe course is ideal for the inexperienced programmer interested in adding these skills to their toolbox. New coders who\u2032ve made it through an online course or boot camp will also find great value in how this course builds on what you already know.\r\n\r\nWhat you'll learn:\r\n\r\n1.  Setup a Package Manager\r\n\r\n2. Setup Working Environment\r\n\r\n3. Select, Keyword, Expressions and Functions\r\n\r\n4. ORDER BY ASC and DESC\r\n\r\n5. WHERE Clause, LIKE and IN Clauses\r\n\r\n6. Insert and update data\r\n\r\n7. Create and use database\r\n\r\n8. Use tables, indexes, constraints\r\n\r\n9. Date and time types and functions\r\n\r\n10. Use triggers and transactions\r\n\r\n11. Routines, Functions, Procedures\r\n\r\n12. PDO\r\n\r\n\r\n\r\nWho this course is for:\r\nAny student wanting to learn about data management and MySQL programming.",
+    "created": "2020-05-27T11:01:32.786Z"
+  }
+},
+{
+  "model": "courses.course",
+  "pk": 4,
+  "fields": {
+    "owner": 1,
+    "subject": 1,
+    "title": "Software Engineering 101: Plan and Execute Better Software.",
+    "slug": "software-engineering-101-plan-and-execute-better-software",
+    "overview": "If you are looking to learn the invaluable ideas behind software engineering, you have come to the right place. This course is perfect for anyone who is currently in, or looking to get into the highly profitable programming field.\r\n\r\nNo Previous Experience Necessary!",
+    "created": "2020-05-27T11:02:47.446Z"
+  }
+},
+{
+  "model": "courses.module",
+  "pk": 1,
+  "fields": {
+    "course": 1,
+    "title": "Introduction",
+    "description": ""
+  }
+},
+{
+  "model": "courses.module",
+  "pk": 2,
+  "fields": {
+    "course": 1,
+    "title": "Analyzing Algorythms",
+    "description": ""
+  }
+},
+{
+  "model": "courses.module",
+  "pk": 3,
+  "fields": {
+    "course": 1,
+    "title": "Arrays",
+    "description": ""
+  }
+},
+{
+  "model": "courses.module",
+  "pk": 4,
+  "fields": {
+    "course": 2,
+    "title": "Introduction to DBMS",
+    "description": ""
+  }
+},
+{
+  "model": "courses.module",
+  "pk": 5,
+  "fields": {
+    "course": 2,
+    "title": "Structured Query Language",
+    "description": ""
+  }
+},
+{
+  "model": "courses.module",
+  "pk": 6,
+  "fields": {
+    "course": 2,
+    "title": "Data definition",
+    "description": ""
+  }
+},
+{
+  "model": "courses.module",
+  "pk": 7,
+  "fields": {
+    "course": 3,
+    "title": "MYSQL Database - Introduction",
+    "description": ""
+  }
+},
+{
+  "model": "courses.module",
+  "pk": 8,
+  "fields": {
+    "course": 3,
+    "title": "MySQL Database - Practice",
+    "description": ""
+  }
+},
+{
+  "model": "courses.module",
+  "pk": 9,
+  "fields": {
+    "course": 4,
+    "title": "Introduction",
+    "description": ""
+  }
+},
+{
+  "model": "courses.module",
+  "pk": 10,
+  "fields": {
+    "course": 4,
+    "title": "Software Life Cycle",
+    "description": ""
+  }
+},
+{
+  "model": "courses.module",
+  "pk": 11,
+  "fields": {
+    "course": 4,
+    "title": "Requirement and Specification",
+    "description": ""
+  }
+}
+]

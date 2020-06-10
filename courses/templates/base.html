@@ -1,0 +1,241 @@
+{%load staticfiles %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>{% block title %} im-umni {% endblock title %}</title> 
+        
+        <!-- Font awesome CDN-->
+        <script src="https://kit.fontawesome.com/478a7abd62.js" crossorigin="anonymous"></script>
+        <!-- <script src="https://cdn.linearicons.com/free/1.0.0/svgembedder.min.js"></script> -->
+       
+        <!-- Latest compiled and minified CSS -->
+       <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+       <link href="{% static 'css/base.css' %}" rel="stylesheet">
+
+       <link rel="stylesheet" href="{% static 'star-ratings/css/star-ratings.css' %}">
+       <script type="text/javascript" src="{% static 'star-ratings/js/dist/star-ratings.min.js' %}"></script>
+
+
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+        <!-- URL's to work with -->
+        <script>
+            let LOGIN_URL = "{% url 'login'%}";
+            let SEARCH_URL = "{% url 'login'%}"; 
+        </script>
+        
+        
+    </head>
+    <body>
+
+        <!-- header -->
+        <header>
+            <div class="container-fluid">
+                <nav class="navbar">
+                    <div class="row w-100 h-50">
+                    <div class="col-md-6 d-none d-sm-block site-address">
+                        <!-- <h6>
+                            <ul>
+                                <li><i class="fa fa-phone" aria-hidden="true"></i>&nbsp;&nbsp;+94 245-9898-890</li>
+                                <li><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;&nbsp;No. 04, Geethanjalee Place, Colombo 04</li>
+                                <li class="col-md-4 col-sm-4 px-0"><i class="fas fa-clock"></i>&nbsp;&nbsp;SL Mon - Sat 8:00 - 18:00 </li>
+                            </ul>
+                        </h6>
+                    </div> -->
+                    <!-- <div class="col-md col"> -->
+                        <nav class="navbar navbar-expand-md bg-transparent mt-0 p-0">
+                            <a class="navbar-brand text-center" href="#">
+                              <img class="w-25 h-25" src="{% static '/images/logo.png' %}">
+                            </a>
+                        <ul class="navbar-nav w-50 justify-content-end align-right font-weight-bolder text-black-50">
+                            <li class="dropdown">
+                                <a class="nav-link" href="#">
+                                    Plans <span><i class="fas fa-caret-down"></i></span></a>
+                            </li>
+                            <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                Paths <span><i class="fas fa-caret-down"></i></span></a>
+                            </li>
+                            <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                Resources <span><i class="fas fa-caret-down"></i></span></a>
+                            </li>   
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Pages</a>
+                            </li>  
+                        </li>   
+                        </ul>
+                    </nav>
+                    </div>
+                    <div class="col-md-2 col-3 mt-3 text-right">
+                        <button class="btn border dropdown-toggle"
+                        data-toggle="dropdown" 
+                        aria-haspopup="true" 
+                        aria-expanded="false">English
+                        </button>
+                        <div class="dropdown-menu text-right">
+                            <a href="#" class="dropdown-item">Spanish</a>
+                            <a href="#" class="dropdown-item">German</a>  
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 col-9 text-center align-content-center mt-3" >
+                        <ul class="header-links">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                                        Launch demo modal
+                                      </button>
+                                <i class="fa fa-search" aria-hidden="true" id="search_icon" onClick="(e)=>{console.log(e.target.id)}"></i>
+                                </a>
+                            </li> 
+                        {% if request.user.is_authenticated %}
+                            <li><a href="{% url 'logout' %}">Sign Out</a>
+                        {% else %}
+                            <li><a href="{% url 'login' %}"><i class="fa fa-user" aria-hidden="true"></i>
+                            <span>Sign In</span></a></li>
+                            <li><a href="#">Register</a></li>
+                        {% endif %}
+                        </ul>
+                    </div>
+                </div>
+                </nav>
+            </div>
+            <!-- <div class="container search-box" id="search_box"> -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <!-- <h5 class="modal-title" id="exampleModalLabel">Modal title</h5> -->
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          ...
+                        </div>
+                        <!-- <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                          <button type="button" class="btn btn-primary">Save changes</button>
+                        </div> -->
+                      </div>
+                    </div>
+                  </div>
+                <!-- <form class="form-inline  md-form form-sm mt-0 ml-5">
+                    <div class="row w-100" >
+                        <div class="col-md-1 col-1"> <i class="fa fa-search fa-2x aria-hidden=true"></i></div>
+                        <div class="col-md-7 col-6"><input class="form-control form-control-sm ml-3 w-100 bg-transparent border-0" 
+                        style="font-size: 20px;" type="text" placeholder="Search for what you need" 
+                        aria-label="Search" id="search_box_input"></div>
+                        <div class="col-md-4 col search-button-bar">
+                            <button type="button" class="btn btn-warning" id="search_box_button">Search</button>
+                        </div>    
+                        </div>
+                  </form> -->
+            <!-- </div> -->
+        </header>
+            
+           
+        <!-- header -->
+        
+        <div id="content">
+            {% block content %}
+              
+            {% endblock content %}  
+        </div>
+
+        <!--Footer-->
+        <footer>
+            <div class="contaner-fluid">
+                <div class="jumbotron-fluid">
+                    <div class="container-fluid ml-5 mr-5">
+                        <nav class="navbar navbar-expand-md bg-transparent">
+                        <div class="row w-100">
+                            <ul class="navbar-nav  nav-fill w-100 font-weight-bolder text-black">
+                                <li class="nav-item">
+                                    <div class="text-left"><strong>SOLUTIONS</strong></div>
+                                    <br>
+                                    <div>
+                                        <ul class="nav flex-column text-black-50">
+                                            <li class="nav-item"><a class = "nav-link" href="">Skills</a></li>
+                                            <li class="nav-item"><a class = "nav-link" href="">Flow</a></li>
+                                            <li class="nav-item"><a class = "nav-link" href="">Gifts</a></li>
+                                            <li class="nav-item"><a class = "nav-link" href="">Pricing</a></li>
+                                            <li class="nav-item"><a class = "nav-link" href="">Contact Sales</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="nav-item">
+                                    <div class="text-left"><strong>PLATFORM</strong></div>
+                                    <br>
+                                    <div>
+                                        <ul class="nav flex-column text-black-50">
+                                            <li class="nav-item"><a class = "nav-link" href="">Library</a></li>
+                                            <li class="nav-item"><a class = "nav-link" href="">Authors</a></li>
+                                            <li class="nav-item"><a class = "nav-link" href="">Proffessional Services</a></li>
+                                            <li class="nav-item"><a class = "nav-link" href="">Technology</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="nav-item">
+                                    <div class="text-left"><strong>COMPANY</strong></div>
+                                    <br>
+                                    <div>
+                                        <ul class="nav flex-column text-black-50">
+                                            <li class="nav-item"><a class = "nav-link" href="">About us</a></li>
+                                            <li class="nav-item"><a class = "nav-link" href="">Testimonials</a></li>
+                                            <li class="nav-item"><a class = "nav-link" href="">Careers</a></li>
+                                            <li class="nav-item"><a class = "nav-link" href="">Blog</a></li>
+                                            <li class="nav-item"><a class = "nav-link" href="">News Room</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="nav-item">
+                                    <div class="text-left"><strong>RESOURCES</strong></div>
+                                    <br>
+                                    <div>
+                                        <ul class="nav flex-column text-black-50">
+                                            <li class="nav-item"><a class = "nav-link" href="">Download App</a></li>
+                                            <li class="nav-item"><a class = "nav-link" href="">Events</a></li>
+                                            <li class="nav-item"><a class = "nav-link" href="">Tech Partners</a></li>
+                                            <li class="nav-item"><a class = "nav-link" href="">Affiliate Programs</a></li>
+                                            <li class="nav-item"><a class = "nav-link" href="">Subscribe</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="nav-item">
+                                    <div class="text-left"><strong>SUPPORT</strong></div>
+                                    <br>
+                                    <div>
+                                        <ul class="nav flex-column text-black-50">
+                                            <li class="nav-item"><a class = "nav-link" href="">Contact</a></li>
+                                            <li class="nav-item"><a class = "nav-link" href="">Help center</a></li>
+                                            <li class="nav-item"><a class = "nav-link" href="">Sitemap</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+
+        <!-- Footer-->
+        <script>
+            $(document).ready(function() {
+                {% block domready %}
+                {% endblock domready %}
+            });
+        </script>
+        <script src="{% static 'js/list.js' %}"></script>
+    </body>
+</html>
