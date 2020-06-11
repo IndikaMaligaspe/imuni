@@ -50,9 +50,7 @@ header .site-address{
   font-family: var(--Roboto);
   font-size: 0.9em;
   color: rgb(0, 0, 0);
-  
-  
-}
+} 
 
 header .site-address li{
   list-style: none;
@@ -85,22 +83,29 @@ header .fa{
 }
 
 
-.container-fluid .dropdown-menu,
+/* .container-fluid .dropdown-menu,
 .container-fluid .dropdown-toggle,
 .container-fluid .dropdown-item
 {
    font-size: 0.9em;
    color:black;
    background-color: var(--prinmary-color);
-   /* border: 1px solid; */
    min-height: 10px;;
-}
+} */
 
 .navbar {
      background-color: var(--prinmary-color);
-     min-height: 10px;
+     min-height: 10px; 
      margin-top:5px;
      
+}
+
+.navbar-logo{
+  height: 10px;
+}
+
+.navbar-logo img{
+  height: 70px;
 }
 
 .jumbotron {
@@ -111,25 +116,50 @@ header .fa{
   background-color: var(--prinmary-color);
 }
 
-.search-box{
-  display:none;
-  background-color: cornflowerblue;
-  /* height:100px; */
-  align-items: center;
-  /* width:50%; */
-  /* margin-right:-10%; */
+.language-selection{
+  align-content: right;
+  text-align: right;
+  margin-top: 1%;
+  margin-left: 0px;
+  margin-right: 0px;
+  padding: 0px; 
 }
 
-.search-box .search-button-bar{
-  /* border: 1px solid; */
-  float: right;
-  text-align: right;
+.language-selection :hover{
+  cursor: pointer;
 }
+
+.search-box{
+  align-content: right;
+  text-align: right;
+  margin-top: 1%;
+  margin-left: 0px;
+  margin-right: 0px;
+  padding: 0px; 
+}
+
 /* Home page ... List courses------------------------------------------------- */
 .inner{
   overflow: hidden;
   transition: all 1.5s ease;
   z-index: inherit;
+}
+
+
+.sign_in{
+   text-align: right;
+   margin-top: 1%;
+   margin-left: 0px;
+   margin-right: 0px;
+   padding: 0px;
+   /* border:1px solid; */
+   
+}
+
+.sign_in ul li {
+  padding: 2px;
+  padding-top: 5px;
+  margin: 0px;
 }
 
 .inner:hover{
@@ -219,7 +249,7 @@ body {
 }
 
 .image{
-  height:12rem;
+  /* height:12rem; */
   margin-top:10px;
   position: relative;
 }

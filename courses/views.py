@@ -196,7 +196,8 @@ class CourseDetailView(DetailView):
 class SearchMain(TemplateResponseMixin, View):
     template_name = "search_main.html"
     
-    def get(self, request, search_term=None):
+    def get(self, request):
+        search_term =request.GET.get('search_term')
         courses = Course.objects.filter(Q(title__icontains=search_term)| Q(owner__first_name__icontains=search_term)).annotate(average_rating=Avg('course_review__rating')).values('title','thumbnail_image','overview','duration','price','level','owner__first_name','owner__last_name').annotate(avg=Avg('course_review__rating'))
         return self.render_to_response({'result_courses':courses,
                                          'search_term':search_term})
