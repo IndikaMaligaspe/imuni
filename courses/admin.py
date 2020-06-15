@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Subject, Course, Module, Profiles, Content, CourseRating, SiteReview
+from .models import Subject, Course, Module, Profiles, Content, CourseRating, SiteReview, InstructorRating
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
@@ -43,3 +43,6 @@ class CourseRatingAdmin(admin.ModelAdmin):
 @admin.register(SiteReview)
 class SiteReviewAdmin(admin.ModelAdmin):
     model = SiteReview
+@admin.register(InstructorRating)
+class InstructorRatingAdmin(admin.ModelAdmin):
+    model = InstructorRating

@@ -10,10 +10,11 @@ from django.forms.models import modelform_factory
 from django.apps import apps
 from braces.views import CsrfExemptMixin, JsonRequestResponseMixin
 from django.db.models import Count, Avg
-from .models import Course, Content, Module, Subject, Profiles
+from .models import Course, Content, Module, Subject, Profiles, InstructorRating
 from .forms import ModuleFormSet
-from students.forms import CourseEnrolmentForm 
+# from students.forms import CourseEnrolmentForm 
 from django.db.models import Q
+import json
 
 
 # class ManageCourseListView(ListView):
@@ -171,7 +172,7 @@ class CourseListView(TemplateResponseMixin, View):
         courses = Course.objects.annotate(total_modules = Count('modules'))[:12]
         instructors =  query = Course.objects.values('owner__id').annotate(count=Count('owner_id')).values('owner__first_name','owner__last_name', 'owner__profiles__bio','owner__profiles__photo','count').order_by('-count')[:5]
         students_review = User.objects.filter(groups=4).values('first_name','last_name','profiles__photo')[:6]
-
+    
         if subject:
             subject = get_object_or_404(Subject,slug=subject)
             courses = courses.filter(subject=subject)
@@ -186,6 +187,13 @@ class CourseListView(TemplateResponseMixin, View):
 class CourseDetailView(DetailView):
     model  =  Course
     template_name = "courses/course/detail.html"
+    
+    def get(self, request, slug):
+        course = get_object_or_404(Course, slug=slug)
+        instructor_ratings = InstructorRating.objects.annotate(avg_rating = Avg('rating')).annotate(review_count = Count('review')).annotate(students=Count('instructor__courses_created__students')).annotate(course_count = Count('instructor__courses_created', distinct=True)).filter(instructor = course.owner)
+        print(instructor_ratings[0].students) 
+        return self.render_to_response({'course':course,
+                                         'instructor_ratings':instructor_ratings})
 
     def get_context_data(self, **kwargs):
         context = super(CourseDetailView, self).get_context_data(**kwargs)
@@ -198,6 +206,53 @@ class SearchMain(TemplateResponseMixin, View):
     
     def get(self, request):
         search_term =request.GET.get('search_term')
-        courses = Course.objects.filter(Q(title__icontains=search_term)| Q(owner__first_name__icontains=search_term)).annotate(average_rating=Avg('course_review__rating')).values('title','thumbnail_image','overview','duration','price','level','owner__first_name','owner__last_name').annotate(avg=Avg('course_review__rating'))
+        skill_filter = request.GET.get('hid_skill_filter')
+        paid_filter  = request.GET.get('hid_paid_filter')
+        hid_rating_filter =request.GET.get('hid_ratind_filter') 
+        
+        hid_skill_filter = {
+                'All Levels':'0',
+                'Beginner':'0',
+                'Intermediate':'0',
+                'Advance':'0',
+        }
+
+        hid_paid_filter = {
+                'Free':'0',
+                'Paid':'0',
+        }
+ 
+        qry_skill_filter   = []
+        qry_paid_filter = []
+        qry_paid_filter
+
+
+        if skill_filter:
+            for skill in skill_filter.split(","):
+                if skill:
+                    hid_skill_filter[skill] = '1'
+                    qry_skill_filter.append(skill)
+        else:
+            qry_skill_filter.extend(["All Levels","Beginner","Intermediate","Advance"])       
+
+        
+        if paid_filter:
+            for filter_item in paid_filter.split(","):
+                if filter_item:
+                    hid_paid_filter[filter_item]  = '1'
+                    qry_paid_filter.append(filter_item)
+        else:
+            qry_paid_filter.extend(["Paid","Free"])
+
+        print('---------{}  - {}  -  {}'.format(qry_paid_filter,qry_skill_filter,hid_rating_filter))
+        # print(paid_filter)
+        courses = Course.objects.filter(Q(title__icontains=search_term)| Q(owner__first_name__icontains=search_term)).filter(level__in=qry_skill_filter).annotate(average_rating=Avg('course_review__rating')).values('title','slug', 'thumbnail_image','overview','duration','price','level','owner__first_name','owner__last_name').annotate(avg_rating=Avg('course_review__rating'))
+        
+        if hid_rating_filter:
+            courses = courses.filter(avg_rating__gte = hid_rating_filter)
+        # print(hid_skill_filter);
         return self.render_to_response({'result_courses':courses,
-                                         'search_term':search_term})
+                                         'search_term':search_term,
+                                         'hid_paid_filter':hid_paid_filter,
+                                         'hid_skill_filter': hid_skill_filter,
+                                         'hid_rating_filter' : hid_rating_filter})

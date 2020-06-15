@@ -43,7 +43,9 @@ class Course(models.Model):
     subject = models.ForeignKey(Subject, related_name='courses', on_delete=models.CASCADE)
     title = models.CharField( max_length=200)
     slug = models.SlugField( max_length=200, unique=True)
-    overview = models.TextField() 
+    overview = models.TextField()
+    requirements = models.TextField(blank=True)
+    content_summary = models.TextField(blank=True) 
     created = models.DateTimeField( auto_now=False, auto_now_add=True)  
     students = models.ManyToManyField(User,
                                  related_name='courses_joined',
@@ -149,6 +151,26 @@ class CourseRating(models.Model):
 
     def __str__(self):
         return '{} on {}'.format(self.user.username, self.course.title)
+
+class InstructorRating(models.Model):
+    rate_choices = ( (1,1),
+                     (1.5,1.5),
+                     (2,2),
+                     (2.5,2.5),
+                     (3, 3),
+                     (3.5,3.5),
+                     (4,4),
+                     (4.5,4.5),
+                     (5,5))
+
+    student = models.ForeignKey(User, on_delete=models.CASCADE)
+    instructor = models.ForeignKey(User, related_name='instructor_review', on_delete=models.CASCADE)
+    review = models.TextField()
+    review_date = models.DateTimeField(auto_now_add=True)
+    rating = models.FloatField(default=0,choices=rate_choices)
+
+    def __str__(self):
+        return '{} on {}'.format(self.student.username, self.instructor.username)
 
 class SiteReview(models.Model):
     student = models.ForeignKey(User, related_name='site_review', on_delete=models.CASCADE)

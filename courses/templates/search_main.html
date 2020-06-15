@@ -7,10 +7,26 @@
 {% endblock title %}
 
 {% block content %}
+<script>
+
+var skill_level_filter = JSON.parse('{{ hid_skill_filter }}'.replace(/&#39;/g,'"'));
+var paid_filter = JSON.parse('{{ hid_paid_filter }}'.replace(/&#39;/g,'"'));
+var rating_filter = '';
+
+
+ 
+
+</script>
  <div class="container-fluid bg-transparent">
      <div class="row w-100">
          <div class="col-md-3">
              <div class="container mt-3 search-filters">
+                 <form name="submit_frm" id="submit_frm" action="{% url 'search_main' %}">
+                     <input type="hidden" name="search_term" id="search_term" value="{{ search_term }}">
+                     <input type="hidden" name="hid_skill_filter" id="hid_skill_filter" value="{{ hid_skill_filter }}">
+                     <input type="hidden" name="hid_paid_filter" id="hid_paid_filter" value="{{ hid_paid_filter }}" >
+                     <input type="hidden" name="hid_ratind_filter" id="hid_ratind_filter" value="{{ hid_rating_filter }}">
+                 </form>
                  <ul>
                      <li><span>FILTER BY</span>
                       <hr>
@@ -19,10 +35,16 @@
                      <hr>
                     </li>
                     <li class="filter-skill-level"><span class="filter-heading">Skill Level</span>
-                    {% for i in 'All Levels,Beginner,Intermediate,Adnavce'|makelist %}
+                    <!-- <p>{{ hid_skill_filter }}</p>     -->
+                    {% for i, val in hid_skill_filter.items %}
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="skill-level{{forloop.counter}}">
-                            <label class="form-check-label" for="defaultCheck1">
+                            
+                            {% if val == '1' %}
+                                <input class="form-check-input" type="checkbox" checked=True value="{{i}}" id="skill_level">
+                            {% else %}
+                                <input class="form-check-input" type="checkbox" value="{{i}}" id="skill_level">
+                            {% endif %}
+                            <label class="form-check-label" for="defaultCheck{{forloop.counter}}">
                               {{ i }}
                             </label>
                         </div>
@@ -31,10 +53,15 @@
                      <hr>
                     </li>
                      <li><span class="filter-heading">Price</span>
-                        {% for i in 'Free,Paid'|makelist %}
+                        {% for i, val in hid_paid_filter.items %}
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck{{forloop.counter}}">
-                            <label class="form-check-label" for="defaultCheck1">
+                            
+                            {% if val == '1' %}
+                                <input class="form-check-input" type="checkbox" value="{{i}}" id="paid_filter" checked>     
+                            {% else %}
+                                <input class="form-check-input" type="checkbox" value="{{i}}" id="paid_filter">
+                            {% endif %}
+                            <label class="form-check-label" for="defaultCheck{{forloop.counter}}">
                               {{ i }}
                             </label>
                         </div>
@@ -44,8 +71,14 @@
                      <li><span class="filter-heading">Rating</span>
                         {% for i in '1,2,3,4,5'|makelist %}
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="exampleRadios" id="ratingOpt" value="ratingOpt{{i}}">
-                            <label class="form-check-label" for="exampleRadios1">
+                            {% if i|stringformat:"c" == hid_rating_filter %}
+                                <input class="form-check-input" type="radio" name="exampleRadios" id="ratingOpt" checked value="{{i}}">
+                            {% else %}   
+                                <input class="form-check-input" type="radio" name="exampleRadios" id="ratingOpt" value="{{i}}">
+                            {% endif %}
+                                
+                            
+                            <label class="form-check-label" for="exampleRadios{{forloop.counter}}">
                                 {{ i | ratings }} {{ i }} & up
                             </label>
                         </div>
@@ -58,33 +91,35 @@
          <div class="col-md-9 bg-transparent">
              <div class="container search-list">
                  {% for course in result_courses  %}
-                    <div class="row">
-                        <div class="col-md-3 col-12 bg-light image">
-                            <div><img class="img-thumbnail" src="/media/{{ course.thumbnail_image}}"></div>
+                    <a href="{% url 'course_detail' course.slug %}">
+                        <div class="row">
+                            <div class="col-md-3 col-12 bg-light image">
+                                <div><img class="img-thumbnail" src="/media/{{ course.thumbnail_image}}"></div>
+                            </div>
+                            <div class="col-md-7 col">
+                            <div class="card-title"><strong>{{ course.title }}</strong></div>
+                            <div class="card-text overview">
+                                <p>
+                                    {{ course.overview | slice:":500" }}      
+                                </p>
+                            </div>
+                            <div class="card-text author">
+                                {{ course.owner__first_name}} {{ course.owner__last_name}}
+                            </div>
+                            <div class="card-text ratings">
+                            <span> {{ course.avg_rating| ratings }} </span>
+                            </div>
+                            <div class="card-text extra_details">
+                                <span> {{ course.duration}} total hours. {{ course.level}}</span>
+                            </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="price">
+                                    <strong>${{course.price}}</strong>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-md-7 col">
-                        <div class="card-title"><strong>{{ course.title }}</strong></div>
-                        <div class="card-text overview">
-                            <p>
-                                {{ course.overview | slice:":500" }}      
-                            </p>
-                        </div>
-                        <div class="card-text author">
-                            {{ course.owner__first_name}} {{ course.owner__last_name}}
-                        </div>
-                        <div class="card-text ratings">
-                           <span> {{ course.avg| ratings }} </span>
-                        </div>
-                        <div class="card-text extra_details">
-                            <span> {{ course.duration}} total hours. {{ course.level}}</span>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="price">
-                            <strong>${{course.price}}</strong>
-                        </div>
-                    </div>
-                    </div>
+                    </a>
                     <hr>  
                  {% endfor %}
              </div>

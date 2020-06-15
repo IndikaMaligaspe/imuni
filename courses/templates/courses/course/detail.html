@@ -1,22 +1,141 @@
 {% extends "base.html" %}
 
+{% load course %}
+
 {% block title %}
-  {{ object.title }}
-{% endblock title %}{{ object.title }}
+  {{ course.title }}
+{% endblock title %}{{ course.title }}
 
 {% block content %}
  {% with subject=course.subject  %}
-    <h1> {{ object.title }}</h1>
-    <div class="module">
-        <h2>Overview</h2>
-        <p>
-            <a href="{% url "course_list_subject" subject.slug %}">
-                {{ subject.title }}</a>
-                {{ course.nodules.count }} modules.
-                {Instructor: { course.owner.get_full_name }}
-        </p>
-        {{ object.overview | linebreaks}}
+  <div class="container">
+    
+      <div class="jumbotron">
+        <div class="row">
+          <div class="col-md-8 col">
+            <h1> {{ course.title }}</h1>
+            <p>
+                <a href="{% url "course_list_subject" subject.slug %}">
+                    {{ subject.title }}</a>
+                    {{ course.modules.count }} modules.
+                    <br>
+                    By: {{ course.owner.get_full_name }}
+            </p>
+          </div>
+          <div class="col-4 col right-box">
+            <div class="card course-details-card">
+              <img class="card-img-top img-thumbnail" src="/media/{{ course.thumbnail_image}}" alt="Card image cap">
+              <div class="card-title price">$ {{ course.price }}</div>
+              
+                <div class="card-text">
+                  <div class="button">
+                    <button class="addtocart">Add to cart</button>
+                  </div>
+                  <div class="button">
+                    <button class="enroll">Enroll</button>
+                  </div>
+                </div> 
+            </div>
+          </div>
+        </div>
+      </div>
+      
+
+        <div class="row p-2">
+          <div class="col-md-8 col content-summary">
+            <div class="row">
+              <div class="col-md-12">
+                <h5><strong> What you will learn </strong></h5> 
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 col">
+                <ul>
+                  {{ course.content_summary | createul}}
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col">
+          </div>
+        </div>
+        <br>
+        <div class="row p-2">
+          <div class="col-md-8 col prerequisits">
+            <div class="row">
+              <div class="col-md-12">
+                <h5><strong> Requirements </strong></h5> 
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 col">
+                <ul>
+                  {{ course.requirements | createul}}
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col">
+          </div>
+        </div>
+        <br>
+        <div class="row p-2">
+          <div class="col-md-8 col overview">
+            <div class="row">
+              <div class="col-md-12">
+                <h5><strong> Description </strong></h5> 
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 col">
+                {{ course.overview | linebreaks}}
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col">
+          </div>
+        </div>
+      <div class="instructor">
+        <div class="row">
+          <div class="col-md-8 col">
+            <div class="row">
+              <div class="col-md-4 col">
+                <div class="card">
+                  <img class="card-img-top img-instructor" 
+                      src="/media/{{ course.owner.profiles.photo}}" 
+                      alt="Card image cap">
+                  <div class="card-text">
+                    
+                    {% for rating in instructor_ratings  %}
+                      <div class="card-text">{{rating.avg_rating}} Instructor Ratings</div>  
+                      <div class="card-text">{{rating.review_count}} Reviews</div>  
+                      <div class="card-text">{{rating.students}} Students</div>  
+                      <div class="card-text">{{rating.course_count}} Courses</div>  
+                    {% endfor %}
+                      
+                    
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col">
+                <div class="card">
+                  <div class="card-title">
+                    <h5>{{course.owner.first_name}} {{course.owner.last_name}}</h5>
+                  </div>
+                  
+                  <div class="card-text">
+                    {{course.owner.profiles.bio}}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-0">
+          </div>
+        </div>
         
+      </div>
+      <div>
         {% if request.user.is_authenticated %}
           <form action="{% url "student_enroll_course" %}" method="post">
              {{ enroll_form }}
@@ -29,5 +148,6 @@
             </a>
         {% endif %}
     </div>
+  </div>  
  {% endwith %} 
 {% endblock content %}

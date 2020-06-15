@@ -34,6 +34,13 @@ def ratings(value):
 @register.filter
 def makelist(text):
     # print("----------{}".format(text))
-    return text.split(",");
-        
+    return text.split(",")
+
+
+@register.filter
+def createul(text):
+    text = "<li>{}".format(text)
+    text  = mark_safe(text.replace('\n','</li><li>'))
+    print(text)
+    return(text)        
         

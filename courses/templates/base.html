@@ -36,12 +36,14 @@
 
         <!-- header -->
         <header>
-            <div class="container-fluid">
+            <div class="container-fluid" >
                 <nav class="navbar">
                     <div class="row w-100">
                        
                         <div class="col-md-1 navbar-logo">
-                            <img class="ml-0 pl-0 " src="{% static '/images/logo.png' %}">        
+                            <a href="{% url 'home' %}">
+                                <img class="ml-0 pl-0 " src="{% static '/images/logo.png' %}">        
+                            </a>    
                         </div>
                         <div class="col-md-1 col-3 language-selection" id="language_selection">
                             <i class="fa fa-language fa-2x" aria-hidden="true"></i>
@@ -113,12 +115,12 @@
         <footer>
             <div class="contaner-fluid">
                 <div class="jumbotron-fluid">
-                    <div class="container-fluid ml-5 mr-5">
-                        <nav class="navbar navbar-expand-md bg-transparent">
-                        <div class="row w-100">
+                    <div class="container">
+                        <nav class="navbar  navbar-expand-md bg-transparent">
+                        <div class="row w-100" > 
                             <ul class="navbar-nav  nav-fill w-100 font-weight-bolder text-black">
                                 <li class="nav-item">
-                                    <div class="text-left"><strong>SOLUTIONS</strong></div>
+                                    <div class=""><strong>SOLUTIONS</strong></div>
                                     <br>
                                     <div>
                                         <ul class="nav flex-column text-black-50">

@@ -138,6 +138,61 @@ header .fa{
   padding: 0px; 
 }
 
+
+.sign_in{
+  text-align: right;
+  margin-top: 1%;
+  margin-left: 0px;
+  margin-right: 0px;
+  padding: 0px;
+  /* border:1px solid; */
+  
+}
+
+.sign_in ul li {
+ padding: 2px;
+ padding-top: 5px;
+ margin: 0px;
+}
+
+
+
+
+/* Footer Navbar */
+
+footer .navbar .nav-item {
+  text-align: left;
+  padding:0px;
+  margin:0px;
+}
+
+footer .navbar .nav-item .nav-link{
+  text-orientation: none;
+  color:rgb(83, 82, 82);
+  font-size: 13px;
+
+  
+}
+footer .navbar .nav-item .nav-link:hover{
+  color:rgb(255, 253, 253);
+}
+
+footer .jumbotron-fluid{
+  background-color: rgb(155, 218, 240);
+}
+/* Home page  - Media queries  */
+
+
+/* 
+@media (min-width: 992px) {
+  .container-mobile-fluid {
+    width: 80%;
+
+
+  }
+} */
+
+
 /* Home page ... List courses------------------------------------------------- */
 .inner{
   overflow: hidden;
@@ -145,22 +200,6 @@ header .fa{
   z-index: inherit;
 }
 
-
-.sign_in{
-   text-align: right;
-   margin-top: 1%;
-   margin-left: 0px;
-   margin-right: 0px;
-   padding: 0px;
-   /* border:1px solid; */
-   
-}
-
-.sign_in ul li {
-  padding: 2px;
-  padding-top: 5px;
-  margin: 0px;
-}
 
 .inner:hover{
   transform: scale(1.5) translateZ(0px);
@@ -200,28 +239,7 @@ header .fa{
 }
 
 
-/* Footer Navbar */
 
-footer .navbar .nav-item {
-  text-align: left;
-  padding:0px;
-  margin:0px;
-}
-
-footer .navbar .nav-item .nav-link{
-  text-orientation: none;
-  color:rgb(83, 82, 82);
-  font-size: 13px;
-
-  
-}
-footer .navbar .nav-item .nav-link:hover{
-  color:rgb(255, 253, 253);
-}
-
-footer .jumbotron-fluid{
-  background-color: rgb(155, 218, 240);
-}
 body {
     margin:0;
     font-family:'Roboto', sans-serif;
@@ -229,10 +247,7 @@ body {
     color:rgb(99, 96, 96);
 }
 
-
-.search-filters ul li{
-  list-style: none;
-}
+/* Search filters */
 
 .form-check{
   padding-top: 5px;
@@ -248,15 +263,8 @@ body {
   font-weight: bold;
 }
 
-.image{
-  /* height:12rem; */
-  margin-top:10px;
-  position: relative;
-}
-
-.search-list .img-thumbnail {
-  width:300px;
-  height:150px;
+.search-filters ul li{
+  list-style: none;
 }
 
 .fa-star-o , .fa-star-half-o{
@@ -265,4 +273,112 @@ body {
 
 .extra_details {
   font-size: 12px;
+}
+
+.image{
+  /* height:12rem; */
+  margin-top:10px;
+  position: relative;
+}
+
+/* ------------- Search list---------- */
+
+.search-list .img-thumbnail {
+  width:300px;
+  height:150px;
+}
+
+.search-list a{
+  text-decoration: none;
+  background-color: blue;
+  color:unset;
+}
+
+.search-list a:hover{
+  color: unset;
+}
+
+/* Course details  */
+.right-box{
+  float: left;
+}
+
+.course-details-card{
+  z-index:20;
+  position: absolute;
+  width:calc(100% - 30px)
+}
+.right-box .img-thumbnail {
+  /* width:200px; */
+  height:200px;
+}
+
+.right-box .price{
+  font-size: xx-large;
+  font-weight: bolder;
+  text-align: center;
+  /* border: 1px solid red; */
+}
+
+.right-box .card-text{
+  text-align: center; 
+  /* padding: 10px; */
+  /* border:1px solid; */
+}
+
+.right-box .card-text .button{
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+}
+
+.right-box .card-text .addtocart{
+  width:100%;
+  height:50px;
+  font-weight: bolder;
+  background-color: brown;
+  color:white;
+  border-style: none;
+  padding-bottom: 3px;
+}
+
+.right-box .card-text  .enroll {
+  width:100%;
+  height:50px;
+  font-weight: bolder;
+  border:1px solid;
+  color:black ;
+  border-style: none;
+}
+
+.content-summary{
+  background-color: rgb(240, 234, 234);
+  backdrop-filter: blur(5px);
+  border: 1px ridge;
+}
+
+.content-summary ul{
+   list-style: none;
+   display: grid;
+   grid-template-columns: repeat(2, 1fr)
+}
+
+.content-summary ul li{
+ padding:2px;
+
+}
+.content-summary ul li:before{
+   content: '✓';
+   padding-right:5px;
+ 
+}
+
+.img-instructor{
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%; 
+  border:1px solid red;
+  width:100px;
+  height: 100px;
+  align-self: center;
 }
