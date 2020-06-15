@@ -10,7 +10,7 @@ from django.forms.models import modelform_factory
 from django.apps import apps
 from braces.views import CsrfExemptMixin, JsonRequestResponseMixin
 from django.db.models import Count, Avg
-from .models import Course, Content, Module, Subject, Profiles, InstructorRating
+from .models import Course, Content, Module, Subject, Profiles, InstructorRating, CourseRating
 from .forms import ModuleFormSet
 # from students.forms import CourseEnrolmentForm 
 from django.db.models import Q
@@ -191,9 +191,15 @@ class CourseDetailView(DetailView):
     def get(self, request, slug):
         course = get_object_or_404(Course, slug=slug)
         instructor_ratings = InstructorRating.objects.annotate(avg_rating = Avg('rating')).annotate(review_count = Count('review')).annotate(students=Count('instructor__courses_created__students')).annotate(course_count = Count('instructor__courses_created', distinct=True)).filter(instructor = course.owner)
-        print(instructor_ratings[0].students) 
+        course_avg_ratings = CourseRating.objects.all().filter(course=course.id).aggregate(Avg('rating')) 
+        course_wise_ratings = CourseRating.objects.values('rating').filter(course=4).annotate(rate_count = Count('rating')).values('rating','rate_count').order_by()
+        print(course.id)
+        print(course_avg_ratings['rating__avg'])
         return self.render_to_response({'course':course,
-                                         'instructor_ratings':instructor_ratings})
+                                         'instructor_ratings':instructor_ratings,
+                                         'course_avg_ratings':course_avg_ratings,
+                                         'course_wise_ratings':course_wise_ratings})
+
 
     def get_context_data(self, **kwargs):
         context = super(CourseDetailView, self).get_context_data(**kwargs)

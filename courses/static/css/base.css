@@ -380,5 +380,39 @@ body {
   border:1px solid red;
   width:100px;
   height: 100px;
-  align-self: center;
+  align-self: left;
+}
+
+.ratings-instructor{
+  font-size: smaller;
+  padding-left: 1px;
+  padding-right: 0px;
+  text-align: left;
+}
+
+.instructor-link:hover{
+  text-decoration: none;
+}
+
+.student-review .card-title{
+  text-align: center;
+}
+.student-review .card-title h1{
+  text-align: center;
+  /* padding-left:10px; */
+  font-weight: bolder;
+}
+
+.student-review .card-title .stars{
+  text-align: center;
+  align-content: center;
+  /* padding-left:10px; */
+  font-weight: bolder;
+  display: inline-block;
+}
+
+.student-review .card-title .text{
+  text-align: center;
+  align-items: center;
+  width: 100%;
 }

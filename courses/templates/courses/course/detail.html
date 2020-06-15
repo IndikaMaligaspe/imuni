@@ -8,11 +8,11 @@
 
 {% block content %}
  {% with subject=course.subject  %}
-  <div class="container">
+  <div class="container-fluid p-0 m-0">
     
       <div class="jumbotron">
         <div class="row">
-          <div class="col-md-8 col">
+          <div class="col-md-8 col-12">
             <h1> {{ course.title }}</h1>
             <p>
                 <a href="{% url "course_list_subject" subject.slug %}">
@@ -22,7 +22,7 @@
                     By: {{ course.owner.get_full_name }}
             </p>
           </div>
-          <div class="col-4 col right-box">
+          <div class="col-md-4 col-12 right-box">
             <div class="card course-details-card">
               <img class="card-img-top img-thumbnail" src="/media/{{ course.thumbnail_image}}" alt="Card image cap">
               <div class="card-title price">$ {{ course.price }}</div>
@@ -39,10 +39,11 @@
           </div>
         </div>
       </div>
-      
-
+      <br>
+  </div>
+  <div class="container">
         <div class="row p-2">
-          <div class="col-md-8 col content-summary">
+          <div class="col-md-8 col-12 content-summary">
             <div class="row">
               <div class="col-md-12">
                 <h5><strong> What you will learn </strong></h5> 
@@ -56,7 +57,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-4 col">
+          <div class="col-md-4 col-12">
           </div>
         </div>
         <br>
@@ -95,32 +96,46 @@
           <div class="col-md-4 col">
           </div>
         </div>
+        <br><br>
       <div class="instructor">
         <div class="row">
           <div class="col-md-8 col">
             <div class="row">
               <div class="col-md-4 col">
-                <div class="card">
+                <div class="card border-0">
                   <img class="card-img-top img-instructor" 
                       src="/media/{{ course.owner.profiles.photo}}" 
                       alt="Card image cap">
                   <div class="card-text">
                     
                     {% for rating in instructor_ratings  %}
-                      <div class="card-text">{{rating.avg_rating}} Instructor Ratings</div>  
-                      <div class="card-text">{{rating.review_count}} Reviews</div>  
-                      <div class="card-text">{{rating.students}} Students</div>  
-                      <div class="card-text">{{rating.course_count}} Courses</div>  
+                      <div class="card-text ratings-instructor">
+                        <br>
+                        <div class="row">
+                          <div class="col-md-1"><i class="fa fa-star-o fa-sm" aria-hidden="true"></i></div>
+                          <div class="col-md-10 pr-0 m-0"><b>{{rating.avg_rating}}</b>&nbsp;&nbsp;Instructor Ratings</div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-1"><i class="fa fa-star-o fa-sm" aria-hidden="true"></i></div>
+                          <div class="col-md-10"><b>{{rating.review_count}}</b>&nbsp;&nbsp;Reviews</div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-1"><i class="fa fa-star-o fa-sm" aria-hidden="true"></i></div>
+                          <div class="col-md-10"><b>{{rating.students}}</b>&nbsp;&nbsp;Students</div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-1"><i class="fa fa-star-o fa-sm" aria-hidden="true"></i></div>
+                          <div class="col-md-10"><b>{{rating.course_count}}</b>&nbsp;&nbsp;Courses</div>
+                        </div>
+                      </div>  
                     {% endfor %}
-                      
-                    
                   </div>
                 </div>
               </div>
-              <div class="col-md-6 col">
-                <div class="card">
+              <div class="col-md-8 col">
+                <div class="card border-0">
                   <div class="card-title">
-                    <h5>{{course.owner.first_name}} {{course.owner.last_name}}</h5>
+                    <h5><a class="instructor-link" href="">{{course.owner.first_name}} {{course.owner.last_name}}</a></h5>
                   </div>
                   
                   <div class="card-text">
@@ -135,8 +150,41 @@
         </div>
         
       </div>
+      <br>
+      <br>
+      <div class="student-review">
+        <div class="row">
+          <div class="col-md-12">
+            <h5><strong> Student feedback </strong></h5> 
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-8 col-12">
+            <div class="row">
+              <div class="col-md-4 col-12">
+                <div class="card border-0">
+                  <div class="card-title">
+                      <h1>{{course_avg_ratings.rating__avg}}</h1>
+                      <span class="stars">{{course_avg_ratings.rating__avg | ratings:'lg' }}</span>
+                      <br>
+                      <span class="text">Course Rating</span>
+                  </div>
+                </div>
+             </div>
+             <div class="col-md-8 col-12 bg-primary">
+
+             </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-12">
+             
+          </div>
+        </div>
+        <br><br>
+      </div>  
       <div>
-        {% if request.user.is_authenticated %}
+        
+        <!-- {% if request.user.is_authenticated %}
           <form action="{% url "student_enroll_course" %}" method="post">
              {{ enroll_form }}
              {% csrf_token %} 
@@ -147,7 +195,8 @@
               Resgiter to enroll
             </a>
         {% endif %}
-    </div>
+          </dev> -->
+     </div>     
   </div>  
  {% endwith %} 
 {% endblock content %}
