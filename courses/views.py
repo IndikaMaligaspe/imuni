@@ -10,11 +10,16 @@ from django.forms.models import modelform_factory
 from django.apps import apps
 from braces.views import CsrfExemptMixin, JsonRequestResponseMixin
 from django.db.models import Count, Avg
+from django.db.models import Q
+from django.db.models.functions import Round
+import json
+
 from .models import Course, Content, Module, Subject, Profiles, InstructorRating, CourseRating
 from .forms import ModuleFormSet
+from cart.forms import CartAddForm
+from cart.cart import Cart
+
 # from students.forms import CourseEnrolmentForm 
-from django.db.models import Q
-import json
 
 
 # class ManageCourseListView(ListView):
@@ -191,14 +196,36 @@ class CourseDetailView(DetailView):
     def get(self, request, slug):
         course = get_object_or_404(Course, slug=slug)
         instructor_ratings = InstructorRating.objects.annotate(avg_rating = Avg('rating')).annotate(review_count = Count('review')).annotate(students=Count('instructor__courses_created__students')).annotate(course_count = Count('instructor__courses_created', distinct=True)).filter(instructor = course.owner)
-        course_avg_ratings = CourseRating.objects.all().filter(course=course.id).aggregate(Avg('rating')) 
-        course_wise_ratings = CourseRating.objects.values('rating').filter(course=4).annotate(rate_count = Count('rating')).values('rating','rate_count').order_by()
-        print(course.id)
-        print(course_avg_ratings['rating__avg'])
+        course_avg_ratings = CourseRating.objects.all().filter(course=course.id).aggregate(Avg('rating'), Count('rating')) 
+        total_ratings = course_avg_ratings['rating__count']
+        course_ratings = CourseRating.objects.values(ratings = Round('rating')).filter(course=course.id).annotate(rating_count = Count('rating')*100/total_ratings).values('ratings','rating_count').order_by()
+        
+        add_to_cart_form = CartAddForm(initial={'course_id':course.id, 
+                                                'price': course.price,
+                                                'discount': 0,
+                                                'coupon_code': None })
+#       Create a rate counter for start ratng and % showing as that is not practical in template.
+        course_wise_ratings = []
+        ratings={}
+        for i in range(5,0,-1):
+            for course_rat in course_ratings:
+                ratings = {}
+                ratting = int(course_rat['ratings'])
+                if i == ratting:
+                     ratings['ratings'] = ratting
+                     ratings['ratingspct'] = course_rat['rating_count']
+                     break
+                else:
+                     ratings['ratings'] = i
+                     ratings['ratingspct'] = '< 1'  
+            if len(ratings) > 0:         
+                course_wise_ratings.append(ratings)
+                
         return self.render_to_response({'course':course,
                                          'instructor_ratings':instructor_ratings,
                                          'course_avg_ratings':course_avg_ratings,
-                                         'course_wise_ratings':course_wise_ratings})
+                                         'course_wise_ratings':course_wise_ratings,
+                                         'add_to_cart_form':add_to_cart_form})
 
 
     def get_context_data(self, **kwargs):
@@ -215,7 +242,13 @@ class SearchMain(TemplateResponseMixin, View):
         skill_filter = request.GET.get('hid_skill_filter')
         paid_filter  = request.GET.get('hid_paid_filter')
         hid_rating_filter =request.GET.get('hid_ratind_filter') 
-        
+
+        cart = Cart(request)
+        print(cart.get_keys())
+
+        if not search_term:
+            search_term = ''
+
         hid_skill_filter = {
                 'All Levels':'0',
                 'Beginner':'0',
@@ -252,8 +285,11 @@ class SearchMain(TemplateResponseMixin, View):
 
         print('---------{}  - {}  -  {}'.format(qry_paid_filter,qry_skill_filter,hid_rating_filter))
         # print(paid_filter)
-        courses = Course.objects.filter(Q(title__icontains=search_term)| Q(owner__first_name__icontains=search_term)).filter(level__in=qry_skill_filter).annotate(average_rating=Avg('course_review__rating')).values('title','slug', 'thumbnail_image','overview','duration','price','level','owner__first_name','owner__last_name').annotate(avg_rating=Avg('course_review__rating'))
+        courses = Course.objects.filter(Q(title__icontains=search_term)| Q(owner__first_name__icontains=search_term)).filter(level__in=qry_skill_filter).annotate(average_rating=Avg('course_review__rating')).values('id','title','slug', 'thumbnail_image','overview','duration','price','level','owner__first_name','owner__last_name').annotate(avg_rating=Avg('course_review__rating'))
         
+        if (len(cart)) > 0:
+            courses = courses.exclude(id__in = cart.get_keys())
+
         if hid_rating_filter:
             courses = courses.filter(avg_rating__gte = hid_rating_filter)
         # print(hid_skill_filter);

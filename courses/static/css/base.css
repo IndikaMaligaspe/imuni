@@ -415,4 +415,73 @@ body {
   text-align: center;
   align-items: center;
   width: 100%;
+  font-size: small;
 }
+
+
+.student-review .rating-list{
+  /* justify-content: left; */
+  /* text-align: left; */
+  margin-right: 0px;
+  position: relative;
+  /* border: 1px solid; */
+  padding-right: 0px;
+  float: right;
+}
+
+/* Add to cart page----------------------------------------------- */
+.addtocart{
+  margin-top: 5%;
+}
+
+.addtocart .card{
+  border:0px;
+  border-bottom: 2px thin;
+}
+
+.addtocart .courselist .card .img-thumbnail{
+  border:0px;
+  margin:0px;
+  padding: 0px;
+}
+
+.addtocart .courselist .card .card-title{
+  font-size: medium;
+  font-weight: bolder;
+}
+.addtocart .courselist .card .card-text{
+  font-size: smaller;
+  font-weight: 200;
+}
+
+.addtocart .courselist .card .price{
+  font-size: smaller;
+  font-weight: bolder;
+  color: red;
+}
+
+.addtocart .courselist .card .card-text a{
+  text-decoration: none;
+}
+
+.addtocart .courselist .card .card-text a:hover{
+  text-decoration: none;
+}
+
+
+.addtocart .cart-rate .card .card-text .main-price{
+  font-weight: bold;
+  font-size: xx-large;
+  color: black;
+}
+
+.addtocart .cart-rate .card .card-text {
+  padding-left: 0px;
+  margin-left: 0px;
+  text-align: left;
+  font-size: medium;
+  color: black;
+}
+
+
+/* Add to cart page----------------------------------------------- */

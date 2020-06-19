@@ -11,30 +11,36 @@
   <div class="container-fluid p-0 m-0">
     
       <div class="jumbotron">
-        <div class="row">
-          <div class="col-md-8 col-12">
-            <h1> {{ course.title }}</h1>
-            <p>
-                <a href="{% url "course_list_subject" subject.slug %}">
-                    {{ subject.title }}</a>
-                    {{ course.modules.count }} modules.
-                    <br>
-                    By: {{ course.owner.get_full_name }}
-            </p>
-          </div>
-          <div class="col-md-4 col-12 right-box">
-            <div class="card course-details-card">
-              <img class="card-img-top img-thumbnail" src="/media/{{ course.thumbnail_image}}" alt="Card image cap">
-              <div class="card-title price">$ {{ course.price }}</div>
-              
-                <div class="card-text">
-                  <div class="button">
-                    <button class="addtocart">Add to cart</button>
-                  </div>
-                  <div class="button">
-                    <button class="enroll">Enroll</button>
-                  </div>
-                </div> 
+        <div class="container">
+          <div class="row">
+            <div class="col-md-8 col-12">
+              <h1> {{ course.title }}</h1>
+              <p>
+                  <a href="{% url "course_list_subject" subject.slug %}">
+                      {{ subject.title }}</a>
+                      {{ course.modules.count }} modules.
+                      <br>
+                      By: {{ course.owner.get_full_name }}
+              </p>
+            </div>
+            <div class="col-md-4 col-12 right-box">
+              <div class="card course-details-card">
+                <img class="card-img-top img-thumbnail" src="/media/{{ course.thumbnail_image}}" alt="Card image cap">
+                <div class="card-title price">$ {{ course.price }}</div>
+                
+                  <div class="card-text">
+                    <form action="/cart/courses/" method="POST">
+                      {% csrf_token %}
+                      {{ add_to_cart_form.as_p }}
+                      <div class="button">
+                        <button type="submit" id='addToCart' class="addtocart">Add to cart</button>
+                      </div>
+                    </form>
+                    <div class="button">
+                      <button class="enroll">Enroll</button>
+                    </div>
+                  </div> 
+              </div>
             </div>
           </div>
         </div>
@@ -112,21 +118,21 @@
                       <div class="card-text ratings-instructor">
                         <br>
                         <div class="row">
-                          <div class="col-md-1"><i class="fa fa-star-o fa-sm" aria-hidden="true"></i></div>
+                          <div class="col-md-1"><i class="fa fa-star-o fa-md text-dark" aria-hidden="true"></i></div>
                           <div class="col-md-10 pr-0 m-0"><b>{{rating.avg_rating}}</b>&nbsp;&nbsp;Instructor Ratings</div>
                         </div>
                         <div class="row">
-                          <div class="col-md-1"><i class="fa fa-star-o fa-sm" aria-hidden="true"></i></div>
+                          <div class="col-md-1"><i class="fa fa-comments fa-md" aria-hidden="true"></i></div>
                           <div class="col-md-10"><b>{{rating.review_count}}</b>&nbsp;&nbsp;Reviews</div>
                         </div>
                         <div class="row">
-                          <div class="col-md-1"><i class="fa fa-star-o fa-sm" aria-hidden="true"></i></div>
+                          <div class="col-md-1"><i class="fa fa-graduation-cap" aria-hidden="true"></i></div>
                           <div class="col-md-10"><b>{{rating.students}}</b>&nbsp;&nbsp;Students</div>
                         </div>
-                        <div class="row">
-                          <div class="col-md-1"><i class="fa fa-star-o fa-sm" aria-hidden="true"></i></div>
+                        <Bdiv class="row">
+                          <div class="col-md-1"><i class="fa fa-step-forward" aria-hidden="true"></i></div>
                           <div class="col-md-10"><b>{{rating.course_count}}</b>&nbsp;&nbsp;Courses</div>
-                        </div>
+                        </Bdiv>
                       </div>  
                     {% endfor %}
                   </div>
@@ -164,17 +170,26 @@
               <div class="col-md-4 col-12">
                 <div class="card border-0">
                   <div class="card-title">
-                      <h1>{{course_avg_ratings.rating__avg}}</h1>
-                      <span class="stars">{{course_avg_ratings.rating__avg | ratings:'lg' }}</span>
+                    {% if course_avg_ratings.rating__avg %}
+                       <h1>{{course_avg_ratings.rating__avg}}</h1>
+                       {% else %}
+                        <h1>0</h1>    
+                       {% endif %}  
+                        <span class="stars">{{course_avg_ratings.rating__avg | ratings:'md' }}</span>  
                       <br>
                       <span class="text">Course Rating</span>
                   </div>
                 </div>
              </div>
-             <div class="col-md-8 col-12 bg-primary">
-
+             <div class="col-md-8 col-12">
+              {% for rating_count in course_wise_ratings  %}
+                <div class="row">
+                  <!-- <div class="col-md-3"></div> -->
+                  <div class="col-md-5 col-12 rating-list pr-0 pl-0"> {{ rating_count.ratings | ratings:'md p-1'}}</div>
+                  <div class="col-md-7 col-0">{{rating_count.ratingspct}}%</div>
+                </div>
+              {% endfor %}
              </div>
-            </div>
           </div>
           <div class="col-md-4 col-12">
              
@@ -183,6 +198,7 @@
         <br><br>
       </div>  
       <div>
+        <br><br>
         
         <!-- {% if request.user.is_authenticated %}
           <form action="{% url "student_enroll_course" %}" method="post">

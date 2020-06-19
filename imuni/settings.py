@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'courses.apps.CoursesConfig',
     'students.apps.StudentsConfig',
+    'cart.apps.CartConfig',
     'embed_video',
     'rest_framework',
     # 'star_ratings',
@@ -139,3 +140,5 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
     ),
 }
+
+CART_SESSION_ID='cart'

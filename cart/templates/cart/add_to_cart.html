@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}
+ Cart 
+{% endblock title %}
+
+{% block content %}
+
+
+ <div class="container addtocart">
+    <h5>{{cart.get_item_count}} Course(s) in the Cart</h5>
+     <div class="row">
+         <div class="col-md-8 col-12">
+            {% for item in cart  %}
+                <div class="row courselist">
+                    <div class="col-md-12 col-12">
+                        <div class="card">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <img class="card-img-top img-thumbnail h-100" 
+                                    src="/media/{{item.thumbnail}}" 
+                                    alt="{{item.title }}">
+                                </div>
+                                <div class="col-md-8 px3">
+                                    <div class="card-title">{{item.title }}</div>
+                                    <div class="card-text">By {{item.instructor }}</div>
+                                    <div class="card-text price">${{item.price }}</div>
+                                    {% if item.discount %}
+                                        <div class="card-text">${{ item.discount }}</div>
+                                    {% endif %}    
+                                </div>
+                            </div>
+                            <div class="row pt-2">
+                                <div class="col-md-3"><div class="card-text"><a href="{% url 'add_to_cart' %}?remove_id={{item.id}}">Remove</a></div></div>
+                                <div class="col-md-5"><div class="card-text"><a href="{% url 'search_main'  %}">Add another course</a></div></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                 </div>  
+            {% endfor %}
+        </div>
+        <div class="col-md-4 col-12 cart-rate">
+            <div class="card text-left">
+                <div class="card-text">Total:</div>
+                <card class="card-text main-price">$ {{ cart.get_total_price }}</card>
+                {% if cart.get_total_discount_pct  %}
+                    <card class="card-text">{{ cart.get_total_discount_pct }}% off</card>    
+                {% endif %}
+                    <card class="card-text">Checkout</card>
+        </div>
+     </div>
+    </div>
+    <br>
+ </div>
+{% endblock content %}

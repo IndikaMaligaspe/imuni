@@ -65,6 +65,9 @@ class Course(models.Model):
 
     def get_absolute_url(self):
         return reverse("Course_detail", kwargs={"pk": self.pk})
+    
+    def get_instructors(self):
+        return '{} {}'.format(self.owner.first_name, self.owner.last_name)
 
 class Module(models.Model):
     course = models.ForeignKey(Course,  related_name='modules', on_delete=models.CASCADE)     

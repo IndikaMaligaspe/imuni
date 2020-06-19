@@ -33,6 +33,13 @@
         console.log(paid_filter)
         update_form();
     });
+    // $('#addToCart').click(function(e){
+    //    $('#id_course_id').val()
+    //    $('#id_price').val()
+    //    $('#id_discount').val()
+    //    $('#id_coupon_code').val() 
+
+    // });
     
 })(jQuery);
 
@@ -65,4 +72,4 @@ update_form=()=>{
 
 
 
-console.log(paid_filter);
+// console.log(paid_filter);
