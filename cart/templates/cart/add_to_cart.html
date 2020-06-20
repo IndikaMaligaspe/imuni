@@ -22,8 +22,9 @@
                                     alt="{{item.title }}">
                                 </div>
                                 <div class="col-md-8 px3">
-                                    <div class="card-title">{{item.title }}</div>
-                                    <div class="card-text">By {{item.instructor }}</div>
+                                    <div class="card-title">{{item.title }}
+                                        <div class="card-text">By {{item.instructor }}</div>
+                                    </div>
                                     <div class="card-text price">${{item.price }}</div>
                                     {% if item.discount %}
                                         <div class="card-text">${{ item.discount }}</div>
@@ -47,7 +48,8 @@
                 {% if cart.get_total_discount_pct  %}
                     <card class="card-text">{{ cart.get_total_discount_pct }}% off</card>    
                 {% endif %}
-                    <card class="card-text">Checkout</card>
+                    <card class="card-text"><button type="button" class="btn btn-danger">Checkout</button></card>
+                        
         </div>
      </div>
     </div>

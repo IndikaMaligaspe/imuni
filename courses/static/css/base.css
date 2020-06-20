@@ -469,11 +469,7 @@ body {
 }
 
 
-.addtocart .cart-rate .card .card-text .main-price{
-  font-weight: bold;
-  font-size: xx-large;
-  color: black;
-}
+
 
 .addtocart .cart-rate .card .card-text {
   padding-left: 0px;
@@ -483,5 +479,13 @@ body {
   color: black;
 }
 
+.addtocart .cart-rate .card .main-price{
+  font-weight: bold;
+  font-size: xx-large;
+  color: black;
+}
 
+.addtocart .cart-rate .card .btn{
+  width:100%;
+}
 /* Add to cart page----------------------------------------------- */
