@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% load student %}
+{% block title %}
+   {{course.title}} 
+{% endblock title %}
+
+{% block content %}
+  <div class="container">
+    <form method="POST">
+    <div class="row mt-5">
+      <div class="col-md-5 col-12">
+        
+        <div class="form-group">
+          <label for="sel1">Select Country:</label>
+          <select class="form-control" id="country">
+            {% for country in countries.items  %}
+                <option "{{country|dict_key:'key'}}">{{country|dict_key:'val'}}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      <div class="col-md-7 col-0"></div>
+    </div>
+    <div class="container bg-light">
+      <div class="row">
+        <div class="col-md-12 col-12">
+          
+          {% for item in cart %}
+            <div class="row w-100">
+              <div class="col-md-8 col-10 p-0">{{item.title}} 
+                  <span> by {{item.instructor}}</span>  
+              </div>
+              <div class="col-md-4 col-2 p-0 text-right">${{item.price}}</div>
+            </div>   
+            
+          {% endfor %}
+          <div class="row w-100 p-0">
+            <div class="col-md-12 col-12">
+              <br>
+            </div>
+          </div>
+          <div class="row w-100">
+            <div class="col-md-8 col-8 p-0"> 
+                <span> Total of {{cart.get_item_count}} item(s)</span>  
+            </div>
+            <div class="col-md-4 col-4 p-0 text-right">${{cart.get_total_price}}</div>
+          </div>  
+        </div>
+        <div></div>
+      </div>
+    </div>
+    <hr>
+    <div class="container bg-light">
+     
+      <div class="row w-100">
+        <div class="col-md-4 col-0 p-0">
+          Purchased by
+        </div>
+        <div class="col-md-8 col-12 p-0 text-right"> 
+          <span>: {{student.first_name |title}} {{student.last_name |title}} / {{student.email}}</span>          
+        </div>
+        <div></div>
+      </div>
+    </div>
+    <hr>
+    <div class="container">
+      <div class="row w-100">
+        <div class="col-md-12 p-0">
+          <span>Payment Options</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-check pl-3">
+            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+            <label class="form-check-label" for="exampleRadios1">
+              Pay by Credit / Debit card
+            </label>
+          </div>
+          <div class="form-check pl-3">
+            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+            <label class="form-check-label" for="exampleRadios2">
+              Pay by PayPal
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <hr>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 col-4">
+          terms and conditions
+        </div>
+        <div></div>
+      </div>
+    </div> -->
+    <div class="container">
+      <div class="row w-100">
+        <div class="col-md-12 text-center p-5">
+          <input type="submit" class="btn btn-danger w-50" value="Complete Order"></input>
+        </div>
+      </div>
+    </div>
+  </form>
+  </div> 
+{% endblock content %}

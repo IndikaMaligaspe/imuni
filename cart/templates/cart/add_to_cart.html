@@ -48,7 +48,19 @@
                 {% if cart.get_total_discount_pct  %}
                     <card class="card-text">{{ cart.get_total_discount_pct }}% off</card>    
                 {% endif %}
+                {% if request.user.is_authenticated %}
+                    <form action="{% url "student_enroll_course" %}" method="post">
+                        <input type="hidden" name="course" value={{course}} />
+                        {{ enroll_form }}
+                        {% csrf_token %} 
+                        <card class="card-text"><button type="submit" class="btn btn-danger">Checkout</button></card>
+                </form>  
+              {% else %}
+                  <a href="{% url "student_registration" %}" class="button">
                     <card class="card-text"><button type="button" class="btn btn-danger">Checkout</button></card>
+                  </a>
+              {% endif %}
+                    <!-- <card class="card-text"><button type="button" class="btn btn-danger">Checkout</button></card> -->
                         
         </div>
      </div>

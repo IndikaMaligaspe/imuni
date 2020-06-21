@@ -3,12 +3,13 @@ from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView, FormView 
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
+from django.views import View
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import CourseEnrolmentForm
-from courses.models import  Course, Module
-
+from courses.models import  Course, Module 
+from cart.cart import Cart
 class StudentRegistrationView(CreateView):
     template_name = 'students/student/registration.html'
     form_class = UserCreationForm
@@ -23,19 +24,18 @@ class StudentRegistrationView(CreateView):
         login(self, request, user)
         return result
 
-class StudentEnrollCourseView(LoginRequiredMixin, FormView):
-    course = None
-    form_class =  CourseEnrolmentForm 
+class StudentEnrollCourseView(LoginRequiredMixin, View):
 
-    def form_valid(self, form):
-        self.course = form.cleaned_data['course']
-        self.course.students.add(self.request.user)
-        return super(StudentEnrollCourseView, 
-                    self).form_valid(form)
-    
-    def get_success_url(self):
-        return reverse_lazy('student_course_detail',
-                            args=[self.course.id])
+    def post(self,request):
+        cart = Cart(request)
+        student = self.request.user
+        countries = {'LK':'Sri Lanka', 'IN':'Inidia','US':'United States','CA':'Canada'}
+        print(student)
+        return render(request,'students/course/enrol.html',{'cart':cart, 
+                                                            'student':student,
+                                                            'countries':countries})
+        
+     
 
 class StudentCourseListView(LoginRequiredMixin, ListView):
     model = Course

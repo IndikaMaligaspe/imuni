@@ -7,3 +7,5 @@ class CourseEnrolmentForm(forms.Form):
                                      widget=forms.HiddenInput)
  
 
+    
+    
