@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'courses.apps.CoursesConfig',
     'students.apps.StudentsConfig',
     'cart.apps.CartConfig',
+    'payments.apps.PaymentsConfig',
+    'orders.apps.OrdersConfig',
     'embed_video',
     'rest_framework',
     # 'star_ratings',
