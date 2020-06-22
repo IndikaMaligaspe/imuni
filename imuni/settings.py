@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 from django.urls import reverse_lazy
+import braintree
+from braintree import Configuration, Environment , BraintreeGateway
 
 
 
@@ -144,3 +146,16 @@ REST_FRAMEWORK = {
 }
 
 CART_SESSION_ID='cart'
+
+BRAINTREE_MERCHANT_ID = 'phvg3b2rz4k7jwqy'
+BRAINTREE_PUBLIC_KEY = 'kf84mmg2cf4x3fk5'
+BRAINTREE_PRIVATE_KEY = '5efd1f609a3fa90e212632f0838680e8'
+
+
+GATEWAY = BraintreeGateway(
+Configuration(
+    braintree.Environment.Sandbox,
+    BRAINTREE_MERCHANT_ID,
+    BRAINTREE_PUBLIC_KEY,
+    BRAINTREE_PRIVATE_KEY
+))

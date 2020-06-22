@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}
+   Order Confirmation  
+{% endblock title %}
+
+{% block content %}
+  <div class="container">
+      <br>
+      <div class="row w-100">
+          <div class="col-md-12">
+              <h5> Order Confirmed for {{ order.order_by.first_name|title }} {{ order.order_by.last_name|title }} with order id {{ order.id}}</h5>
+          </div>
+      </div>
+      <br>
+      <div class="container bg-light">
+        <div class="row">
+          <div class="col-md-12 col-12">
+            
+            {% for item in order.items.all %}
+              <div class="row w-100">
+                <div class="col-md-8 col-10 p-0">{{item.course.title}} 
+                    <span> by {{item.course.owner.first_name}} {{item.course.owner.last_name}}</span>  
+                </div>
+                <div class="col-md-4 col-2 p-0 text-right">${{item.price}}</div>
+              </div>   
+              
+            {% endfor %}
+            <div class="row w-100 p-0">
+              <div class="col-md-12 col-12">
+                <br>
+              </div>
+            </div>
+            <div class="row w-100">
+              <div class="col-md-8 col-8 p-0"> 
+                  <span> Total of {{cart.get_item_count}} item(s)</span>  
+              </div>
+              <div class="col-md-4 col-4 p-0 text-right">${{order.get_total_cost}}</div>
+            </div>  
+          </div>
+          <div></div>
+        </div>
+      </div>
+      <hr>
+  </div>
+  
+{% endblock content %}

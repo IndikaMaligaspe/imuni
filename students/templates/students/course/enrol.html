@@ -6,7 +6,7 @@
 
 {% block content %}
   <div class="container">
-    <form method="POST">
+    <form method="POST" action="{% url 'order_create' %}">
     <div class="row mt-5">
       <div class="col-md-5 col-12">
         
@@ -98,10 +98,12 @@
     <div class="container">
       <div class="row w-100">
         <div class="col-md-12 text-center p-5">
+          {% csrf_token %}
           <input type="submit" class="btn btn-danger w-50" value="Complete Order"></input>
         </div>
       </div>
     </div>
+    <input type='Hidden' name='order_type' value='student_enrol_course'>
   </form>
   </div> 
 {% endblock content %}

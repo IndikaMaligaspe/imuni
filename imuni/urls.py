@@ -29,6 +29,8 @@ urlpatterns = [
     path('cart/',include('cart.urls')),
     path('', CourseListView.as_view(), name='course_list'),
     path('students/', include('students.urls')),
+    path('orders/', include('orders.urls')),
+    path('payments/', include('payments.urls')),
     path('api/', include('courses.api.urls', namespace='api')),
     # path('ratings/', include('star_ratings.urls', namespace='ratings')),
 ]
