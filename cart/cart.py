@@ -15,7 +15,7 @@ class Cart(object):
         course_id = str(course.id)
         
         if course_id not in self.cart:
-            self.cart[course_id] = {'id':course_id, 'title':course.title, 'instructor':course.get_instructors(),'price':str(course.price),'thumbnail':course.thumbnail_image.path}
+            self.cart[course_id] = {'id':course_id, 'title':course.title, 'instructor':course.get_instructors(),'price':str(course.price),'thumbnail':course.thumbnail_image.path, 'subject_id':course.subject_id}
         self.save()
     
     def save(self):
@@ -43,7 +43,17 @@ class Cart(object):
         if len(self.cart) > 0:
             return list(self.cart.keys())
 
-    
+    def get_subject_list(self):
+       subject_list = []
+       for item in self.cart.values():
+           subject_list.append(item['subject_id'])
+       return subject_list
+
+    def get_course_list(self):
+       course_list = []
+       for item in self.cart.values():
+           course_list.append(item['id'])
+       return course_list
 
     def clear(self):
         del self.session[settings.CART_SESSION_ID]

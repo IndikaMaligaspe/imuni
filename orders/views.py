@@ -15,6 +15,7 @@ def order_create(request):
 
     if request.method == 'POST':
         order_type = request.POST['order_type']
+        course_list = Course.objects.filter(subject_id__in = cart.get_subject_list()).exclude(id__in=cart.get_course_list())[:5]
         if 'student_enrol_course' in order_type:
 
             order = Order(order_by=request.user, created=datetime.now(), paid=False)
@@ -29,6 +30,6 @@ def order_create(request):
 
             request.session['order_id'] = order.id 
             # return redirect(reverse('payment:process'))    
-            return render(request,'orders/order/order_confirm.html',{'order':order})                       
+            return render(request,'orders/order/order_confirm.html',{'order':order,'courses':course_list})                       
     else:
         return HttpResponse('Method not implemented...')

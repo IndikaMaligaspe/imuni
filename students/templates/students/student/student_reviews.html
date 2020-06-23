@@ -1,0 +1,61 @@
+{% load staticfiles %}
+{% block content %}
+    <div class="container">
+
+        <div id="student-review" class="carousel slide" data-interval="false">
+            <div class="row">
+                <h3 style="background-color: white;margin-left: 0;padding-left: 0;">What our student say</h3>
+                <br><br>
+            </div>
+            <div class="carousel-inner row w-100 mx-auto">
+                <!-- <div class="carousel-inner"> -->
+                    <div class="container w-100 h-100">  
+                        <div class="carousel-item active data-interval=0">
+                            <div class="container">
+                            <div class="row">
+                                {% for review in students_review %}
+                                    <div class="col-md-4 col">
+                                        <div class="card h-100">
+                                            <div class="card-header bg-light" style="height: 8rem;">
+                                                
+                                                {% if review.profiles__photo %}
+                                                    <div class="float-left w-25"><img  class="rounded-circle  h-100 w-100  bg-light"
+                                                    alt="{{ review.first_name }}" src="/media/{{ review.profiles__photo}}" alt="First slide"></div>    
+                                                {% else %}
+                                                    <div class="float-left w-25 avatar-circle">
+                                                        <span class="initials text-capitalize">{{ review.first_name| make_list|first}}</span>
+                                                    </div>
+                                                {% endif %}
+                                                    <div class="float-center text-center align-bottom w-75 h-25 pt-4" > <strong>{{review.first_name}} </strong></div>    
+                                            </div>
+                                            <div class="card-body h-100" >
+                                                <div class="card-text">IM-UNI - is a life saver. I don't have the time or money for a college education. My goal is to become a freelance web developer, and thanks to Udemy, I'm really close.</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% if forloop.counter == 3 %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item data-interval=0"> 
+                                        <div class="container">
+                                            <div class="row">
+                                    {% endif %}
+                                {% endfor %}
+                                        </div>
+                                        </div> 
+                                    </div>
+                        </div>
+                    <!-- </div> -->
+            </div>
+            <a class="carousel-control-prev mx-0 px-0 text-left"  href="#student-review" role="button" data-slide="prev">
+                <i class="fa fa-chevron-circle-left fa-3x m-0 p-0 w-100 text-color pull-left "  aria-hidden="false"></i>
+                <!-- <span class="sr-only">Previous</span> -->
+            </a>
+            <a class="carousel-control-next mx-0 px-0 text-right" href="#student-review" rounded z-depth-4 data-slide="next">
+                <i class="fa fa-chevron-circle-right fa-3x  m-0 p-0 w-100 pull-right text-color"  aria-hidden="false"></i>
+                <!-- <span class="sr-only">Next</span> -->
+            </a>
+        </div>
+    </div> 
+{% endblock content %}

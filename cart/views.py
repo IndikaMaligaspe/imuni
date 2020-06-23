@@ -17,7 +17,6 @@ class AddToCart(TemplateResponseMixin, View):
     
     
     def post(self, request, *args, **kwargs):
-        cart = {}
         course = None
         form = CartAddForm(request.POST)
         if form.is_valid():
@@ -25,12 +24,13 @@ class AddToCart(TemplateResponseMixin, View):
             course_id = cd['course_id']
             cart = Cart(request)
             course = Course.objects.filter(id = course_id).get()
-            # cart.clear()
             cart.add(course)
             cart.save()
             for item in cart:
                 print(item)
-        return self.render_to_response({'cart':cart, 'course':course})
+        # print(cart.get_subject_list())        
+        course_list = Course.objects.filter(subject_id__in = cart.get_subject_list()).exclude(id__in=cart.get_course_list())[:5]        
+        return self.render_to_response({'cart':cart, 'courses':course_list})
 
     def get(self, request):
         remove_id = request.GET.get('remove_id')
@@ -47,4 +47,5 @@ class AddToCart(TemplateResponseMixin, View):
             cart.save()
             if len(cart) == 0:
                 return redirect('search_main')
-        return self.render_to_response({'cart':cart})
+        course_list = Course.objects.filter(subject_id__in = cart.get_subject_list()).exclude(id__in=cart.get_course_list())[:5]       
+        return self.render_to_response({'cart':cart,'courses':course_list})

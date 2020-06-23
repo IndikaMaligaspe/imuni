@@ -1,0 +1,36 @@
+{% load staticfiles %}
+{% block content %}
+ <div class="container my-4 p-0" id="course-list">
+    <div class="row mx-0">
+        {% for course in courses  %}
+            {% with subject=course.subject  %}
+            <div class="col-md-3 col-12 p-1 d-flex">
+                <a  class="card-link" href="{% url "course_detail" course.slug %}">
+                    <div class="card shadow text-dark flex-fill h-100">
+                        <img src="{% static '/images/course-1.jpg' %}" 
+                        class="card-img-top" 
+                        alt="...">
+                        <hr>
+                        <p class="mx-2">
+                            <small>{{ course.subject }} ></small>
+                        </p>
+                        <p style="height:3rem;" class="mx-2">
+                            <medium><strong>{{ course.title }}</strong></medium>
+                        </p>
+                        <hr>
+                        <p class="mx-2">
+                            <div class="row mx-1"> <div class="col-7"> 
+                                <small>By: {{ course.owner.get_full_name }}</small>
+                            </div>
+                            <div class="col text-right">
+                                <small>10 hours</small></div>
+                            </div>
+                        </p>
+                    </div>
+                </a>
+            </div>
+            {% endwith %}
+        {% endfor %}
+    </div>
+</div> 
+{% endblock content %}
