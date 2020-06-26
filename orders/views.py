@@ -2,11 +2,13 @@ from django.shortcuts import render, get_object_or_404, redirect, render, revers
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
 from datetime import datetime
-from django.http import HttpResponse
+from django.http import HttpResponse , request
+
 
 from cart.cart import Cart 
 from courses.models import Course
 from .models import Order , OrderItem
+from mail_templated import EmailMessage
 # Create your views here.
 
 # User = get_user_model()
@@ -22,14 +24,19 @@ def order_create(request):
             # if cart.coupon:
             order.save()
             for item in cart:
-                course = get_object_or_404(Course,id=item['id'])
-                OrderItem.objects.create(order = order,
-                                        course = course,
-                                        price = item['price'],
-                                        quantity=1)
-
-            request.session['order_id'] = order.id 
-            # return redirect(reverse('payment:process'))    
+                    course = get_object_or_404(Course,id=item['id'])
+                    OrderItem.objects.create(order = order,
+                                            course = course,
+                                            price = item['price'],
+                                            quantity=1)
+                    request.session['order_id'] = order.id 
+                # return redirect(reverse('payment:process')) 
+            message = EmailMessage()
+            message.template_name= 'orders/emails/order_confirmed.tpl'
+            message.context = {'user':request.user,'order':order, 'courses':course_list, 'host': request.get_host()}
+            # message.from_email = 'k.indika.maligaspe@gmail.com'
+            message.to = [request.user.email]
+            message.send()
             return render(request,'orders/order/order_confirm.html',{'order':order,'courses':course_list})                       
     else:
         return HttpResponse('Method not implemented...')

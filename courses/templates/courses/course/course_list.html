@@ -1,4 +1,5 @@
 {% load staticfiles %}
+ {% load i18n %}
 {% block content %}
  <div class="container my-4 p-0" id="course-list">
     <div class="row mx-0">
@@ -20,10 +21,10 @@
                         <hr>
                         <p class="mx-2">
                             <div class="row mx-1"> <div class="col-7"> 
-                                <small>By: {{ course.owner.get_full_name }}</small>
+                                <small>{% trans "By:" %}" {{ course.owner.get_full_name }}</small>
                             </div>
                             <div class="col text-right">
-                                <small>10 hours</small></div>
+                                <small>{% trans"10 hours" %}</small></div>
                             </div>
                         </p>
                     </div>

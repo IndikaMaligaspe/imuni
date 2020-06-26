@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load staticfiles %}
 {% load course %}
-
+{% load i18n %}
 {% block title %}
   Search list for {{ search_term }}
 {% endblock title %}
@@ -28,13 +28,13 @@ var rating_filter = '';
                      <input type="hidden" name="hid_ratind_filter" id="hid_ratind_filter" value="{{ hid_rating_filter }}">
                  </form>
                  <ul>
-                     <li><span>FILTER BY</span>
+                     <li><span>{% trans "FILTER BY" %}</span>
                       <hr>
                     </li>
-                     <li><span class="filter-heading">Topic</span>
+                     <li><span class="filter-heading">{% trans "Topic" %}</span>
                      <hr>
                     </li>
-                    <li class="filter-skill-level"><span class="filter-heading">Skill Level</span>
+                    <li class="filter-skill-level"><span class="filter-heading">{% trans "Skill Level" %}</span>
                     <!-- <p>{{ hid_skill_filter }}</p>     -->
                     {% for i, val in hid_skill_filter.items %}
                         <div class="form-check">
@@ -52,7 +52,7 @@ var rating_filter = '';
                        
                      <hr>
                     </li>
-                     <li><span class="filter-heading">Price</span>
+                     <li><span class="filter-heading">{% trans "Price" %}</span>
                         {% for i, val in hid_paid_filter.items %}
                         <div class="form-check">
                             
@@ -68,7 +68,7 @@ var rating_filter = '';
                         {% endfor %}
                      <hr>
                     </li>
-                     <li><span class="filter-heading">Rating</span>
+                     <li><span class="filter-heading">{% trans "Rating" %}</span>
                         {% for i in '1,2,3,4,5'|makelist %}
                         <div class="form-check">
                             {% if i|stringformat:"c" == hid_rating_filter %}

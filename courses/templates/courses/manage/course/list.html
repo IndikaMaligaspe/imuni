@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
-
-{% block title %} My Courses {% endblock title %}
+{% load i18n  %}
+{% block title %} {% trans "My Courses" %} {% endblock title %}
 
 {% block content %}
-  <h1>My Courses</h1>
+  <h1>{% trans "My Courses" %}</h1>
   
   <div class="module">
       
@@ -11,16 +11,16 @@
           <div class="course-info">
               <h3>{{ course.title }}</h3>
               <p>
-                  <a href="{% url "course_edit" course.id %}">Edit</a>
-                  <a href="{% url "course_delete" course.id %}">Delete</a>
-                  <a href="{% url "course_module_update" course.id %}">Edit Module's</a>
+                  <a href="{% url "course_edit" course.id %}">{% trans "Edit" %}</a>
+                  <a href="{% url "course_delete" course.id %}">{% trans "Delete" %}</a>
+                  <a href="{% url "course_module_update" course.id %}">{% trans "Edit Module's" %}</a>
               </p>
           </div>
           {% empty %}
-            <p>You haven't created any courses yet. </p>
+            <p>{% trans "You haven't created any courses yet." %} </p>
       {% endfor %}
       <p>
-          <a href="{% url "course_create" %}" class="button">Create new course</a>
+          <a href="{% url "course_create" %}" class="button">{% trans "Create new course" %}</a>
       </p>
   </div>
 {% endblock content %}

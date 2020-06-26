@@ -1,15 +1,15 @@
 {% extends "base.html" %}
-
+{% load i18n %}
 {% load course %}
 
 {% block title %}
   {{ course.title }}
-{% endblock title %}{{ course.title }}
+{% endblock title %}
 
 {% block content %}
  {% with subject=course.subject  %}
   <div class="container-fluid p-0 m-0">
-    
+      
       <div class="jumbotron">
         <div class="container">
           <div class="row">
@@ -18,9 +18,9 @@
               <p>
                   <a href="{% url "course_list_subject" subject.slug %}">
                       {{ subject.title }}</a>
-                      {{ course.modules.count }} modules.
+                      {{ course.modules.count }} {% trans "modules." %}
                       <br>
-                      By: {{ course.owner.get_full_name }}
+                      {% trans "By:" %}{{ course.owner.get_full_name }}
               </p>
             </div>
             <div class="col-md-4 col-12 right-box">
@@ -33,11 +33,11 @@
                       {% csrf_token %}
                       {{ add_to_cart_form.as_p }}
                       <div class="button">
-                        <button type="submit" id='addToCart' class="addtocart">Add to cart</button>
+                        <button type="submit" id='addToCart' class="btn btn-info w-100">{% trans "Add to cart" %}</button>
                       </div>
                     </form>
                     <div class="button">
-                      <button class="enroll">Enroll</button>
+                       <button type="button" class="btn btn-danger w-100">{% trans "Checkout" %}</button>
                     </div>
                   </div> 
               </div>
@@ -52,7 +52,7 @@
           <div class="col-md-8 col-12 content-summary">
             <div class="row">
               <div class="col-md-12">
-                <h5><strong> What you will learn </strong></h5> 
+                <h5><strong> {% trans "What you will learn" %} </strong></h5> 
               </div>
             </div>
             <div class="row">
@@ -71,7 +71,7 @@
           <div class="col-md-8 col prerequisits">
             <div class="row">
               <div class="col-md-12">
-                <h5><strong> Requirements </strong></h5> 
+                <h5><strong> {% trans "Requirements" %} </strong></h5> 
               </div>
             </div>
             <div class="row">
@@ -90,7 +90,7 @@
           <div class="col-md-8 col overview">
             <div class="row">
               <div class="col-md-12">
-                <h5><strong> Description </strong></h5> 
+                <h5><strong> {% trans "Description" %} </strong></h5> 
               </div>
             </div>
             <div class="row">
@@ -119,19 +119,19 @@
                         <br>
                         <div class="row">
                           <div class="col-md-1"><i class="fa fa-star-o fa-md text-dark" aria-hidden="true"></i></div>
-                          <div class="col-md-10 pr-0 m-0"><b>{{rating.avg_rating}}</b>&nbsp;&nbsp;Instructor Ratings</div>
+                          <div class="col-md-10 pr-0 m-0"><b>{{rating.avg_rating}}</b>&nbsp;&nbsp;{% trans "Instructor Ratings" %}</div>
                         </div>
                         <div class="row">
                           <div class="col-md-1"><i class="fa fa-comments fa-md" aria-hidden="true"></i></div>
-                          <div class="col-md-10"><b>{{rating.review_count}}</b>&nbsp;&nbsp;Reviews</div>
+                          <div class="col-md-10"><b>{{rating.review_count}}</b>&nbsp;&nbsp;{% trans "Reviews" %}</div>
                         </div>
                         <div class="row">
                           <div class="col-md-1"><i class="fa fa-graduation-cap" aria-hidden="true"></i></div>
-                          <div class="col-md-10"><b>{{rating.students}}</b>&nbsp;&nbsp;Students</div>
+                          <div class="col-md-10"><b>{{rating.students}}</b>&nbsp;&nbsp;{% trans "Students" %}</div>
                         </div>
                         <Bdiv class="row">
                           <div class="col-md-1"><i class="fa fa-step-forward" aria-hidden="true"></i></div>
-                          <div class="col-md-10"><b>{{rating.course_count}}</b>&nbsp;&nbsp;Courses</div>
+                          <div class="col-md-10"><b>{{rating.course_count}}</b>&nbsp;&nbsp;{% trans "Courses" %}</div>
                         </Bdiv>
                       </div>  
                     {% endfor %}
@@ -161,7 +161,7 @@
       <div class="student-review">
         <div class="row">
           <div class="col-md-12">
-            <h5><strong> Student feedback </strong></h5> 
+            <h5><strong> {% trans "Student feedback" %} </strong></h5> 
           </div>
         </div>
         <div class="row">
@@ -177,7 +177,7 @@
                        {% endif %}  
                         <span class="stars">{{course_avg_ratings.rating__avg | ratings:'md' }}</span>  
                       <br>
-                      <span class="text">Course Rating</span>
+                      <span class="text">{% trans "Course Rating" %}</span>
                   </div>
                 </div>
              </div>

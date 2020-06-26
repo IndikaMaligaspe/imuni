@@ -1,0 +1,211 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#: .\imuni\urls.py:33
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-06-25 14:42+0530\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\courses\templates\base.html:11
+msgid "title"
+msgstr "uiuiuiu"
+
+#: .\courses\templates\base.html:62
+msgid "Plans"
+msgstr "fffffffffffff"
+
+#: .\courses\templates\base.html:66
+msgid "Paths"
+msgstr ""
+
+#: .\courses\templates\base.html:71
+msgid "Resources"
+msgstr ""
+
+#: .\courses\templates\base.html:75
+msgid "Pages"
+msgstr ""
+
+#: .\courses\templates\base.html:96
+msgid "Sign Out"
+msgstr ""
+
+#: .\courses\templates\base.html:99
+msgid "Sign In"
+msgstr ""
+
+#: .\courses\templates\base.html:101
+msgid "Register"
+msgstr ""
+
+#: .\courses\templates\base.html:129
+msgid "SOLUTIONS"
+msgstr ""
+
+#: .\courses\templates\base.html:133
+msgid "Skills"
+msgstr ""
+
+#: .\courses\templates\base.html:134
+msgid "Flow"
+msgstr ""
+
+#: .\courses\templates\base.html:135
+msgid "Gifts"
+msgstr ""
+
+#: .\courses\templates\base.html:136
+msgid "Pricing"
+msgstr ""
+
+#: .\courses\templates\base.html:137
+msgid "Contact Sales"
+msgstr ""
+
+#: .\courses\templates\base.html:142
+msgid "PLATFORM"
+msgstr ""
+
+#: .\courses\templates\base.html:146
+msgid "Library"
+msgstr ""
+
+#: .\courses\templates\base.html:147
+msgid "Authors"
+msgstr ""
+
+#: .\courses\templates\base.html:148
+msgid "Proffessional Services"
+msgstr ""
+
+#: .\courses\templates\base.html:149
+msgid "Technology"
+msgstr ""
+
+#: .\courses\templates\base.html:154
+msgid "COMPANY"
+msgstr ""
+
+#: .\courses\templates\base.html:158
+msgid "About us"
+msgstr ""
+
+#: .\courses\templates\base.html:159
+msgid "Testimonials"
+msgstr ""
+
+#: .\courses\templates\base.html:160
+msgid "Careers"
+msgstr ""
+
+#: .\courses\templates\base.html:161
+msgid "Blog"
+msgstr ""
+
+#: .\courses\templates\base.html:162
+msgid "News Room"
+msgstr ""
+
+#: .\courses\templates\base.html:167
+msgid "RESOURCES"
+msgstr ""
+
+#: .\courses\templates\base.html:171
+msgid "Download App"
+msgstr ""
+
+#: .\courses\templates\base.html:172
+msgid "Events"
+msgstr ""
+
+#: .\courses\templates\base.html:173
+msgid "Tech Partners"
+msgstr ""
+
+#: .\courses\templates\base.html:174
+msgid "Affiliate Programs"
+msgstr ""
+
+#: .\courses\templates\base.html:175
+msgid "Subscribe"
+msgstr ""
+
+#: .\courses\templates\base.html:180
+msgid "SUPPORT"
+msgstr ""
+
+#: .\courses\templates\base.html:184
+msgid "Contact"
+msgstr ""
+
+#: .\courses\templates\base.html:185
+msgid "Help center"
+msgstr ""
+
+#: .\courses\templates\base.html:186
+msgid "Sitemap"
+msgstr ""
+
+#: .\courses\templates\courses\course\detail.html:10
+msgid "test"
+msgstr "in EN"
+
+#: .\courses\views.py:224
+msgid "testing"
+msgstr "in EN"
+
+#: .\imuni\settings.py:134
+msgid "English"
+msgstr ""
+
+#: .\imuni\settings.py:135
+msgid "Spanish"
+msgstr ""
+
+#: .\imuni\urls.py:29
+msgid "accounts/login/"
+msgstr ""
+
+#: .\imuni\urls.py:30
+msgid "accounts/logout/"
+msgstr ""
+
+#: .\imuni\urls.py:31
+msgid "course/"
+msgstr ""
+
+#: .\imuni\urls.py:32
+msgid "cart/"
+msgstr ""
+
+#: .\imuni\urls.py:34
+msgid "students/"
+msgstr ""
+
+#: .\imuni\urls.py:35
+msgid "orders/"
+msgstr ""
+
+#: .\imuni\urls.py:36
+msgid "payments/"
+msgstr ""
+
+#: .\imuni\urls.py:37
+msgid "api/"
+msgstr ""
+
+#~ msgid "im-umni"
+#~ msgstr "wwwwwwwwwww"

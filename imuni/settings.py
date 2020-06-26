@@ -14,6 +14,7 @@ import os
 from django.urls import reverse_lazy
 import braintree
 from braintree import Configuration, Environment , BraintreeGateway
+from django.utils.translation import ugettext_lazy as _ 
 
 
 
@@ -49,6 +50,7 @@ INSTALLED_APPS = [
     'orders.apps.OrdersConfig',
     'embed_video',
     'rest_framework',
+    'mail_templated',
     # 'star_ratings',
     
 ]
@@ -56,6 +58,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -117,8 +120,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
-
+LANGUAGE_CODE = 'es'
+# LANGUAGE_CODE = 'es'
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
@@ -127,7 +130,15 @@ USE_L10N = True
 
 USE_TZ = True
 
+LANGUAGES = (
+    ('en',_('English')),
+    ('es',_('Spanish')),
+)
+LACALE_PATHS=(
+    os.path.join(BASE_DIR,'locale/'),
+)
 
+print(LACALE_PATHS)
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
@@ -159,3 +170,9 @@ Configuration(
     BRAINTREE_PUBLIC_KEY,
     BRAINTREE_PRIVATE_KEY
 ))
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT=587
+EMAIL_HOST_USER = 'k.indika.maligaspe@gmail.com'
+EMAIL_HOST_PASSWORD='youareno1Sumu#'
+EMAIL_USE_TLS=True

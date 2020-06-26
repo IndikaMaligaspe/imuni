@@ -18,6 +18,7 @@ from .models import Course, Content, Module, Subject, Profiles, InstructorRating
 from .forms import ModuleFormSet
 from cart.forms import CartAddForm
 from cart.cart import Cart
+from django.utils.translation import gettext_lazy as _
 
 # from students.forms import CourseEnrolmentForm 
 
@@ -220,7 +221,8 @@ class CourseDetailView(DetailView):
                      ratings['ratingspct'] = '< 1'  
             if len(ratings) > 0:         
                 course_wise_ratings.append(ratings)
-                
+        # test_i18n = _("testing")  
+        # print(test_i18n)      
         return self.render_to_response({'course':course,
                                          'instructor_ratings':instructor_ratings,
                                          'course_avg_ratings':course_avg_ratings,

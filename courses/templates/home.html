@@ -1,6 +1,7 @@
 
 {% extends "base.html" %}
 {%load staticfiles %}
+{% load i18n %}
 {% block title %} 
   
   {% if subject %}
@@ -11,7 +12,6 @@
 {% endblock title %}
 
 {% block content %}
-    
     <!-- Logo -->
     <div class="container-fluid logo" style="padding: 0;">
         <div class="jumbotron bg-dark">
@@ -74,7 +74,7 @@
 
         <div class="container my-4 p-1" id="categories">
             <div class="col p-1">
-                <h3 class="text-left">TOP CATEGORIES</h3>
+                <h3 class="text-left">{% trans "TOP CATEGORIES" %}</h3>
             </div>
            <div class="row justify-content-center mx-0">
             {% for s in subjects  %}   
@@ -102,15 +102,15 @@
  <div class="container" id="course-sort">
     <div class="row">
         <div class="col">
-            <h3 style="background-color: white;margin-left: 0;padding-left: 0;">TOP COURSES</h3>
+            <h3 style="background-color: white;margin-left: 0;padding-left: 0;">{% trans "TOP COURSES" %}</h3>
         </div>
         <div class="col text-right" style="text-align:right; background-color: white; margin-right: 0; padding: 0;">
             <div class="form-group col-md6 float-right" style="margin-right: 0; padding-top: 15px;">
                 <select id="inputState" class="form-control">
-                  <option selected>Release date (newest first)</option>
-                  <option>Release date (newest oldest)</option>
-                  <option>Overall Rating</option>
-                  <option>Popular (most viewed)</option>
+                  <option selected>{% trans "Release date (newest first)" %}</option>
+                  <option>{% trans "Release date (newest oldest)" %}</option>
+                  <option>{% trans "Overall Rating" %}</option>
+                  <option>{% trans "Popular (most viewed)" %}</option>
                 </select>
               </div>
         </div>
@@ -120,7 +120,7 @@
 <div class="container"><hr></div>
 <div class="container" id="instructors">
     <div class="row">
-        <h3 style="background-color: white;margin-left: 0;padding-left: 0;">Top Instructors</h3>
+        <h3 style="background-color: white;margin-left: 0;padding-left: 0;">{% trans "Top Instructors" %}</h3>
     </div>
     <div class="row">
     {% for instructor in  instructors %}
@@ -137,9 +137,9 @@
                     <hr>
                     <div class="card-text p-2"><span> <strong>{{instructor.count}}</strong> 
                         {% if instructor.count == 1  %}
-                            Course</span>
+                            {% trans "Course" %}</span>
                         {% else %}
-                            Courses</span>
+                            {% trans "Courses" %}</span>
                         {% endif %}
                     </div>
                 </div> 
