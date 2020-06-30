@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'cart.apps.CartConfig',
     'payments.apps.PaymentsConfig',
     'orders.apps.OrdersConfig',
+    'home.apps.HomeConfig',
     'embed_video',
     'rest_framework',
     'mail_templated',
@@ -120,7 +121,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
-LANGUAGE_CODE = 'es'
+LANGUAGE_CODE = 'en'
+
 # LANGUAGE_CODE = 'es'
 TIME_ZONE = 'UTC'
 
@@ -131,14 +133,14 @@ USE_L10N = True
 USE_TZ = True
 
 LANGUAGES = (
-    ('en',_('English')),
-    ('es',_('Spanish')),
+    ('en', _('English')),
+    ('es', _('Spanish')),
 )
 LACALE_PATHS=(
     os.path.join(BASE_DIR,'locale/'),
 )
 
-print(LACALE_PATHS)
+# print(LACALE_PATHS)
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
@@ -176,3 +178,32 @@ EMAIL_PORT=587
 EMAIL_HOST_USER = 'k.indika.maligaspe@gmail.com'
 EMAIL_HOST_PASSWORD='youareno1Sumu#'
 EMAIL_USE_TLS=True
+
+
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose'
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'INFO',
+    },
+
+}

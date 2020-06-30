@@ -12,31 +12,30 @@ from braces.views import CsrfExemptMixin, JsonRequestResponseMixin
 from django.db.models import Count, Avg
 from django.db.models import Q
 from django.db.models.functions import Round
+from django.utils.translation import get_language
 import json
+import logging
 
-from .models import Course, Content, Module, Subject, Profiles, InstructorRating, CourseRating
+from courses.models import Course, Content, Module, Subject, Profiles, InstructorRating, CourseRating
 from .forms import ModuleFormSet
 from cart.forms import CartAddForm
 from cart.cart import Cart
+from common.functions import Admin as admin
+
 from django.utils.translation import gettext_lazy as _
 
-# from students.forms import CourseEnrolmentForm 
 
+logger = logging.getLogger(__name__)
 
-# class ManageCourseListView(ListView):
-    # model = Course
-    # template_name = "course/manage/course/list.html"
-    
-    # def get_queryset(self):
-    #     queryset = super(ManageCourseListView, self).get_queryset()
-    #     queryset = queryset.filter(owner=self.request.user)
-    #     return queryset
-
+current_language = get_language()
+print(f'language --- {current_language}')
 class OwnerMixin(object):
 
     def get_queryset(self):
+        client_id = admin.get_client_id('website', request)
+        logger.info(f'queryset : OwnerMixin : {client_id} : {current_language} ')
         queryset = super(OwnerMixin, self).get_queryset()
-        queryset = queryset.filter(owner=self.request.user)
+        queryset = queryset.filter(owner=self.request.user).filter(client_id=client_id).filter(language=current_language)
         return queryset
 
 class OwnerEditMixin(object):
@@ -78,9 +77,13 @@ class CourseModuleUpdateView(TemplateResponseMixin, View):
         return ModuleFormSet(instance=self.course, data=data)
     
     def dispatch(self, request, pk):
+        client_id = admin.get_client_id('website', request)
+        logger.info(f'dispatch : CourseModuleUpdateView : {client_id} : {current_language} ')
         self.course = get_object_or_404(Course,
                                 id=pk,
-                                owner=request.user)
+                                owner=request.user,
+                                client_id=client_id,
+                                language = current_language)
         return super(CourseModuleUpdateView, self).dispatch(request, pk)
     
     def get(self, request, *args, **kwargs):
@@ -112,10 +115,12 @@ class ContentCreatUpdateView(TemplateResponseMixin, View):
         return Form(*args, ** kwargs)
         
     def dispatch(self, request, module_id, model_name, id=None):
-        self.module = get_object_or_404(Module, id=module_id, course__owner = request.user)
-        self.model= self.get_model(model_name)
+        client_id = admin.get_client_id('website', request)
+        logger.info(f'dispatch : ContentCreatUpdateView : {client_id} : {current_language} ')
+        self.module = get_object_or_404(Module, id=module_id, course__owner = request.user, client_id=client_id, language = current_language)
+        self.model = self.get_model(model_name)
         if id:
-            self.obj=get_object_or_404(self.model, id=id, owner=request.user)
+            self.obj=get_object_or_404(self.model, id=id, owner=request.user, client_id=client_id, language = current_language)
         return super(ContentCreatUpdateView, self).dispatch(request, module_id, model_name, id)
     
     def get(self, request, module_id, model_name, id=None):
@@ -124,22 +129,27 @@ class ContentCreatUpdateView(TemplateResponseMixin, View):
     
     
     def post(self, request, module_id, model_name, id=None):
+        client_id = admin.get_client_id('website', request)
+        logger.info(f'POST : ContentCreatUpdateView : {client_id} : {current_language} ')
         form = self.get_form(self.model, 
                             instance=self.obj,
                             data=request.POST, 
                             files = request.FILES)
         if form.is_valid():
+            
             obj = form.save(commit=False)
             obj.owner = request.user
             obj.save()
             if not id:
-                Content.objects.create(module=self.module, item=obj)
+                Content.objects.create(module=self.module, item=obj, client_id=client_id, language = current_language)
             return redirect('module_content_list', self.module.id)
         return self.render_to_response({'form':form, 'object':self.obj})
 
 class ContentDeleteView(View):
     def post(self, request, id):
-        content = get_object_or_404(Content, id=id, module__course__owner =reqeust_user)
+        client_id = admin.get_client_id('website', request)
+        logger.info(f'POST : ContentDeleteView : {client_id} : {current_language} ')
+        content = get_object_or_404(Content, id=id, module__course__owner = reqeust_user, client_id = client_id, language = current_language)
         module = content.module
         content.item.delete()
         content.delete()
@@ -149,23 +159,31 @@ class ModuleContentListView(TemplateResponseMixin, View):
     template_name = 'courses/manage/module/content_list.html'
 
     def get(self, request, module_id):
+        client_id = admin.get_client_id('website', request)
+        logger.info(f'GET : ModuleContentListView : {client_id} : {current_language} ')
         module = get_object_or_404(Module, 
                                   id = module_id, 
-                                  course__owner = request.user)
+                                  course__owner = request.user,
+                                  client_id=client_id,
+                                  language = current_language)
         return self.render_to_response({'module':module})
 
 
 class ModuleOrderView(CsrfExemptMixin, JsonRequestResponseMixin, View):
     def post(self, request):
+        client_id = admin.get_client_id('website', request)
+        logger.info(f'POST : ModuleOrderView : {client_id} : {current_language} ')
         for id, order in self.request_json.items():
-            Module.objects.filter(id = id, course__owner=request.user).update(order=order)
+            Module.objects.filter(id = id, course__owner=request.user).filter(client_id=client_id).filter(language=current_language).update(order=order)
         return self.render_json_response({'saved':'OK'})
     
 
 class ContentOrderView(CsrfExemptMixin, JsonRequestResponseMixin, View):
     def post(self, request):
+        client_id = admin.get_client_id('website', request)
+        logger.info(f'POST : ContentOrderView : {client_id} : {current_language} ')
         for id , order in self.request_json.items():
-            Content.objects.filter(id = id, module__course__owner=request.user).update(order=order)
+            Content.objects.filter(id = id, module__course__owner=request.user).filter(language=current_language).filter(client_id=client_id).update(order=order)
         return self.render_json_reponse({'saved':'OK'})
 
 
@@ -174,13 +192,17 @@ class CourseListView(TemplateResponseMixin, View):
     template_name = 'home.html'
 
     def get(self, request, subject=None):
-        subjects = Subject.objects.annotate(total_courses=Count('courses'))[:5]
-        courses = Course.objects.annotate(total_modules = Count('modules'))[:12]
-        instructors =  query = Course.objects.values('owner__id').annotate(count=Count('owner_id')).values('owner__first_name','owner__last_name', 'owner__profiles__bio','owner__profiles__photo','count').order_by('-count')[:5]
-        students_review = User.objects.filter(groups=4).values('first_name','last_name','profiles__photo')[:6]
+        
+        client_id = admin.get_client_id('website', request)
+        logger.info(f'GET : CourseListView : {client_id} : {current_language} ')
+        subjects = Subject.objects.annotate(total_courses=Count('courses')).filter(language=current_language).filter(client_id = client_id)[:5]
+        courses = Course.objects.annotate(total_modules = Count('modules')).filter(language=current_language).filter(client_id = client_id)[:12]
+        instructors = Course.objects.values('owner__id').filter(language=current_language).filter(client_id = client_id).annotate(count=Count('owner_id')).values('client_id', 'owner__first_name','owner__last_name', 'owner__profiles__bio','owner__profiles__photo','count').order_by('-count')[:5]
+        students_review = User.objects.filter(groups=4).values('first_name', 'last_name', 'profiles__photo')[:6]
     
         if subject:
-            subject = get_object_or_404(Subject,slug=subject)
+            logger.info(f'GET : CourseListView : {subject} : {client_id} : {current_language} ')
+            subject = get_object_or_404(Subject, slug=subject, client_id=client_id,language = current_language)
             courses = courses.filter(subject=subject)
         return self.render_to_response({'subjects': subjects, 
                                          'subject':subject,
@@ -195,11 +217,12 @@ class CourseDetailView(DetailView):
     template_name = "courses/course/detail.html"
     
     def get(self, request, slug):
-        course = get_object_or_404(Course, slug=slug)
-        instructor_ratings = InstructorRating.objects.annotate(avg_rating = Avg('rating')).annotate(review_count = Count('review')).annotate(students=Count('instructor__courses_created__students')).annotate(course_count = Count('instructor__courses_created', distinct=True)).filter(instructor = course.owner)
-        course_avg_ratings = CourseRating.objects.all().filter(course=course.id).aggregate(Avg('rating'), Count('rating')) 
+        client_id = admin.get_client_id('website', request)
+        course = get_object_or_404(Course, slug=slug, client_id = client_id, language = current_language)
+        instructor_ratings = InstructorRating.objects.filter(language=current_language).filter(client_id=client_id).annotate(avg_rating = Avg('rating')).annotate(review_count = Count('review')).annotate(students=Count('instructor__courses_created__students')).annotate(course_count = Count('instructor__courses_created', distinct=True)).filter(instructor = course.owner)
+        course_avg_ratings = CourseRating.objects.all().filter(course=course.id).filter(language=current_language).filter(client_id=client_id).aggregate(Avg('rating'), Count('rating')) 
         total_ratings = course_avg_ratings['rating__count']
-        course_ratings = CourseRating.objects.values(ratings = Round('rating')).filter(course=course.id).annotate(rating_count = Count('rating')*100/total_ratings).values('ratings','rating_count').order_by()
+        course_ratings = CourseRating.objects.values(ratings = Round('rating')).filter(language=current_language).filter(course=course.id).filter(client_id=client_id).annotate(rating_count = Count('rating')*100/total_ratings).values('ratings','rating_count').order_by()
         
         add_to_cart_form = CartAddForm(initial={'course_id':course.id, 
                                                 'price': course.price,
@@ -237,13 +260,17 @@ class CourseDetailView(DetailView):
     
 
 class SearchMain(TemplateResponseMixin, View):
+    logger.info('SearchMain')
     template_name = "search_main.html"
     
     def get(self, request):
+        client_id = admin.get_client_id('website', request)
+        logger.info(f'get for {client_id}')
         search_term =request.GET.get('search_term')
         skill_filter = request.GET.get('hid_skill_filter')
         paid_filter  = request.GET.get('hid_paid_filter')
         hid_rating_filter =request.GET.get('hid_ratind_filter') 
+
 
         cart = Cart(request)
         print(cart.get_keys())
@@ -286,8 +313,8 @@ class SearchMain(TemplateResponseMixin, View):
             qry_paid_filter.extend(["Paid","Free"])
 
         print('---------{}  - {}  -  {}'.format(qry_paid_filter,qry_skill_filter,hid_rating_filter))
-        # print(paid_filter)
-        courses = Course.objects.filter(Q(title__icontains=search_term)| Q(owner__first_name__icontains=search_term)).filter(level__in=qry_skill_filter).annotate(average_rating=Avg('course_review__rating')).values('id','title','slug', 'thumbnail_image','overview','duration','price','level','owner__first_name','owner__last_name').annotate(avg_rating=Avg('course_review__rating'))
+        # print(paid_filter
+        courses = Course.objects.filter(Q(title__icontains=search_term)| Q(owner__first_name__icontains=search_term)).filter(language=current_language).filter(client_id=client_id).filter(level__in=qry_skill_filter).annotate(average_rating=Avg('course_review__rating')).values('id','title','slug', 'thumbnail_image','overview','duration','price','level','owner__first_name','owner__last_name').annotate(avg_rating=Avg('course_review__rating'))
         
         if (len(cart)) > 0:
             courses = courses.exclude(id__in = cart.get_keys())

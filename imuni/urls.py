@@ -21,15 +21,17 @@ from django.conf.urls.static import static
 from django.conf.urls.i18n import i18n_patterns
 from django.utils.translation import gettext_lazy as _
 from courses.views import CourseListView
+from home.views import LoggedInView
 
 
 
 urlpatterns = i18n_patterns (
     path('admin/', admin.site.urls),
     path(_('accounts/login/'), auth_views.LoginView.as_view(), name='login'),   
-    path(_('accounts/logout/'), auth_views.LogoutView.as_view(), name = 'logout'),
-    path(_('course/'),include('courses.urls')),
-    path(_('cart/'),include('cart.urls')),
+    path(_('accounts/logout/'), auth_views.LogoutView.as_view(), name='logout'),
+    path(_('home/loggedin'), LoggedInView.as_view(), name='loggedin'),
+    path(_('course/'), include('courses.urls')),
+    path(_('cart/'), include('cart.urls')),
     path(_(''), CourseListView.as_view(), name='course_list'),
     path(_('students/'), include('students.urls')),
     path(_('orders/'), include('orders.urls')),

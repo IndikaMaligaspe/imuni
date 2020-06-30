@@ -1,4 +1,6 @@
 from django.db import models
+from django.db.models import ForeignKey
+
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
@@ -7,13 +9,17 @@ from django.contrib.auth import get_user_model
 from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
 from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
+ 
 
 User = get_user_model()
 
 class Subject(models.Model):
-    title= models.CharField( max_length=200)
+    title= models.CharField(_('title'), max_length=200)
     slug= models.SlugField(max_length=200, unique=True)
-       
+    language = models.CharField(max_length=20, db_index=True, default='en')
+    client_id= models.IntegerField(db_index=True, default=0)
+      
 
     class Meta:
         ordering  = ['title']
@@ -41,21 +47,23 @@ class Course(models.Model):
 
     owner = models.ForeignKey(User,  related_name='courses_created', on_delete=models.CASCADE)    
     subject = models.ForeignKey(Subject, related_name='courses', on_delete=models.CASCADE)
-    title = models.CharField( max_length=200)
-    slug = models.SlugField( max_length=200, unique=True)
-    overview = models.TextField()
-    requirements = models.TextField(blank=True)
-    content_summary = models.TextField(blank=True) 
-    created = models.DateTimeField( auto_now=False, auto_now_add=True)  
+    title = models.CharField(_('title'), max_length=200)
+    slug = models.SlugField(max_length=200, unique=True)
+    overview = models.TextField(_('overview'))
+    requirements = models.TextField(_('overview'),blank=True)
+    content_summary = models.TextField(_('content_summary'),blank=True) 
+    created = models.DateTimeField(_('created'), auto_now=False, auto_now_add=True)  
     students = models.ManyToManyField(User,
                                  related_name='courses_joined',
                                  blank=True)
     thumbnail_image = models.ImageField(upload_to='courses/%Y/%m/%d/',blank=True)
     duration = models.FloatField(default=5)
-    level = models.CharField(max_length=50, 
+    level = models.CharField(_('level'), max_length=50, 
                              choices = level_choices, 
                              default=ALL_LEVELS)
     price  = models.FloatField(default=21)
+    language = models.CharField(max_length=20, db_index=True, default='en')
+    client_id= models.IntegerField(db_index=True, default=0)
 
     class Meta:
         ordering = ['-created']
@@ -71,10 +79,12 @@ class Course(models.Model):
 
 class Module(models.Model):
     course = models.ForeignKey(Course,  related_name='modules', on_delete=models.CASCADE)     
-    title = models.CharField( max_length=200)
-    description = models.TextField(blank=True)
+    title = models.CharField(_('title'), max_length=200)
+    description = models.TextField(_('description'),blank=True)
     order = OrderField(blank=True, for_fields=['course'])
-    
+    language = models.CharField(max_length=20, db_index=True, default='en')
+    client_id= models.IntegerField(db_index=True, default=0)
+
     class Meta:
         ordering = ['order']
 
@@ -91,6 +101,8 @@ class Content(models.Model):
     object_id = models.PositiveIntegerField()
     item = GenericForeignKey('content_type','object_id')
     order = OrderField(blank=True, for_fields=['module'])
+    language = models.CharField(max_length=20, db_index=True, default='en')
+    client_id= models.IntegerField(db_index=True, default=0)
 
     class Meta:
         ordering = ['order']
@@ -100,10 +112,12 @@ class ItemBase(models.Model):
     title = models.CharField(max_length=250)
     created = models.DateTimeField(auto_now_add=True)
     update = models.DateTimeField(auto_now=True)
+    language = models.CharField(max_length=20, db_index=True, default='en')
+    client_id= models.IntegerField(db_index=True, default=0)
 
     class Meta:
-        abstract = True 
-    
+        abstract = True
+
     def __str__(self):
         return self.title
     
@@ -113,20 +127,30 @@ class ItemBase(models.Model):
 
 class Text(ItemBase):
     content = models.TextField()
+    language = models.CharField(max_length=20, db_index=True, default='en')
+    client_id= models.IntegerField(db_index=True, default=0)
 
 class File(ItemBase):
     file = models.FileField(upload_to='files')
+    language = models.CharField(max_length=20, db_index=True, default='en')
+    client_id= models.IntegerField(db_index=True, default=0)
 
 class Image(ItemBase):
     file = models.FileField(upload_to='images')
+    language = models.CharField(max_length=20, db_index=True, default='en')
+    client_id= models.IntegerField(db_index=True, default=0)
 
 class video(ItemBase):
     url = models.URLField()
+    language = models.CharField(max_length=20, db_index=True, default='en')
+    client_id= models.IntegerField(db_index=True, default=0)
 
 class Profiles(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    bio = models.TextField()
+    bio = models.TextField(_('bio'))
     photo = models.ImageField(upload_to='users/%Y/%m/%d/',blank=True)
+    language = models.CharField(max_length=20, db_index=True, default='en')
+    client_id= models.IntegerField(db_index=True, default=0)
 
     def __str__(self):
         return 'Profile for user {}'.format(self.user.username)
@@ -148,9 +172,11 @@ class CourseRating(models.Model):
 
     user = models.ForeignKey(User, related_name='student_review', on_delete=models.CASCADE)
     course = models.ForeignKey(Course, related_name='course_review', on_delete=models.CASCADE)
-    review = models.TextField()
+    review = models.TextField(_('review'))
     review_date = models.DateTimeField(auto_now_add=True)
     rating = models.FloatField(default=0,choices=rate_choices)
+    language = models.CharField(max_length=20, db_index=True, default='en')
+    client_id= models.IntegerField(db_index=True, default=0)
 
     def __str__(self):
         return '{} on {}'.format(self.user.username, self.course.title)
@@ -168,14 +194,18 @@ class InstructorRating(models.Model):
 
     student = models.ForeignKey(User, on_delete=models.CASCADE)
     instructor = models.ForeignKey(User, related_name='instructor_review', on_delete=models.CASCADE)
-    review = models.TextField()
+    review = models.TextField(_('review'))
     review_date = models.DateTimeField(auto_now_add=True)
     rating = models.FloatField(default=0,choices=rate_choices)
+    language = models.CharField(max_length=20, db_index=True, default='en')
+    client_id= models.IntegerField(db_index=True, default=0)
 
     def __str__(self):
         return '{} on {}'.format(self.student.username, self.instructor.username)
 
 class SiteReview(models.Model):
     student = models.ForeignKey(User, related_name='site_review', on_delete=models.CASCADE)
-    review = models.TextField()
+    review = models.TextField(_('review'))
     review_date = models.DateTimeField(auto_now_add=True)
+    language = models.CharField(max_length=20, db_index=True, default='en')
+    client_id= models.IntegerField(db_index=True, default=0)

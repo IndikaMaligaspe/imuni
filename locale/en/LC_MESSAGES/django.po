@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-25 14:42+0530\n"
+"POT-Creation-Date: 2020-06-26 23:02+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,152 +19,455 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: .\courses\templates\base.html:11
+#: .\courses\models.py:15 .\courses\models.py:45 .\courses\models.py:75
 msgid "title"
 msgstr "uiuiuiu"
 
-#: .\courses\templates\base.html:62
+#: .\courses\models.py:47 .\courses\models.py:48
+msgid "overview"
+msgstr ""
+
+#: .\courses\models.py:49
+msgid "content_summary"
+msgstr ""
+
+#: .\courses\models.py:50
+msgid "created"
+msgstr ""
+
+#: .\courses\models.py:56
+msgid "level"
+msgstr ""
+
+#: .\courses\models.py:76
+msgid "description"
+msgstr ""
+
+#: .\courses\models.py:129
+msgid "bio"
+msgstr ""
+
+#: .\courses\models.py:152 .\courses\models.py:172 .\courses\models.py:181
+msgid "review"
+msgstr ""
+
+#: .\courses\templates\base.html:11
+#, fuzzy
+#| msgid "im-umni"
+msgid "im-uni"
+msgstr "wwwwwwwwwww"
+
+#: .\courses\templates\base.html:60
 msgid "Plans"
 msgstr "fffffffffffff"
 
-#: .\courses\templates\base.html:66
+#: .\courses\templates\base.html:64
 msgid "Paths"
 msgstr ""
 
-#: .\courses\templates\base.html:71
+#: .\courses\templates\base.html:69
 msgid "Resources"
 msgstr ""
 
-#: .\courses\templates\base.html:75
+#: .\courses\templates\base.html:73
 msgid "Pages"
 msgstr ""
 
-#: .\courses\templates\base.html:96
+#: .\courses\templates\base.html:94
 msgid "Sign Out"
 msgstr ""
 
-#: .\courses\templates\base.html:99
+#: .\courses\templates\base.html:97
 msgid "Sign In"
 msgstr ""
 
-#: .\courses\templates\base.html:101
+#: .\courses\templates\base.html:99
 msgid "Register"
 msgstr ""
 
-#: .\courses\templates\base.html:129
+#: .\courses\templates\base.html:127
 msgid "SOLUTIONS"
 msgstr ""
 
-#: .\courses\templates\base.html:133
+#: .\courses\templates\base.html:131
 msgid "Skills"
 msgstr ""
 
-#: .\courses\templates\base.html:134
+#: .\courses\templates\base.html:132
 msgid "Flow"
 msgstr ""
 
-#: .\courses\templates\base.html:135
+#: .\courses\templates\base.html:133
 msgid "Gifts"
 msgstr ""
 
-#: .\courses\templates\base.html:136
+#: .\courses\templates\base.html:134
 msgid "Pricing"
 msgstr ""
 
-#: .\courses\templates\base.html:137
+#: .\courses\templates\base.html:135
 msgid "Contact Sales"
 msgstr ""
 
-#: .\courses\templates\base.html:142
+#: .\courses\templates\base.html:140
 msgid "PLATFORM"
 msgstr ""
 
-#: .\courses\templates\base.html:146
+#: .\courses\templates\base.html:144
 msgid "Library"
 msgstr ""
 
-#: .\courses\templates\base.html:147
+#: .\courses\templates\base.html:145
 msgid "Authors"
 msgstr ""
 
-#: .\courses\templates\base.html:148
+#: .\courses\templates\base.html:146
 msgid "Proffessional Services"
 msgstr ""
 
-#: .\courses\templates\base.html:149
+#: .\courses\templates\base.html:147
 msgid "Technology"
 msgstr ""
 
-#: .\courses\templates\base.html:154
+#: .\courses\templates\base.html:152
 msgid "COMPANY"
 msgstr ""
 
-#: .\courses\templates\base.html:158
+#: .\courses\templates\base.html:156
 msgid "About us"
 msgstr ""
 
-#: .\courses\templates\base.html:159
+#: .\courses\templates\base.html:157
 msgid "Testimonials"
 msgstr ""
 
-#: .\courses\templates\base.html:160
+#: .\courses\templates\base.html:158
 msgid "Careers"
 msgstr ""
 
-#: .\courses\templates\base.html:161
+#: .\courses\templates\base.html:159
 msgid "Blog"
 msgstr ""
 
-#: .\courses\templates\base.html:162
+#: .\courses\templates\base.html:160
 msgid "News Room"
 msgstr ""
 
-#: .\courses\templates\base.html:167
+#: .\courses\templates\base.html:165
 msgid "RESOURCES"
 msgstr ""
 
-#: .\courses\templates\base.html:171
+#: .\courses\templates\base.html:169
 msgid "Download App"
 msgstr ""
 
-#: .\courses\templates\base.html:172
+#: .\courses\templates\base.html:170
 msgid "Events"
 msgstr ""
 
-#: .\courses\templates\base.html:173
+#: .\courses\templates\base.html:171
 msgid "Tech Partners"
 msgstr ""
 
-#: .\courses\templates\base.html:174
+#: .\courses\templates\base.html:172
 msgid "Affiliate Programs"
 msgstr ""
 
-#: .\courses\templates\base.html:175
+#: .\courses\templates\base.html:173
 msgid "Subscribe"
 msgstr ""
 
-#: .\courses\templates\base.html:180
+#: .\courses\templates\base.html:178
 msgid "SUPPORT"
 msgstr ""
 
-#: .\courses\templates\base.html:184
+#: .\courses\templates\base.html:182
 msgid "Contact"
 msgstr ""
 
-#: .\courses\templates\base.html:185
+#: .\courses\templates\base.html:183
 msgid "Help center"
 msgstr ""
 
-#: .\courses\templates\base.html:186
+#: .\courses\templates\base.html:184
 msgid "Sitemap"
 msgstr ""
 
-#: .\courses\templates\courses\course\detail.html:10
-msgid "test"
-msgstr "in EN"
+#: .\courses\templates\courses\course\course_list.html:24
+#: .\courses\templates\courses\course\detail.html:23
+msgid "By:"
+msgstr ""
 
-#: .\courses\views.py:224
-msgid "testing"
+#: .\courses\templates\courses\course\course_list.html:27
+msgid "10 hours"
+msgstr ""
+
+#: .\courses\templates\courses\course\detail.html:21
+msgid "modules."
+msgstr ""
+
+#: .\courses\templates\courses\course\detail.html:36
+msgid "Add to cart"
+msgstr ""
+
+#: .\courses\templates\courses\course\detail.html:40
+msgid "Checkout"
+msgstr ""
+
+#: .\courses\templates\courses\course\detail.html:55
+msgid "What you will learn"
+msgstr ""
+
+#: .\courses\templates\courses\course\detail.html:74
+msgid "Requirements"
+msgstr ""
+
+#: .\courses\templates\courses\course\detail.html:93
+msgid "Description"
+msgstr ""
+
+#: .\courses\templates\courses\course\detail.html:122
+msgid "Instructor Ratings"
+msgstr ""
+
+#: .\courses\templates\courses\course\detail.html:126
+msgid "Reviews"
+msgstr ""
+
+#: .\courses\templates\courses\course\detail.html:130
+msgid "Students"
+msgstr ""
+
+#: .\courses\templates\courses\course\detail.html:134
+#: .\courses\templates\home.html:142
+msgid "Courses"
+msgstr ""
+
+#: .\courses\templates\courses\course\detail.html:164
+msgid "Student feedback"
+msgstr ""
+
+#: .\courses\templates\courses\course\detail.html:180
+msgid "Course Rating"
+msgstr ""
+
+#: .\courses\templates\courses\manage\content\form.html:6
+#: .\courses\templates\courses\manage\content\form.html:16
+msgid "Edit content"
+msgstr ""
+
+#: .\courses\templates\courses\manage\content\form.html:8
+msgid "Add new content"
+msgstr ""
+
+#: .\courses\templates\courses\manage\content\form.html:18
+msgid "Add a new content"
+msgstr ""
+
+#: .\courses\templates\courses\manage\content\form.html:22
+#: .\courses\templates\courses\manage\course\form.html:21
+msgid "Course info"
+msgstr ""
+
+#: .\courses\templates\courses\manage\content\form.html:26
+msgid "Save content"
+msgstr ""
+
+#: .\courses\templates\courses\manage\course\delete.html:4
+#: .\courses\templates\courses\manage\course\delete.html:7
+msgid "Delete course"
+msgstr ""
+
+#: .\courses\templates\courses\manage\course\delete.html:11
+msgid "Are you sure you want to delete"
+msgstr ""
+
+#: .\courses\templates\courses\manage\course\delete.html:12
+msgid "Confirm"
+msgstr ""
+
+#: .\courses\templates\courses\manage\course\form.html:5
+msgid "Edit Course"
+msgstr ""
+
+#: .\courses\templates\courses\manage\course\form.html:7
+#: .\courses\templates\courses\manage\course\form.html:17
+msgid "Create a new course"
+msgstr ""
+
+#: .\courses\templates\courses\manage\course\form.html:15
+msgid "Edit course"
+msgstr ""
+
+#: .\courses\templates\courses\manage\course\form.html:25
+msgid "Save course"
+msgstr ""
+
+#: .\courses\templates\courses\manage\course\list.html:3
+#: .\courses\templates\courses\manage\course\list.html:6
+msgid "My Courses"
+msgstr ""
+
+#: .\courses\templates\courses\manage\course\list.html:14
+#: .\courses\templates\courses\manage\module\content_list.html:38
+#: .\courses\templates\courses\manage\module\formset.html:4
+#: .\courses\templates\courses\manage\module\formset.html:8
+msgid "Edit"
+msgstr ""
+
+#: .\courses\templates\courses\manage\course\list.html:15
+msgid "Delete"
+msgstr ""
+
+#: .\courses\templates\courses\manage\course\list.html:16
+msgid "Edit Module's"
+msgstr ""
+
+#: .\courses\templates\courses\manage\course\list.html:20
+msgid "You haven't created any courses yet."
+msgstr ""
+
+#: .\courses\templates\courses\manage\course\list.html:23
+msgid "Create new course"
+msgstr ""
+
+#: .\courses\templates\courses\manage\module\content_list.html:5
+#: .\courses\templates\courses\manage\module\content_list.html:18
+#: .\courses\templates\courses\manage\module\content_list.html:31
+msgid "Module"
+msgstr ""
+
+#: .\courses\templates\courses\manage\module\content_list.html:10
+#: .\courses\templates\home.html:140
+msgid "Course"
+msgstr ""
+
+#: .\courses\templates\courses\manage\module\content_list.html:12
+msgid "Modules"
+msgstr ""
+
+#: .\courses\templates\courses\manage\module\content_list.html:25
+msgid "No modules yet"
+msgstr ""
+
+#: .\courses\templates\courses\manage\module\content_list.html:28
+msgid "Edit modules"
+msgstr ""
+
+#: .\courses\templates\courses\manage\module\content_list.html:32
+msgid "Module conttens:"
+msgstr ""
+
+#: .\courses\templates\courses\manage\module\content_list.html:46
+msgid "This module has no content yet"
+msgstr ""
+
+#: .\courses\templates\courses\manage\module\content_list.html:49
+msgid "Add new content:"
+msgstr ""
+
+#: .\courses\templates\courses\manage\module\content_list.html:51
+msgid "Text"
+msgstr ""
+
+#: .\courses\templates\courses\manage\module\content_list.html:52
+msgid "Image"
+msgstr ""
+
+#: .\courses\templates\courses\manage\module\content_list.html:53
+msgid "Video"
+msgstr ""
+
+#: .\courses\templates\courses\manage\module\content_list.html:54
+msgid "File"
+msgstr ""
+
+#: .\courses\templates\courses\manage\module\formset.html:10
+msgid "Course modules"
+msgstr ""
+
+#: .\courses\templates\courses\manage\module\formset.html:16
+msgid "Save modules"
+msgstr ""
+
+#: .\courses\templates\home.html:77
+msgid "TOP CATEGORIES"
+msgstr ""
+
+#: .\courses\templates\home.html:105
+msgid "TOP COURSES"
+msgstr ""
+
+#: .\courses\templates\home.html:110
+msgid "Release date (newest first)"
+msgstr ""
+
+#: .\courses\templates\home.html:111
+msgid "Release date (newest oldest)"
+msgstr ""
+
+#: .\courses\templates\home.html:112
+msgid "Overall Rating"
+msgstr ""
+
+#: .\courses\templates\home.html:113
+msgid "Popular (most viewed)"
+msgstr ""
+
+#: .\courses\templates\home.html:123
+msgid "Top Instructors"
+msgstr ""
+
+#: .\courses\templates\registration\logged_out.html:6
+msgid "Logged out"
+msgstr ""
+
+#: .\courses\templates\registration\logged_out.html:8
+msgid "You ahve been succesfully logged out."
+msgstr ""
+
+#: .\courses\templates\registration\logged_out.html:8
+msgid "You can"
+msgstr ""
+
+#: .\courses\templates\registration\logged_out.html:8
+msgid "log-in again"
+msgstr ""
+
+#: .\courses\templates\registration\login.html:3
+#: .\courses\templates\registration\login.html:5
+#: .\courses\templates\registration\login.html:18
+msgid "Log-in"
+msgstr ""
+
+#: .\courses\templates\registration\login.html:9
+msgid "Your username and password didn't match. Please try again"
+msgstr ""
+
+#: .\courses\templates\registration\login.html:11
+msgid "Please, use the following form to log-in"
+msgstr ""
+
+#: .\courses\templates\search_main.html:31
+msgid "FILTER BY"
+msgstr ""
+
+#: .\courses\templates\search_main.html:34
+msgid "Topic"
+msgstr ""
+
+#: .\courses\templates\search_main.html:37
+msgid "Skill Level"
+msgstr ""
+
+#: .\courses\templates\search_main.html:55
+msgid "Price"
+msgstr ""
+
+#: .\courses\templates\search_main.html:71
+#, fuzzy
+#| msgid "testing"
+msgid "Rating"
 msgstr "in EN"
 
 #: .\imuni\settings.py:134
@@ -207,5 +510,5 @@ msgstr ""
 msgid "api/"
 msgstr ""
 
-#~ msgid "im-umni"
-#~ msgstr "wwwwwwwwwww"
+#~ msgid "test"
+#~ msgstr "in EN"
