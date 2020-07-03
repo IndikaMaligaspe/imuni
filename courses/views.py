@@ -31,10 +31,10 @@ current_language = get_language()
 print(f'language --- {current_language}')
 class OwnerMixin(object):
 
-    def get_queryset(self):
+    def get_queryset(self, request):
         client_id = admin.get_client_id('website', request)
         logger.info(f'queryset : OwnerMixin : {client_id} : {current_language} ')
-        queryset = super(OwnerMixin, self).get_queryset()
+        queryset = super(OwnerMixin, self).get_queryset(request)
         queryset = queryset.filter(owner=self.request.user).filter(client_id=client_id).filter(language=current_language)
         return queryset
 
@@ -54,8 +54,14 @@ class OwnerCourseEditMixin(OwnerCourseMixin, OwnerEditMixin):
     success_url = reverse_lazy('manage_course_list')
     template_name = 'courses/manage/course/form.html'
 
-class ManageCourseListView(OwnerCourseMixin, ListView):
+
+class ManageCourseListView(LoginRequiredMixin,View):
      template_name = "courses/manage/course/list.html"
+     
+     def get(self, request, *args, ** kwargs):
+        #  print(f'user --- {request.user}')
+         queryset = Course.objects.filter(owner=request.user)
+         return render(request, self.template_name, {'course_list':queryset})
 
 class CourseCreateView(PermissionRequiredMixin, OwnerCourseEditMixin, CreateView):
     permission_required = 'courses.add_courses'
@@ -327,3 +333,10 @@ class SearchMain(TemplateResponseMixin, View):
                                          'hid_paid_filter':hid_paid_filter,
                                          'hid_skill_filter': hid_skill_filter,
                                          'hid_rating_filter' : hid_rating_filter})
+
+class InstructorCourseView(View):
+    def get(self, request, *args, **kwargs):
+        # print(f'user - {request.user.groups__name}')
+        courses = Course.objects.filter(owner=request.user)
+        response = render(request, 'courses/course/course_list.html', {'courses': courses, 'view':'list_view'})
+        return response

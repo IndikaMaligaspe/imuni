@@ -33,13 +33,16 @@
         console.log(paid_filter)
         update_form();
     });
-    // $('#addToCart').click(function(e){
-    //    $('#id_course_id').val()
-    //    $('#id_price').val()
-    //    $('#id_discount').val()
-    //    $('#id_coupon_code').val() 
-
-    // });
+    $('#dashboard').on('click','#create_course',function(e){
+        e.preventDefaults;
+        $('#dashboard').load($(this).attr('href'));
+           return false;
+   });   
+    $('#dashboard_course_list').click(function(e){
+         e.preventDefault;
+         $('#dashboard').load($(this).attr('href'));
+            return false;
+    });
     
 })(jQuery);
 

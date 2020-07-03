@@ -1,5 +1,59 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block content %}
-  
+  <div class="container">
+      <div class="welcome">
+          <h5>{% trans 'welcome back' %} {{ instructor.first_name }} , {% trans "you last login was at" %}</h5>
+      </div>
+      <div class="row">
+          <div class="col-md-3 col-12">
+              <div class="container">
+                  <div class="row">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link  active " href="{% url 'loggedin' %}">{% trans "My Board" %}</a>
+                          </li>
+                        <li class="nav-item">
+                          <a class="nav-link  " href="">{% trans "My Profile" %}</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="#">{% trans "My Account" %}</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="#">{% trans "My Finances" %}</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="{% url 'manage_course_list' %}" id='dashboard_course_list'>{% trans "My Courses" %}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">{% trans "Get Support" %}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">{% trans "Invite Friends" %}</a>
+                      </li>
+                    </ul>
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-9 col-12">
+              <div class="container">
+                  <div class="row" id="dashboard">
+                        <div class="col-md-6 col-12">
+                            course dashboard
+                        </div>
+                        <div class="col-md-6 col-12">
+                            student dashboard
+                        </div>
+                        <div class="col-md-6 col-12">
+                            earnings board
+                        </div>
+                        <div class="col-md-6 col-12">
+                            course message board
+                        </div>
+                    </div>
+              </div>
+          </div>
+      </div>
+  </div>
 {% endblock content %}
