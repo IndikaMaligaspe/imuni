@@ -1,28 +1,26 @@
-{% extends 'base.html' %}
 {% load i18n %}
-{% block title %}
-  {% if object %}
-    {% trans "Edit Course" %} "{{ object.title }}"
-  {% else %}
-    {% trans "Create a new course" %}
-  {% endif %}
-{% endblock title %}
-
 {% block content %}
-  <h1>
-      
-      {% if object %}
-        {% trans "Edit course" %} "{{ object.title }}"
-      {% else %}
-        {% trans "Create a new course" %}
-      {% endif %}
-  </h1>
+  {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li  {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </li>
+        {% endfor %}
+    </ul>
+  {% endif %}
   <div class="module">
-      <h2>{% trans "Course info" %}</h2>
-      <form action="." method="post">
+      <h2>{% trans "Course info" %} {{ action }}</h2>
+      {% if 'update' in action %}
+        <form  action="{% url 'course_edit' pk %}" method="post" target="dashboard" id="create_course_form">
+      {% else %}
+        <form  action="{% url 'course_create' %}" method="post" target="dashboard" id="create_course_form">
+      {% endif %}
           {{ form.as_p }}
           {% csrf_token %}
-          <p><input type="submit" value={% trans "Save course" %}> </p>
+          <p>
+              <input type="submit" value={% trans "Save course" %}> 
+              <input type='Hidden' value='{{ status }}'>
+          </p>
+          
       </form>
   </div> 
 {% endblock content %}

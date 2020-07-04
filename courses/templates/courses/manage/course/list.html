@@ -17,8 +17,8 @@
                 <h5>{{ course.title }}</h5>
             </div>
             <div class="col-md-4 col-12">
-                <a href="{% url "course_edit" course.id %}">{% trans "Edit" %} | </a>
-                <a href="{% url "course_delete" course.id %}">{% trans "Delete" %} | </a>
+                <a href="{% url "course_edit" course.id %}" id="edit_course">{% trans "Edit" %} | </a>
+                <a href="{% url "course_delete" course.id %}" id="delete_course">{% trans "Delete" %} | </a>
                 <a href="{% url "course_module_update" course.id %}">{% trans "Edit Module's" %}</a>
             </div>
           </div>

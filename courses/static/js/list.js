@@ -37,12 +37,37 @@
         e.preventDefaults;
         $('#dashboard').load($(this).attr('href'));
            return false;
-   });   
+   });
+   $('#dashboard').on('click','#edit_course',function(e){
+    e.preventDefaults;
+    $('#dashboard').load($(this).attr('href'));
+       return false;
+    });
+    $('#dashboard').on('click','#delete_course',function(e){
+        e.preventDefaults;
+        $('#dashboard').load($(this).attr('href'));
+           return false;
+    });    
+   $('#dashboard').on('submit','#create_course_form',function(e){
+        e.preventDefault;
+        $.post($('#create_course_form').attr('action'), $('#create_course_form').serialize(),function(data){
+            $('#dashboard').html(data)
+        });
+        return false;
+    }); 
+    $('#dashboard').on('submit','#delete_course_form',function(e){
+       e.preventDefault;
+       $.post($('#delete_course_form').attr('action'), $('#delete_course_form').serialize(),function(data){
+           $('#dashboard').html(data)
+       });
+       return false;
+    });   
     $('#dashboard_course_list').click(function(e){
          e.preventDefault;
          $('#dashboard').load($(this).attr('href'));
             return false;
     });
+    
     
 })(jQuery);
 

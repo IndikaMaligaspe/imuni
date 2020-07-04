@@ -1,12 +1,9 @@
-{% extends "base.html" %}
 {% load i18n %}
 
-{% block title %} {% trans "Delete course" %} {% endblock title %}   
-
 {% block content %}
-  <h1>{% trans "Delete course" %} "{{ object.title }}"</h1> 
+  <h1>{% trans "Delete course" %} "{{ object.title }} {{ object.id }}"</h1> 
   <div class="module">
-      <form action="" method="post">
+      <form action="{% url 'course_delete' pk %}" method="post" target="dashboard" id="delete_course_form">
           {% csrf_token %}
           <p>{% trans "Are you sure you want to delete" %} "{{ object }}"</p>
           <input type="submit" class="button" value={% trans "Confirm" %}>

@@ -13,11 +13,12 @@ from django.db.models import Count, Avg
 from django.db.models import Q
 from django.db.models.functions import Round
 from django.utils.translation import get_language
+from django.contrib import messages
 import json
 import logging
 
 from courses.models import Course, Content, Module, Subject, Profiles, InstructorRating, CourseRating
-from .forms import ModuleFormSet
+from .forms import ModuleFormSet, CourseForm
 from cart.forms import CartAddForm
 from cart.cart import Cart
 from common.functions import Admin as admin
@@ -54,26 +55,67 @@ class OwnerCourseEditMixin(OwnerCourseMixin, OwnerEditMixin):
     success_url = reverse_lazy('manage_course_list')
     template_name = 'courses/manage/course/form.html'
 
-
-class ManageCourseListView(LoginRequiredMixin,View):
+class ManageCourseListView(LoginRequiredMixin, View):
      template_name = "courses/manage/course/list.html"
      
      def get(self, request, *args, ** kwargs):
-        #  print(f'user --- {request.user}')
+         print(f'user --- {request.user}')
          queryset = Course.objects.filter(owner=request.user)
          return render(request, self.template_name, {'course_list':queryset})
 
-class CourseCreateView(PermissionRequiredMixin, OwnerCourseEditMixin, CreateView):
-    permission_required = 'courses.add_courses'
+class CourseCreateView(PermissionRequiredMixin, View):
+    permission_required = 'courses.add_course'
 
-class CourseUpdateView(PermissionRequiredMixin, OwnerCourseEditMixin, UpdateView):
+    def get(self, request, *args, **kwargs):
+
+        form = CourseForm()
+        return render(request, 'courses/manage/course/form.html', {'action':'create','form':form, 'pk':'0'})
+    
+    def post(self, request, *args, **kwargs):
+        form = CourseForm(request.POST)
+        if form.is_valid():
+            course = form.save(commit=False)
+            course.owner = request.user
+            course.save()
+            messages.success(request, "Course Created Succesfully")
+            return render(request, 'courses/manage/course/form.html', {'action':'create','form':form, 'status':'saved', 'pk':course.pk})
+        
+        return (render(request, 'courses/manage/course/form.html', {'action':'create','status':'failed', 'pk':'0'}))
+
+class CourseUpdateView(PermissionRequiredMixin, View):
     permission_required = 'courses.change_course'
 
+    def get(self, request, *args, **kwargs):
+        course = Course.objects.get(pk=kwargs['pk'])
+        form = CourseForm(instance=course)
+        return render(request, 'courses/manage/course/form.html', {'action':'update','form':form, 'pk':kwargs['pk']})
+    
+    def post(self, request, *args, **kwargs):
+        instance = get_object_or_404(Course, pk=kwargs['pk'])
+        form = CourseForm(request.POST, instance=instance)
 
-class CourseDeleteView(PermissionRequiredMixin, OwnerCourseEditMixin,DeleteView):
-    template_name = 'courses/manage/course/delete.html' 
-    success_url = reverse_lazy('manage_course_list')
-    # permission_required = 'courses.delete_coursecourse_module_update'
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Course Updated Succesfully")            
+            return render(request, 'courses/manage/course/form.html', {'action':'update','form':form, 'status':'updated','pk':kwargs['pk']})
+        return (render(request, 'courses/manage/course/form.html', {'action':'update','status':'failed','pk':kwargs['pk']}))
+
+
+
+class CourseDeleteView(PermissionRequiredMixin, View):
+    template_name = 'courses/manage/course/delete.html'
+    permission_required = 'courses.delete_course'
+
+    def get(self, request, *args, **kwargs):
+        course = Course.objects.get(pk=kwargs['pk'])
+        return render(request, self.template_name, {'action':'delete', 'object':course, 'pk':kwargs['pk']})
+
+    def post(self, request, *args, **kwargs):
+        instance = get_object_or_404(Course, pk=kwargs['pk'])
+        if instance.delete():
+            messages.success(request, "Course Deleted Succesfully")            
+            return render(request, self.template_name, {'action':'delete','object':instance, 'status':'deleted','pk':kwargs['pk']})
+        return (render(request, self.template_name, {'action':'delete','status':'failed','pk':kwargs['pk']}))
 
 class CourseModuleUpdateView(TemplateResponseMixin, View):
     template_name = 'courses/manage/module/formset.html'
