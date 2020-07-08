@@ -50,7 +50,7 @@ class Course(models.Model):
     title = models.CharField(_('title'), max_length=200)
     slug = models.SlugField(max_length=200, unique=True)
     overview = models.TextField(_('overview'))
-    requirements = models.TextField(_('overview'),blank=True)
+    requirements = models.TextField(_('requirements'),blank=True)
     content_summary = models.TextField(_('content_summary'),blank=True) 
     created = models.DateTimeField(_('created'), auto_now=False, auto_now_add=True)  
     students = models.ManyToManyField(User,
@@ -83,6 +83,7 @@ class Module(models.Model):
     description = models.TextField(_('description'),blank=True)
     order = OrderField(blank=True, for_fields=['course'])
     language = models.CharField(max_length=20, db_index=True, default='en')
+    duration = models.FloatField(default=5)
     client_id= models.IntegerField(db_index=True, default=0)
 
     class Meta:

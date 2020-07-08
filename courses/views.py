@@ -67,7 +67,6 @@ class CourseCreateView(PermissionRequiredMixin, View):
     permission_required = 'courses.add_course'
 
     def get(self, request, *args, **kwargs):
-
         form = CourseForm()
         return render(request, 'courses/manage/course/form.html', {'action':'create','form':form, 'pk':'0'})
     
@@ -79,7 +78,7 @@ class CourseCreateView(PermissionRequiredMixin, View):
             course.save()
             messages.success(request, "Course Created Succesfully")
             return render(request, 'courses/manage/course/form.html', {'action':'create','form':form, 'status':'saved', 'pk':course.pk})
-        
+        print(f'Errors - {form.errors}')
         return (render(request, 'courses/manage/course/form.html', {'action':'create','status':'failed', 'pk':'0'}))
 
 class CourseUpdateView(PermissionRequiredMixin, View):
@@ -122,9 +121,11 @@ class CourseModuleUpdateView(TemplateResponseMixin, View):
     course = None
 
     def get_formset(self, data=None):
+        # print(f'course ID - {data} --- {self.course.pk}')
         return ModuleFormSet(instance=self.course, data=data)
     
     def dispatch(self, request, pk):
+        print(f'reqest methoc --  {request.method}')
         client_id = admin.get_client_id('website', request)
         logger.info(f'dispatch : CourseModuleUpdateView : {client_id} : {current_language} ')
         self.course = get_object_or_404(Course,
@@ -136,15 +137,15 @@ class CourseModuleUpdateView(TemplateResponseMixin, View):
     
     def get(self, request, *args, **kwargs):
         formset = self.get_formset()
-        return self.render_to_response({'course': self.course, 
+        return render(request, self.template_name, {'course': self.course, 
                                        'formset':formset})
     
     def post(self, request, *args, **kwargs):
         formset = self.get_formset(data=request.POST)
         if formset.is_valid():
             formset.save()
-            return redirect('manage_course_list')
-        return self.render_to_response({'course': self.course, 
+            formset = self.get_formset()
+        return render(request, self.template_name, {'course': self.course,
                                         'formset': formset})
 
 class ContentCreatUpdateView(TemplateResponseMixin, View):

@@ -57,16 +57,28 @@
     }); 
     $('#dashboard').on('submit','#delete_course_form',function(e){
        e.preventDefault;
-       $.post($('#delete_course_form').attr('action'), $('#delete_course_form').serialize(),function(data){
+        $.get($('#delete_course_form').attr('action'), $('#delete_course_form').serialize(),function(data){
            $('#dashboard').html(data)
        });
        return false;
-    });   
+    });  
+    $('#dashboard').on('click','#edit_course_modules',function(e){
+        e.preventDefault;
+        $('#dashboard').load($(this).attr('href'));
+        return false;
+    }); 
     $('#dashboard_course_list').click(function(e){
          e.preventDefault;
          $('#dashboard').load($(this).attr('href'));
             return false;
     });
+    $('#dashboard').on('submit','#edit_modules',function(e){
+        e.preventDefault;
+         $.post($('#edit_modules').attr('action'), $('#edit_modules').serialize(),function(data){
+            $('#dashboard').html(data)
+        });
+        return false;
+     });  
     
     
 })(jQuery);

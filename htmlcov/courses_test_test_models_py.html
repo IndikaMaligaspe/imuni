@@ -21,8 +21,8 @@
         </h1>
         <img id="keyboard_icon" src="keybd_closed.png" alt="Show keyboard shortcuts" />
         <h2 class="stats">
-            11 statements &nbsp;
-            <span class="run shortkey_r button_toggle_run">11 run</span>
+            16 statements &nbsp;
+            <span class="run shortkey_r button_toggle_run">16 run</span>
             <span class="mis show_mis shortkey_m button_toggle_mis">0 missing</span>
             <span class="exc show_exc shortkey_x button_toggle_exc">0 excluded</span>
         </h2>
@@ -77,13 +77,23 @@
     <p id="t24" class="pln"><span class="n"><a href="#t24">24</a></span><span class="t">                          <span class="nam">client_id</span><span class="op">=</span><span class="num">1</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p id="t25" class="run"><span class="n"><a href="#t25">25</a></span><span class="t">        <span class="key">assert</span> <span class="nam">obj</span><span class="op">.</span><span class="nam">pk</span> <span class="op">==</span> <span class="num">1</span><span class="op">,</span> <span class="str">'Should be able to create Course instance'</span>&nbsp;</span><span class="r"></span></p>
     <p id="t26" class="pln"><span class="n"><a href="#t26">26</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p id="t27" class="pln"><span class="n"><a href="#t27">27</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t27" class="run"><span class="n"><a href="#t27">27</a></span><span class="t"><span class="key">class</span> <span class="nam">TestModule</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t28" class="run"><span class="n"><a href="#t28">28</a></span><span class="t">    <span class="key">def</span> <span class="nam">test_model_create</span><span class="op">(</span><span class="nam">self</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t29" class="run"><span class="n"><a href="#t29">29</a></span><span class="t">        <span class="nam">course</span> <span class="op">=</span> <span class="nam">mixer</span><span class="op">.</span><span class="nam">blend</span><span class="op">(</span><span class="str">'courses.Course'</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t30" class="run"><span class="n"><a href="#t30">30</a></span><span class="t">        <span class="nam">obj</span> <span class="op">=</span> <span class="nam">mixer</span><span class="op">.</span><span class="nam">cycle</span><span class="op">(</span><span class="num">4</span><span class="op">)</span><span class="op">.</span><span class="nam">blend</span><span class="op">(</span><span class="str">'courses.Module'</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t31" class="pln"><span class="n"><a href="#t31">31</a></span><span class="t">                          <span class="nam">course</span><span class="op">=</span><span class="nam">course</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t32" class="pln"><span class="n"><a href="#t32">32</a></span><span class="t">                          <span class="nam">title</span><span class="op">=</span><span class="str">'SE'</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t33" class="pln"><span class="n"><a href="#t33">33</a></span><span class="t">                          <span class="nam">description</span><span class="op">=</span><span class="str">'This module is for SE'</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t34" class="pln"><span class="n"><a href="#t34">34</a></span><span class="t">                          <span class="nam">order</span><span class="op">=</span><span class="nam">mixer</span><span class="op">.</span><span class="nam">sequence</span><span class="op">(</span><span class="key">lambda</span> <span class="nam">c</span><span class="op">:</span> <span class="nam">c</span><span class="op">)</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t35" class="pln"><span class="n"><a href="#t35">35</a></span><span class="t">                          <span class="nam">language</span><span class="op">=</span><span class="str">'en'</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t36" class="pln"><span class="n"><a href="#t36">36</a></span><span class="t">                          <span class="nam">client_id</span><span class="op">=</span><span class="num">1</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t37" class="run"><span class="n"><a href="#t37">37</a></span><span class="t">        <span class="key">assert</span> <span class="nam">obj</span><span class="op">[</span><span class="num">0</span><span class="op">]</span><span class="op">.</span><span class="nam">pk</span> <span class="op">==</span> <span class="num">1</span><span class="op">,</span> <span class="str">'Should be able to create Modules'</span>&nbsp;</span><span class="r"></span></p>
 </div>
 <div id="footer">
     <div class="content">
         <p>
             <a class="nav" href="index.html">&#xab; index</a> &nbsp; &nbsp; <a class="nav" href="https://coverage.readthedocs.io">coverage.py v5.1</a>,
-            created at 2020-07-04 13:14
+            created at 2020-07-05 06:03
         </p>
     </div>
 </div>

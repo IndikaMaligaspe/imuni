@@ -14,13 +14,106 @@
       {% else %}
         <form  action="{% url 'course_create' %}" method="post" target="dashboard" id="create_course_form">
       {% endif %}
-          {{ form.as_p }}
-          {% csrf_token %}
-          <p>
-              <input type="submit" value={% trans "Save course" %}> 
-              <input type='Hidden' value='{{ status }}'>
-          </p>
-          
+          <div class="container">
+            <div class="row">
+              <div class="col-md-4 col-4">
+                {{form.title.label_tag}}
+              </div>
+              <div class="col-md-6 col-6">
+                {{ form.title }}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 col-4">
+                {{form.slug.label_tag}}
+              </div>
+              <div class="col-md-6 col-6">
+                {{ form.slug }}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 col-4">
+                {{form.subject.label_tag}}
+              </div>
+              <div class="col-md-6 col-6">
+                {{ form.subject }}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 col-4">
+                {{form.overview.label_tag}}
+              </div>
+              <div class="col-md-6 col-6">
+                {{ form.overview }}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 col-4">
+                {{form.requirements.label_tag}}
+              </div>
+              <div class="col-md-6 col-6">
+                {{ form.requirements }}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 col-4">
+                {{form.content_summary.label_tag}}
+              </div>
+              <div class="col-md-6 col-6">
+                {{ form.content_summary }}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 col-4">
+                {{form.thumbnail_image.label_tag}}
+              </div>
+              <div class="col-md-6 col-6">
+                {{ form.thumbnail_image }}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 col-4">
+                {{form.duration.label_tag}}
+              </div>
+              <div class="col-md-6 col-6">
+                {{ form.duration }}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 col-4">
+                {{form.level.label_tag}}
+              </div>
+              <div class="col-md-6 col-6">
+                {{ form.level }}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 col-4">
+                {{form.price.label_tag}}
+              </div>
+              <div class="col-md-6 col-6">
+                {{ form.price }}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 col-4">
+                {{form.language.label_tag}}
+              </div>
+              <div class="col-md-6 col-6">
+                {{ form.language }}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 col-4">
+              </div>
+              <div class="col-md-6 col-6">
+                <input type="submit" class='btn btn-info' value="{% trans 'Save course' %}">
+              </div>
+          </div>
+            <!-- {{ form.as_p }} -->
+            {% csrf_token %}
+            <input type='Hidden' value='{{ status }}'>
+          </div>
       </form>
   </div> 
 {% endblock content %}

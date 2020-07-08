@@ -24,4 +24,14 @@ class TestCourse:
                           client_id=1)
         assert obj.pk == 1, 'Should be able to create Course instance'
     
-    
+class TestModule:
+    def test_model_create(self):
+        course = mixer.blend('courses.Course')
+        obj = mixer.cycle(4).blend('courses.Module',
+                          course=course,
+                          title='SE',
+                          description='This module is for SE',
+                          order=mixer.sequence(lambda c: c),
+                          language='en',
+                          client_id=1)
+        assert obj[0].pk == 1, 'Should be able to create Modules'

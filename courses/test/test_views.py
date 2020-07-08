@@ -236,6 +236,19 @@ class TestCourseUpdateView(BaseTest):
         assert course.title == 'test title', 'Instructor saved data'
 
 class TestCourseDeleteVoew(BaseTest):
+    def test_delete_view_load_page(self):
+        instructor = mixer.blend(User, username='test-instructor', password='abcd1234',
+                            groups__name='Instructor')
+        perm = Permission.objects.get(codename='delete_course')
+        instructor.user_permissions.add(perm)
+        instructor.save()
+        course = mixer.blend(models.Course)
+        req = self.factory.get('/')
+        self.setup_request(req)
+        req.user = instructor
+        resp = views.CourseDeleteView.as_view()(req, pk=course.pk)
+        assert resp.status_code == 200, 'Instructor should be able to get delete confirmation page' 
+
     def test_delete_course_with_valid_data(self):
         instructor = mixer.blend(User, username='test-instructor', password='abcd1234',
                             groups__name='Instructor')
@@ -255,6 +268,60 @@ class TestCourseDeleteVoew(BaseTest):
             assert str(a) == 'Course matching query does not exist.', 'Instructor deleted course'
 
 
+class TestCourseModuleUpdateView(BaseTest):
+    def test_load_course_modules(self):
+        instructor = mixer.blend(User, username='test-instructor', password='abcd1234',
+                            groups__name='Instructor')
+        perm = Permission.objects.get(codename='delete_course')
+        instructor.user_permissions.add(perm)
+        instructor.save()
+        course = mixer.blend(models.Course, client_id=0, language='en', owner=instructor) 
+        obj = mixer.cycle(4).blend('courses.Module',
+                          course=course,
+                          title='SE',
+                          description='This module is for SE',
+                          order=mixer.sequence(lambda c: c),
+                          language='en',
+                          client_id=0)       
+        req =  self.factory.get('/')
+        self.setup_request(req)
+        req.user = instructor
+        resp = views.CourseModuleUpdateView.as_view()(req, pk=course.pk)
+        assert resp.status_code == 200, 'instructor can view course modules to edit / add' 
 
-
-        
+    def test_update_course_module(self):
+        instructor = mixer.blend(User, username='test-instructor', password='abcd1234',
+                            groups__name='Instructor')
+        perm = Permission.objects.get(codename='delete_course')
+        instructor.user_permissions.add(perm)
+        instructor.save()
+        course = mixer.blend(models.Course, client_id=0, language='en', owner=instructor) 
+        obj = mixer.cycle(1).blend('courses.Module',
+                          course=course,
+                          title='SE',
+                          description='This module is for SE',
+                          order=mixer.sequence(lambda c: c),
+                          language='en',
+                          client_id=0)   
+        data = {
+            'modules-TOTAL_FORMS': '2',
+            'modules-INITIAL_FORMS': '0',
+            'modules-MAX_NUM_FORMS': '100',
+            'id_modules-0-title':'Python For All',
+            'id_modules-0-description': 'Lets learn python the right way',
+            'id_modules-0-duration': 'Lets learn python the right way',
+            'id_modules-0-DELETE':'no',
+            'id_modules-1-title':'Python For All',
+            'id_modules-1-description': 'Lets learn python the right way',
+            'id_modules-1-duration': 'Lets learn python the right way',
+            'id_modules-1-DELETE':'no',
+        }                  
+        url = reverse('course_module_update', kwargs={'pk':4})    
+        req =  self.factory.post(url,data=data)
+        self.setup_request(req)
+        req.user = instructor
+        resp = views.CourseModuleUpdateView.as_view()(req, pk=course.pk)
+        assert resp.status_code == 200, 'instructor can add moduls'
+        # output = str(resp.content.decode())
+        # print(output)
+        # assert 'Lets learn python the right way' in output, 'module created for course by instrtuctor'

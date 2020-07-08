@@ -69,8 +69,13 @@
                                             {% trans "Resources" %} <span><i class="fas fa-caret-down"></i></span>
                                         </a>
                                     </li>   
+
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#">{% trans "Pages" %}</a>
+                                        {% ifequal user.groups.all.0.name 'Instructor' %}
+                                            <a class="nav-link" href="{% url 'loggedin' %}">{% trans "Dashboard" %}</a>
+                                        {% else %}
+                                            <a class="nav-link" href="">{% trans "Pages" %}</a>
+                                        {% endifequal %}
                                     </li>  
                             <!-- </li>    -->
                                 </ul>

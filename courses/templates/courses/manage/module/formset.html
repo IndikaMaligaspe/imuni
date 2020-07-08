@@ -1,20 +1,72 @@
-{% extends "base.html" %}
 {% load i18n %}
-{% block title %}
-   {% trans "Edit" %} "{{ course.title }}"
-{% endblock title %}
-
 {% block content %}
+{% if form.errors %}
+    {% for field in form %}
+        {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endfor %}
+    {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+    {% endfor %}
+{% endif %}
     <h1>{% trans "Edit" %} "{{ course.title }}"</h1>
-    <div class="module">
         <h2>{% trans "Course modules" %}</h2>
-        <form action="" method="post">
+        <form action="{% url 'course_module_update' course.pk %}" method="post" id="edit_modules" class='w-100'>
+              <div class="container">
+                  {% for form in formset %}
+                  <div class="row bg-light">
+                      <div class="col">
+                        <div class="row">
+                            <div class="col-md-2 col-6">
+                                {{ form.title.label_tag}}
+                            </div>
+                            <div class="col-md-4 col-6">
+                                {{ form.title}}
+                            </div>
+                            <div class="col-md-1 col-6">
+                                {{ form.duration.label_tag}}
+                            </div>
+                            <div class="col-md-1 col-6">
+                                {{ form.duration}}
+                            </div>
+                        </div> 
+                        <div class="row">
+                            <div class="col-md-2 col-3">
+                                {{ form.description.label_tag}}
+                            </div>
+                            <div class="col-md-9 col-9">
+                                {{ form.description}}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8"></div>
+                            <div class="col-md-1 col-6 p-1">
+                                {{ form.DELETE.label_tag}}
+                            </div>
+                            <div class="col-md-1 col-6 p-1">
+                                {{ form.DELETE}}
+                            </div>
+                            <div class="col-md-2 col-6 p-1">
+                                <a href="">Add Content</a>
+                            </div>
+                        </div>      
+                        </div>
+                    </div>   
+                    <div class="row">
+                        <div class="col">
+                            <br>
+                        </div>
+                    </div>        
+                  {% endfor %}
 
-              {{ formset }}
+              </div>
               {{ formset.management_form }}
               {% csrf_token %}
               <input type="submit" class="button" value={% trans "Save modules" %}>
         </form>
-    </div>
-  
 {% endblock content %}
