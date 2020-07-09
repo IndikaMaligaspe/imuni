@@ -92,54 +92,58 @@
         let delete_text = gettext('Delete')
         let add_content = gettext('Add Content')
         for (let i = index; i < index+3; i++) {
-            html += `<div class='row bg-light'
-                    div class="col">
+            html += `<div class='row bg-light'>
+                        <div class="col">
+                            <div class="row">
+                                <div class="col-md-2 col-6">
+                                    <label for="id_modules-`+i+`-title">`+title+`:</label>
+                                </div>
+                                <div class="col-md-8 col-6">
+                                    <input type="text" name="modules-`+i+`-title" size="50" maxlength="200" id="id_modules-`+i+`-title">
+                                </div>
+                                <div class="col-md-1 col-6">
+                                    <label for="id_modules-0-duration">`+duration+`:</label>
+                                </div>
+                                <div class="col-md-1 col-6">
+                                    <input type="text" name="modules-`+i+`-duration" value="5" size="3" id="id_modules-`+i+`-duration">
+                                </div>
+                            </div> 
+
+                            <div class="row">
+                                <div class="col-md-2 col-3">
+                                <label for="id_modules-`+i+`-description">`+description+`:</label>
+                                </div>
+                                <div class="col-md-9 col-9">
+                                    <textarea name="modules-`+i+`-description" cols="83" rows="5" id="id_modules-`+i+`-description"></textarea>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-8"></div>
+                                <div class="col-md-1 col-6 p-1">
+                                    <label for="id_modules-`+i+`-DELETE">`+delete_text+`:</label>
+                                </div>
+                                <div class="col-md-1 col-6 p-1">
+                                    <input type="checkbox" name="modules-`+i+`-DELETE" id="id_modules-`+i+`-DELETE">
+                                </div>
+                                <div class="col-md-2 col-6 p-1">
+                                    <a href="">`+add_content+`</a>
+                                </div>
+                            </div>      
+                        </div>
+                    </div>   
                     <div class="row">
-                        <div class="col-md-2 col-6">
-                            <label for="id_modules-`+i+`-title">`+title+`:</label>
+                        <div class="col">
+                            <br>
                         </div>
-                        <div class="col-md-8 col-6">
-                            <input type="text" name="modules-`+i+`-title" size="50" maxlength="200" id="id_modules-`+i+`-title">
-                        </div>
-                        <div class="col-md-1 col-6">
-                            <label for="id_modules-0-duration">`+duration+`:</label>
-                        </div>
-                        <div class="col-md-1 col-6">
-                            <input type="text" name="modules-`+i+`-duration" value="5" size="3" id="id_modules-`+i+`-duration">
-                        </div>
-                    </div> 
-                    <div class="row">
-                        <div class="col-md-2 col-3">
-                        <label for="id_modules-`+i+`-description">`+description+`:</label>
-                        </div>
-                        <div class="col-md-9 col-9">
-                            <textarea name="modules-`+i+`-description" cols="83" rows="5" id="id_modules-`+i+`-description"></textarea>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-8"></div>
-                        <div class="col-md-1 col-6 p-1">
-                            <label for="id_modules-`+i+`-DELETE">`+delete_text+`:</label>
-                        </div>
-                        <div class="col-md-1 col-6 p-1">
-                            <input type="checkbox" name="modules-`+i+`-DELETE" id="id_modules-`+i+`-DELETE">
-                        </div>
-                        <div class="col-md-2 col-6 p-1">
-                            <a href="">`+add_content+`</a>
-                        </div>
-                    </div>      
-                    </div>
-                </div>   
-                <div class="row">
-                    <div class="col">
-                        <br>
-                    </div>
-                </div>  
-            </div>`;        
+                    </div>  
+                </div>
+            <div class="container" id="add_module_temp"></div>`;        
         }
     
         console.log(html) 
         $('#add_module').html(html)
+        $('#add_module').prop("id","add_module_done");
+        $('#add_module_temp').prop("id","add_module");
         return false;
      }); 
     

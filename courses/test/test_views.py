@@ -235,8 +235,9 @@ class TestCourseUpdateView(BaseTest):
         course.refresh_from_db()
         assert course.title == 'test title', 'Instructor saved data'
 
-class TestCourseDeleteVoew(BaseTest):
+class TestCourseDeleteView(BaseTest):
     def test_delete_view_load_page(self):
+        print('starting DELETE TEST............')
         instructor = mixer.blend(User, username='test-instructor', password='abcd1234',
                             groups__name='Instructor')
         perm = Permission.objects.get(codename='delete_course')
@@ -276,13 +277,17 @@ class TestCourseModuleUpdateView(BaseTest):
         instructor.user_permissions.add(perm)
         instructor.save()
         course = mixer.blend(models.Course, client_id=0, language='en', owner=instructor) 
-        obj = mixer.cycle(4).blend('courses.Module',
+        modules = mixer.cycle(4).blend('courses.Module',
                           course=course,
                           title='SE',
                           description='This module is for SE',
                           order=mixer.sequence(lambda c: c),
                           language='en',
-                          client_id=0)       
+                          client_id=0) 
+        for module in modules:
+            course.modules.add(module)
+            course.save() 
+
         req =  self.factory.get('/')
         self.setup_request(req)
         req.user = instructor
@@ -296,29 +301,86 @@ class TestCourseModuleUpdateView(BaseTest):
         instructor.user_permissions.add(perm)
         instructor.save()
         course = mixer.blend(models.Course, client_id=0, language='en', owner=instructor) 
-        obj = mixer.cycle(1).blend('courses.Module',
+        modules = mixer.cycle(1).blend('courses.Module',
                           course=course,
                           title='SE',
                           description='This module is for SE',
                           order=mixer.sequence(lambda c: c),
                           language='en',
                           client_id=0)   
-        data = {
-            'modules-TOTAL_FORMS': '2',
-            'modules-INITIAL_FORMS': '0',
-            'modules-MAX_NUM_FORMS': '100',
-            'id_modules-0-title':'Python For All',
-            'id_modules-0-description': 'Lets learn python the right way',
-            'id_modules-0-duration': 'Lets learn python the right way',
-            'id_modules-0-DELETE':'no',
-            'id_modules-1-title':'Python For All',
-            'id_modules-1-description': 'Lets learn python the right way',
-            'id_modules-1-duration': 'Lets learn python the right way',
-            'id_modules-1-DELETE':'no',
-        }                  
+
+        for module in modules:
+            course.modules.add(module)
+            course.save()                  
+        data = {}
+        manage_frame = {
+               'modules-TOTAL_FORMS': '2',
+                'modules-INITIAL_FORMS': '1',
+                'modules-MAX_NUM_FORMS': '100',
+        }
+        data.update(manage_frame)
+        iter = course.modules.iterator()
+        for idx, it in enumerate(iter):
+            module = {
+                f'modules-{idx}-title':'Python For All',
+                f'modules-{idx}-description': f'{it.description}',
+                f'modules-{idx}-duration': f'{it.duration}',
+                f'modules-{idx}-DELETE':'on',
+                f'modules-{idx}-course': f'{course.pk}',
+                f'modules-{idx}-id': f'{it.pk}',
+            }
+            data.update(module)
+                  
+
         url = reverse('course_module_update', kwargs={'pk':4})    
         req =  self.factory.post(url,data=data)
         self.setup_request(req)
         req.user = instructor
         resp = views.CourseModuleUpdateView.as_view()(req, pk=course.pk)
         assert resp.status_code == 200, 'instructor can add moduls'
+
+    def test_delete_course_module(self):
+        instructor = mixer.blend(User, username='test-instructor', password='abcd1234',
+                            groups__name='Instructor')
+        perm = Permission.objects.get(codename='delete_course')
+        instructor.user_permissions.add(perm)
+        instructor.save()
+        course = mixer.blend(models.Course, client_id=0, language='en', owner=instructor) 
+        modules = mixer.cycle(2).blend('courses.Module',
+                          course=course,
+                          title='SE',
+                          description='This module is for SE',
+                          order=mixer.sequence(lambda c: c),
+                          language='en',
+                          client_id=0)   
+
+        for module in modules:
+            course.modules.add(module)
+            course.save()                  
+        data = {}
+        manage_frame = {
+               'modules-TOTAL_FORMS': '2',
+                'modules-INITIAL_FORMS': '2',
+                'modules-MAX_NUM_FORMS': '100',
+        }
+        data.update(manage_frame)
+        iter = course.modules.iterator()
+        for idx, it in enumerate(iter):
+            module = {
+                f'modules-{idx}-title':f'{it.title}',
+                f'modules-{idx}-description': f'{it.description}',
+                f'modules-{idx}-duration': f'{it.duration}',
+                f'modules-{idx}-DELETE':'on',
+                f'modules-{idx}-course': f'{course.pk}',
+                f'modules-{idx}-id': f'{it.pk}',
+            }
+            data.update(module)
+        url = reverse('course_module_update', kwargs={'pk':course.pk})    
+        req =  self.factory.post(url,data=data)
+        self.setup_request(req)
+        req.user = instructor
+        resp = views.CourseModuleUpdateView.as_view()(req, pk=course.pk)
+        assert resp.status_code == 200, 'instructor can add moduls'
+        course.refresh_from_db()
+        # print(f'modules count {course.modules.count()}')
+        assert course.modules.count() == 0, 'Instructor deleted modules'

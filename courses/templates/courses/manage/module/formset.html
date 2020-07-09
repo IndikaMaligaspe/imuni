@@ -51,7 +51,10 @@
                             <div class="col-md-1 col-6 p-1">
                                 {{ form.DELETE}}
                             </div>
+
                             <div class="col-md-2 col-6 p-1">
+                                {{form.course}}
+                                {{form.id}}
                                 <a href="">Add Content</a>
                             </div>
                         </div>      
@@ -65,7 +68,7 @@
                   {% endfor %}
 
               </div>
-              <div id="add_module"></div>
+              <div class="container" id="add_module"></div>
               {{ formset.management_form }}
               {% csrf_token %}
               <div class="row">
@@ -73,6 +76,6 @@
                   <div class="col-md-2 col-6"><input type="button" id="btn_add_module" class="btn btn-primary" value="{% trans "Add modules" %}"></div>
                   <div class="col-md-2 col-6"><input type="submit" class="btn btn-primary" value="{% trans "Save modules" %}"></div>
               </div>
-              
         </form>
+
 {% endblock content %}

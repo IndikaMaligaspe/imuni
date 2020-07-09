@@ -125,7 +125,7 @@ class CourseModuleUpdateView(TemplateResponseMixin, View):
         return ModuleFormSet(instance=self.course, data=data)
     
     def dispatch(self, request, pk):
-        print(f'reqest methoc --  {request.method}')
+        # print(f'reqest  --  {request.POST}')
         client_id = admin.get_client_id('website', request)
         logger.info(f'dispatch : CourseModuleUpdateView : {client_id} : {current_language} ')
         self.course = get_object_or_404(Course,
@@ -143,8 +143,10 @@ class CourseModuleUpdateView(TemplateResponseMixin, View):
     def post(self, request, *args, **kwargs):
         formset = self.get_formset(data=request.POST)
         if formset.is_valid():
+            # print(f'Form is valid..................{formset}')
             formset.save()
             formset = self.get_formset()
+            # print(f'Modules Count - {Course.objects.get(pk=self.course.pk).modules.count()}')    
         return render(request, self.template_name, {'course': self.course,
                                         'formset': formset})
 
