@@ -1,4 +1,5 @@
 from django.urls import path 
+from django.conf.urls.i18n import i18n_patterns
 from . import views 
 
 urlpatterns = [
@@ -8,6 +9,7 @@ urlpatterns = [
     path('<pk>/edit/', views.CourseUpdateView.as_view(), name='course_edit'),
     path('<pk>/delete/', views.CourseDeleteView.as_view(), name='course_delete'),
     path('<pk>/module/', views.CourseModuleUpdateView.as_view(), name='course_module_update'),
+    path('module_add_html/', views.CourseModuleUpdateView.as_view(), name='course_module_html'),
     path('module/<int:module_id>/content/<model_name>/create', views.ContentCreatUpdateView.as_view(), name='module_content_create'),
     path('module/<int:module_id>/content/<model_name>/<id>/', views.ContentCreatUpdateView.as_view(), name='module_content_update'),
     path('content/<int:id>/delete', views.ContentDeleteView.as_view(), name='module_content_delete'),

@@ -22,6 +22,8 @@ from django.conf.urls.i18n import i18n_patterns
 from django.utils.translation import gettext_lazy as _
 from courses.views import CourseListView
 from home.views import LoggedInView
+from django.conf.urls.i18n import i18n_patterns
+from django.views.i18n import JavaScriptCatalog
 
 
 
@@ -37,6 +39,7 @@ urlpatterns = i18n_patterns (
     path(_('orders/'), include('orders.urls')),
     path(_('payments/'), include('payments.urls')),
     path(_('api/'), include('courses.api.urls', namespace='api')),
+    path('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
     # path('i18n/', include('django.conf.urls.i18n')), 
     # path('ratings/', include('star_ratings.urls', namespace='ratings')),
 )

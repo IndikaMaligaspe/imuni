@@ -14,8 +14,8 @@
         </div>
     {% endfor %}
 {% endif %}
-    <h1>{% trans "Edit" %} "{{ course.title }}"</h1>
-        <h2>{% trans "Course modules" %}</h2>
+        <h4 class="bg-light w-100" >{% trans "Edit / Add  Course modules for " %} "{{ course.title }}"</h4>
+        <div><br></div>
         <form action="{% url 'course_module_update' course.pk %}" method="post" id="edit_modules" class='w-100'>
               <div class="container">
                   {% for form in formset %}
@@ -25,7 +25,7 @@
                             <div class="col-md-2 col-6">
                                 {{ form.title.label_tag}}
                             </div>
-                            <div class="col-md-4 col-6">
+                            <div class="col-md-8 col-6">
                                 {{ form.title}}
                             </div>
                             <div class="col-md-1 col-6">
@@ -65,8 +65,14 @@
                   {% endfor %}
 
               </div>
+              <div id="add_module"></div>
               {{ formset.management_form }}
               {% csrf_token %}
-              <input type="submit" class="button" value={% trans "Save modules" %}>
+              <div class="row">
+                  <div class="col-md-8 col-0"></div>
+                  <div class="col-md-2 col-6"><input type="button" id="btn_add_module" class="btn btn-primary" value="{% trans "Add modules" %}"></div>
+                  <div class="col-md-2 col-6"><input type="submit" class="btn btn-primary" value="{% trans "Save modules" %}"></div>
+              </div>
+              
         </form>
 {% endblock content %}

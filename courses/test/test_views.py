@@ -322,6 +322,3 @@ class TestCourseModuleUpdateView(BaseTest):
         req.user = instructor
         resp = views.CourseModuleUpdateView.as_view()(req, pk=course.pk)
         assert resp.status_code == 200, 'instructor can add moduls'
-        # output = str(resp.content.decode())
-        # print(output)
-        # assert 'Lets learn python the right way' in output, 'module created for course by instrtuctor'

@@ -5,9 +5,9 @@ from .models import Course, Module
 
 ModuleFormSet = inlineformset_factory(Course, Module, 
                                     fields=['title', 'description', 'duration'],
-                                    widgets={'title':TextInput(attrs={'size':'20'}), \
+                                    widgets={'title':TextInput(attrs={'size':'50'}), \
                                             'duration': TextInput(attrs={'size':'3'}),\
-                                            'description': Textarea(attrs={'rows':'5' , 'cols':'80'})},
+                                            'description': Textarea(attrs={'rows':'5' , 'cols':'83'})},
                                     extra=3, can_delete=True)
 
 class CourseForm(forms.ModelForm):
