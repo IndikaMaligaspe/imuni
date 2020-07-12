@@ -79,6 +79,7 @@
         });
         return false;
      }); 
+     
     $('#dashboard').on('click','#btn_add_module',function(e){
         e.preventDefault;
 
@@ -177,6 +178,17 @@ update_form=()=>{
     console.log($('#hid_ratind_filter').val());    
 }
 
+
+load_content=(e)=>{
+    id = e.target.id;
+    console.log('taregt_id:'+id)
+    module_id = $('#id_modules-'+id+'-id').val();
+    url = '/course/module/'+module_id;
+    console.log(url); 
+    $('#dashboard').load(url);
+
+    return false;
+}
 
 
 // console.log(paid_filter);

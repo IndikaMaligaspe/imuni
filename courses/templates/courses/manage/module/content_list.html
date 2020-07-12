@@ -1,95 +1,60 @@
-{% extends "base.html" %}
 {% load course %}
 {% load i18n %}
-{% block title %}
-  {% trans "Module" %} {{ module.order | add:1 }} : {{ module.title }} 
-{% endblock title %}
 
 {% block content %}
  {% with course=module.course   %}
-    <h1>{% trans "Course" %} "{{ course.title }}"</h1>
-    <div class="contents">
-        <h3>{% trans "Modules" %}</h3>
-        <ul id="modules">
+     <div class="container"> 
+       <div class="row">
+         <div class="col-md-12">
+            <h5>{% trans "Course" %} : "{{ course.title }}"</h5>
+         </div>
+       </div>
+    
+      <div class="row"> 
+        <div class="col-md-3 col-12 align-content-center">{% trans "Select a Module" %}</div>
+        <div class="col-md-6 col-12 align-content-start"> 
+          <select id="inputState" class="form-control">
             {% for m in course.modules.all  %}
-                <li data-id="{{ m.id }}" {% if m == module %} class="selected" {% endif %}>
-                <a href="{% url "module_content_list" m.id %}">
-                <span>
-                  {% trans "Module" %} <span class="order">{{ m.order| add:1 }}</span>
-                </span>
-                <br>
-                  {{ m.title}}
-                </a>
-              </li>
-            {% empty %}
-              <li>{% trans "No modules yet" %} </li>  
+              {% if m.id == module.id %}
+                <option value="{{m.id}}" selected>{{ m.title}} {{ m.order| add:1 }}</option>
+              {% else %}  
+                <option value="{{m.id}}" >{{ m.title}} {{ m.order| add:1 }}</option>
+              {% endif %}
+              {% empty %}
+                <option value="0" selected>{% trans "No modules yet" %}</option>
             {% endfor %}
-        </ul>
-        <p><a href="{% url "course_module_update" course.id %}">{% trans "Edit modules" %} </a></p>
-    </div>
-    <div class="module">
-        <h2>{% trans "Module" %} {{ module.order | add:1 }}: {{ module.title }}</h2>
-        <h3>{% trans "Module conttens:" %}</h3>
-        <div id="module-contents">
-            {% for content in module.content.all %}
-                <div data-id="{{ content.id }}">
-                    {% with item=content.item  %}
-                      <p>{{ item }} ({{ item|model_name }}) </p>
-                      <a href="{% url "module_content_update" module.id item|model_name item.id %}">{% trans "Edit" %}</a>
-                        <form action="{% url "module_content_delete" content.id %}"  method="post">
-                            <input type="submit" value="Delete">
-                            {% csrf_token %}
-                        </form>                    
-                   {% endwith %}
-                </div>
-            {% empty %}
-                <p>{% trans "This module has no content yet" %}</p>
-            {% endfor %}
+          </select>
         </div>
-        <h3> {% trans "Add new content:" %}</h3>
-        <ul class="content-types">
-            <li><a href="{% url "module_content_create" module.id "text" %}">{% trans "Text" %}</a></li>
-            <li><a href="{% url "module_content_create" module.id "image" %}">{% trans "Image" %}</a></li>
-            <li><a href="{% url "module_content_create" module.id "video" %}">{% trans "Video" %}</a></li>
-            <li><a href="{% url "module_content_create" module.id "file" %}">{% trans "File" %}</a></li>
-        </ul>
-        </div>
+      </div>
+    <div class="row">
+      <div class="col-md-12">
+          <!-- <h2>{% trans "Module" %} {{ module.order | add:1 }}: {{ module.title }}</h2> -->
+          <h3>{% trans "Module conttens:" %}</h3>
+          <div id="module-contents">
+              {% for content in module.content.all %}
+                  <div data-id="{{ content.id }}">
+                      {% with item=content.item  %}
+                        <p>{{ item }} ({{ item|model_name }}) </p>
+                        <a href="{% url "module_content_update" module.id item|model_name item.id %}">{% trans "Edit" %}</a>
+                          <form action="{% url "module_content_delete" content.id %}"  method="post">
+                              <input type="submit" value="Delete">
+                              {% csrf_token %}
+                          </form>                    
+                    {% endwith %}
+                  </div>
+              {% empty %}
+                  <p>{% trans "This module has no content yet" %}</p>
+              {% endfor %}
+          </div>
+          <h3> {% trans "Add new content:" %}</h3>
+          <ul class="content-types">
+              <li><a href="{% url "module_content_create" module.id "text" %}">{% trans "Text" %}</a></li>
+              <li><a href="{% url "module_content_create" module.id "image" %}">{% trans "Image" %}</a></li>
+              <li><a href="{% url "module_content_create" module.id "video" %}">{% trans "Video" %}</a></li>
+              <li><a href="{% url "module_content_create" module.id "file" %}">{% trans "File" %}</a></li>
+          </ul>
+      </div>
     </div>
+  </div>
  {% endwith %} 
 {% endblock content %}
-{% block domready %}
-  $('#modules').sortable({
-    stop: function(event, ui) {
-    modules_order = {};
-    $('#modules').children().each(function(){
-    // update the order field
-    $(this).find('.order').text($(this).index() + 1);
-    // associate the module's id with its order
-    modules_order[$(this).data('id')] = $(this).index();
-    });
-    $.ajax({
-    type: 'POST',
-    url: '{% url "module_order" %}',
-    contentType: 'application/json; charset=utf-8',
-    dataType: 'json',
-    data: JSON.stringify(modules_order)
-    });
-    }
-  });
-  $('#module-contents').sortable({
-    stop: function(event, ui) {
-    contents_order = {};
-    $('#module-contents').children().each(function(){
-    // associate the module's id with its order
-    contents_order[$(this).data('id')] = $(this).index();
-    });
-    $.ajax({
-    type: 'POST',
-    url: '{% url "content_order" %}',
-    contentType: 'application/json; charset=utf-8',
-    dataType: 'json',
-    data: JSON.stringify(contents_order),
-    });
-    }
-  });
-{% endblock domready %}

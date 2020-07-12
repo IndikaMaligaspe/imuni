@@ -137,8 +137,8 @@ class CourseModuleUpdateView(TemplateResponseMixin, View):
     
     def get(self, request, *args, **kwargs):
         formset = self.get_formset()
-        return render(request, self.template_name, {'course': self.course, 
-                                       'formset':formset})
+        return render(request, self.template_name, {'course': self.course,
+                                               'formset':formset})
     
     def post(self, request, *args, **kwargs):
         formset = self.get_formset(data=request.POST)

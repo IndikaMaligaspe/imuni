@@ -1,17 +1,6 @@
-{% extends "base.html" %}
 {% load i18n %}
-{% block title %}
- 
- {% if  object %}
-    {% trans "Edit content" %} "{{ object.title }}"
- {% else %}
-  {% trans "Add new content" %}
- {% endif %}
-{% endblock title %}
-
 {% block content %}
   <h1>
-      
       {% if object %}
         {% trans "Edit content" %} "{{ object.title }}"
       {% else %}
