@@ -66,7 +66,28 @@
         e.preventDefault;
         $('#dashboard').load($(this).attr('href'));
         return false;
+    });
+    $('#dashboard').on('click','#add_text_content',function(e){
+        e.preventDefault;
+        $('#dashboard').load($(this).attr('href'));
+        return false;
     }); 
+    $('#dashboard').on('click','#add_image_content',function(e){
+        e.preventDefault;
+        $('#dashboard').load($(this).attr('href'));
+        return false;
+    });  
+    $('#dashboard').on('click','#add_video_content',function(e){
+        e.preventDefault;
+        $('#dashboard').load($(this).attr('href'));
+        return false;
+    });  
+    $('#dashboard').on('click','#add_file_content',function(e){
+        e.preventDefault;
+        $('#dashboard').load($(this).attr('href'));
+        return false;
+    });  
+ 
     $('#dashboard_course_list').click(function(e){
          e.preventDefault;
          $('#dashboard').load($(this).attr('href'));

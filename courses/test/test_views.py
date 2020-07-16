@@ -411,28 +411,31 @@ class TestModuleContentListView(BaseTest):
         resp = views.ModuleContentListView.as_view()(req, module_id=module.pk)
         assert resp.status_code == 200, 'Previladge user can list content'
 
-# class TestContentCreateUpdateView(BaseTest):
-#     def test_get_form(self):
-#         instructor = mixer.blend(User, username='test-instructor', password='abcd1234',
-#                             groups__name='Instructor')
-#         perm = Permission.objects.get(codename='delete_course')
-#         instructor.user_permissions.add(perm)
-#         instructor.save()
-#         course = mixer.blend(models.Course, client_id=0, language='en', owner=instructor) 
-#         module = mixer.blend('courses.Module',
-#                           course=course,
-#                           title='SE',
-#                           description='This module is for SE',
-#                           order=mixer.sequence(lambda c: c),
-#                           language='en',
-#                           client_id=0)   
+class TestContentCreateUpdateView(BaseTest):
+    def test_get_form(self):
+        instructor = mixer.blend(User, username='test-instructor', password='abcd1234',
+                            groups__name='Instructor')
+        perm = Permission.objects.get(codename='delete_course')
+        instructor.user_permissions.add(perm)
+        instructor.save()
+        course = mixer.blend(models.Course, client_id=0, language='en', owner=instructor) 
+        module = mixer.blend('courses.Module',
+                          course=course,
+                          title='SE',
+                          description='This module is for SE',
+                          order=mixer.sequence(lambda c: c),
+                          language='en',
+                          client_id=0)   
 
-#         course.modules.add(module)
-#         course.save()   
-#         url = reverse('course_module_update', kwargs={'module_id':module.pk, 'model_name':None})    
-#         req =  self.factory.get(url)
-#         self.setup_request(req)
-#         req.user = instructor
-#         resp = views.ContentCreatUpdateView.as_view()(req)
-#         assert resp.status_code == 200, 'instructor can update / create content'
+        course.modules.add(module)
+        course.save()   
+        url = reverse('module_content_create', kwargs={'module_id':module.pk, 'model_name':'text'})    
+        req =  self.factory.get(url)
+        self.setup_request(req)
+        req.user = instructor
+        resp = views.ContentCreatUpdateView.as_view()(req,module_id=module.pk, model_name='text')
+        assert resp.status_code == 200, 'instructor can update / create content'
+        output = str(resp.content)
+        assert 'title' in output, 'text content form is rendered.'
+        
  

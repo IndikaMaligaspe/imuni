@@ -1,16 +1,33 @@
 {% load i18n %}
 {% block content %}
-  <h1>
-      {% if object %}
-        {% trans "Edit content" %} "{{ object.title }}"
-      {% else %}
-        {% trans "Add a new content" %}
-      {% endif %}
-  </h1>
-  <div class="module">
+  <div class="container">
     <h2>{% trans "Course info" %}</h2>
     <form action="" method="post" enctype="multipart/form-data">
-        {{ form.as_p }}
+      <div class="row">
+        <div class="col-md-2 col-6">
+          {{ form.title.label_tag}}
+        </div>
+        <div class="col-md-4 col-6">
+          {{form.title}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-2 col-6">
+          {{ form.content.label_tag}}
+        </div>
+        <div class="col-md-4 col-6">
+          {{form.content}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-2 col-6">
+          {{ form.language.label_tag}}
+        </div>
+        <div class="col-md-4 col-6">
+          {{form.language}}
+        </div>
+      </div>
+        <!-- {{ form.as_p }} -->
         {% csrf_token %}
         <p><input type="submit" value={% trans "Save content" %}></p>
     </form>
