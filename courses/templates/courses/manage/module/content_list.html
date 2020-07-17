@@ -43,11 +43,11 @@
                         {% with item=content.item  %}
                           <div class="row">
                             <div class="col-md-8 col-12 bg-light">
-                              <a href="{% url "module_content_update" module.id item|model_name item.id %}">{{ item }} ({{ item|model_name }})</a>
+                              <a href="{% url "module_content_update" module.id item|model_name item.id %}" id='edit_content'>{{ item }} ({{ item|model_name }})</a>
                             </div>
                             <div class="col-md-2 col-6">
-                              <form action="{% url "module_content_delete" content.id %}"  method="post">
-                                <input type="submit" value="Delete">
+                              <form action="{% url "module_content_delete" content.id %}"  method="post" id="delete_module_content">
+                                <input type="submit" class="btn btn-danger" value="Delete">
                                 {% csrf_token %}
                             </form> 
                             </div>  

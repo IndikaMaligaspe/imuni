@@ -14,9 +14,9 @@
       {% else %}
         <form  action="{% url 'course_create' %}" method="post" target="dashboard" id="create_course_form">
       {% endif %}
-          <div class="container">
+          <div class="container bg-light">
             <div class="row">
-              <div class="col-md-4 col-4">
+              <div class="col-md-2 col-4">
                 {{form.title.label_tag}}
               </div>
               <div class="col-md-6 col-6">
@@ -24,7 +24,7 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-md-4 col-4">
+              <div class="col-md-2 col-4">
                 {{form.slug.label_tag}}
               </div>
               <div class="col-md-6 col-6">
@@ -32,7 +32,7 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-md-4 col-4">
+              <div class="col-md-2 col-4">
                 {{form.subject.label_tag}}
               </div>
               <div class="col-md-6 col-6">
@@ -40,7 +40,7 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-md-4 col-4">
+              <div class="col-md-2 col-4">
                 {{form.overview.label_tag}}
               </div>
               <div class="col-md-6 col-6">
@@ -48,7 +48,7 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-md-4 col-4">
+              <div class="col-md-2 col-4">
                 {{form.requirements.label_tag}}
               </div>
               <div class="col-md-6 col-6">
@@ -56,15 +56,15 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-md-4 col-4">
+              <div class="col-md-2 col-4">
                 {{form.content_summary.label_tag}}
               </div>
               <div class="col-md-6 col-6">
                 {{ form.content_summary }}
               </div>
             </div>
-            <div class="row">
-              <div class="col-md-4 col-4">
+            <div class="row pb-1">
+              <div class="col-md-2 col-4">
                 {{form.thumbnail_image.label_tag}}
               </div>
               <div class="col-md-6 col-6">
@@ -72,7 +72,7 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-md-4 col-4">
+              <div class="col-md-2 col-4">
                 {{form.duration.label_tag}}
               </div>
               <div class="col-md-6 col-6">
@@ -80,7 +80,7 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-md-4 col-4">
+              <div class="col-md-2 col-4">
                 {{form.level.label_tag}}
               </div>
               <div class="col-md-6 col-6">
@@ -88,7 +88,7 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-md-4 col-4">
+              <div class="col-md-2 col-4">
                 {{form.price.label_tag}}
               </div>
               <div class="col-md-6 col-6">
@@ -96,7 +96,7 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-md-4 col-4">
+              <div class="col-md-2 col-4">
                 {{form.language.label_tag}}
               </div>
               <div class="col-md-6 col-6">
@@ -104,10 +104,10 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-md-4 col-4">
+              <div class="col-md-10 col-4">
               </div>
-              <div class="col-md-6 col-6">
-                <input type="submit" class='btn btn-info' value="{% trans 'Save course' %}">
+              <div class="col-md-2 col-6">
+                <input type="submit" class='btn btn-primary' value="{% trans 'Save course' %}">
               </div>
           </div>
             <!-- {{ form.as_p }} -->

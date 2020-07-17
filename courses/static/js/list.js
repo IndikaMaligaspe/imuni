@@ -67,6 +67,11 @@
         $('#dashboard').load($(this).attr('href'));
         return false;
     });
+    $('#dashboard').on('click','#edit_content',function(e){
+        e.preventDefault;
+        $('#dashboard').load($(this).attr('href'));
+        return false;
+    });
     $('#dashboard').on('click','#add_text_content',function(e){
         e.preventDefault;
         $('#dashboard').load($(this).attr('href'));
@@ -87,7 +92,20 @@
         $('#dashboard').load($(this).attr('href'));
         return false;
     });  
- 
+    $('#dashboard').on('submit','#submit_add_content',function(e){
+        e.preventDefault;
+         $.post($('#submit_add_content').attr('action'), $('#submit_add_content').serialize(),function(data){
+            $('#dashboard').html(data)
+        });
+        return false;
+     });  
+     $('#dashboard').on('submit','#delete_module_content',function(e){
+        e.preventDefault;
+         $.post($('#delete_module_content').attr('action'), $('#delete_module_content').serialize(),function(data){
+            $('#dashboard').html(data)
+        });
+        return false;
+     });  
     $('#dashboard_course_list').click(function(e){
          e.preventDefault;
          $('#dashboard').load($(this).attr('href'));
@@ -168,6 +186,7 @@
         $('#add_module_temp').prop("id","add_module");
         return false;
      }); 
+     $('#messageModel').modal({show:true});
     
     
 })(jQuery);

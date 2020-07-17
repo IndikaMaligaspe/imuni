@@ -438,4 +438,74 @@ class TestContentCreateUpdateView(BaseTest):
         output = str(resp.content)
         assert 'title' in output, 'text content form is rendered.'
         
- 
+    def test_create_text_content(self):
+        instructor = mixer.blend(User, username='test-instructor', password='abcd1234',
+                            groups__name='Instructor')
+        perm = Permission.objects.get(codename='delete_course')
+        instructor.user_permissions.add(perm)
+        instructor.save()
+        course = mixer.blend(models.Course, client_id=0, language='en', owner=instructor) 
+        module = mixer.blend('courses.Module',
+                          course=course,
+                          title='SE',
+                          description='This module is for SE',
+                          order=mixer.sequence(lambda c: c),
+                          language='en',
+                          client_id=0)   
+
+        course.modules.add(module)
+        course.save()   
+        url = reverse('module_content_create', kwargs={'module_id':module.pk, 'model_name':'text'})    
+        data = {
+            'title':'test title',
+            'content':'test_content',
+            'language': 'en',
+            'client_id':'0',
+        }
+        req =  self.factory.post(url,data=data)
+        self.setup_request(req)
+        req.user = instructor
+        resp = views.ContentCreatUpdateView.as_view()(req,module_id=module.pk, model_name='text')
+        assert resp.status_code == 200 , 'authorized user can create content'
+        output = resp.content.decode()
+        # print(output)
+        assert 'Content Updated Succesfully' in output, 'authorized user created new content'
+
+
+    def test_delete_text_content(self):
+        instructor = mixer.blend(User, username='test-instructor', password='abcd1234',
+                            groups__name='Instructor')
+        perm = Permission.objects.get(codename='delete_course')
+        instructor.user_permissions.add(perm)
+        instructor.save()
+        course = mixer.blend(models.Course, client_id=0, language='en', owner=instructor) 
+        module = mixer.blend('courses.Module',
+                          course=course,
+                          title='SE',
+                          description='This module is for SE',
+                          order=mixer.sequence(lambda c: c),
+                          language='en',
+                          client_id=0)   
+
+        
+        item = mixer.blend(models.Text,
+                          course=course,
+                          title='SE',
+                          description='This module is for SE',
+                          order=mixer.sequence(lambda c: c),
+                          language='en',
+                          client_id=0)
+        item.save()           
+        content = mixer.blend(models.Content, module=module, item=item)       
+        # content.item.add(item)
+        content.save()
+        module.content.add(content)
+        module.save()
+        course.modules.add(module)
+        course.save()   
+        url = reverse('module_content_delete', kwargs={'id':content.pk})            
+        req =  self.factory.post(url)
+        self.setup_request(req)
+        req.user = instructor
+        resp = views.ContentDeleteView.as_view()(req,id=content.pk)
+        assert resp.status_code == 302 , 'authorized user can delete content'

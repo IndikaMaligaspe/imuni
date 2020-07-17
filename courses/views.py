@@ -6,7 +6,7 @@ from django.views.generic.detail import DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy
-from django.forms.models import modelform_factory
+from django.forms.models import modelform_factory, HiddenInput
 from django.apps import apps
 from braces.views import CsrfExemptMixin, JsonRequestResponseMixin
 from django.db.models import Count, Avg
@@ -157,18 +157,20 @@ class ContentCreatUpdateView(TemplateResponseMixin, View):
     template_name = 'courses/manage/content/form.html'
 
     def get_model(self, model_name):
-        if model_name in ['text','video', 'image', 'file']:
-            return apps.get_model(app_label='courses', model_name = model_name)
+        if model_name in ['text', 'video', 'image', 'file']:
+            return apps.get_model(app_label='courses', model_name=model_name)
         return None
     
     def get_form(self, model, *args, **kwargs):
-        Form = modelform_factory(model, exclude = ['owner','order', 'created','updated'])
+        Form = modelform_factory(model, 
+                                 exclude=['owner','order', 'created','updated'],
+                                 widgets={'client_id':HiddenInput()})
         return Form(*args, ** kwargs)
         
     def dispatch(self, request, module_id, model_name, id=None):
         client_id = admin.get_client_id('website', request)
         logger.info(f'dispatch : ContentCreatUpdateView : {client_id} : {current_language} ')
-        self.module = get_object_or_404(Module, id=module_id, course__owner = request.user, client_id=client_id, language = current_language)
+        self.module = get_object_or_404(Module, id=module_id, course__owner=request.user, client_id=client_id, language=current_language)
         self.model = self.get_model(model_name)
         if id:
             self.obj=get_object_or_404(self.model, id=id, owner=request.user, client_id=client_id, language = current_language)
@@ -176,18 +178,16 @@ class ContentCreatUpdateView(TemplateResponseMixin, View):
     
     def get(self, request, module_id, model_name, id=None):
         form = self.get_form(self.model, instance=self.obj)
-        print(f'FORM --- {form}')
-        print(f'OBJ --- {self.obj}')
-        return render(request, self.template_name, {'form':form, 'object':self.obj})
+        return render(request, self.template_name, {'form':form, 'object':self.obj, 'module':self.module, 'model_name':model_name})
     
     
     def post(self, request, module_id, model_name, id=None):
         client_id = admin.get_client_id('website', request)
         logger.info(f'POST : ContentCreatUpdateView : {client_id} : {current_language} ')
-        form = self.get_form(self.model, 
+        form = self.get_form(self.model,
                             instance=self.obj,
-                            data=request.POST, 
-                            files = request.FILES)
+                            data=request.POST,
+                            files=request.FILES)
         if form.is_valid():
             
             obj = form.save(commit=False)
@@ -195,14 +195,21 @@ class ContentCreatUpdateView(TemplateResponseMixin, View):
             obj.save()
             if not id:
                 Content.objects.create(module=self.module, item=obj, client_id=client_id, language = current_language)
-            return redirect('module_content_list', self.module.id)
-        return self.render_to_response({'form':form, 'object':self.obj})
+                form = self.get_form(self.model,
+                            instance=self.obj,
+                            files=request.FILES)
+ 
+            messages.success(request, "Content Updated Succesfully")
+            return render(request, self.template_name, {'form':form, 'object':self.obj, 'module':self.module, 'model_name':model_name})
+        messages.error(request, form.errors)
+        return render(request, self.template_name, {'form':form, 'object':self.obj, 'module':self.module, 'model_name':model_name})
 
 class ContentDeleteView(View):
     def post(self, request, id):
         client_id = admin.get_client_id('website', request)
-        logger.info(f'POST : ContentDeleteView : {client_id} : {current_language} ')
-        content = get_object_or_404(Content, id=id, module__course__owner = reqeust_user, client_id = client_id, language = current_language)
+        logger.info(f'POST : ContentDeleteView : {client_id} : {current_language} , ID:{id} , user:{request.user}')
+        content = get_object_or_404(Content, id=id, module__course__owner = request.user, client_id = client_id, language = current_language)
+        logger.info(f'Content: {content.pk} , type:{type(content)}')
         module = content.module
         content.item.delete()
         content.delete()

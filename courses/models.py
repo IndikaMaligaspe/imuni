@@ -102,8 +102,8 @@ class Content(models.Model):
     object_id = models.PositiveIntegerField()
     item = GenericForeignKey('content_type','object_id')
     order = OrderField(blank=True, for_fields=['module'])
-    language = models.CharField(max_length=20, db_index=True, default='en')
-    client_id= models.IntegerField(db_index=True, default=0)
+    language=models.CharField(max_length=20, db_index=True, default='en')
+    client_id=models.IntegerField(db_index=True, default=0)
 
     class Meta:
         ordering = ['order']

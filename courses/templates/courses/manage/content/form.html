@@ -1,8 +1,30 @@
 {% load i18n %}
 {% block content %}
-  <div class="container">
-    <h2>{% trans "Course info" %}</h2>
-    <form action="" method="post" enctype="multipart/form-data">
+      {% if messages %}
+      <div class="row w-100 ">
+          <div class="col-12">
+            {% for message in messages %}
+                {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {% else %}
+                  <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {% endif %}
+                   <span>{{ message }}</span>
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+            {% endfor %} 
+        </div>  
+      </div>
+      {% endif %} 
+    <div class="row w-100">
+      <div class="headers">
+        <h5>{% trans "Add content for" %} "{{module.title}}"</h5>
+        </div>
+   </div>
+    <div class="container bg-light">
+    <form action="{% url 'module_content_create' module.id model_name  %}" method="post" id="submit_add_content" enctype="multipart/form-data">
       <div class="row">
         <div class="col-md-2 col-6">
           {{ form.title.label_tag}}
@@ -27,9 +49,36 @@
           {{form.language}}
         </div>
       </div>
-        <!-- {{ form.as_p }} -->
+      <!-- if file or image -->
+      <div class="row">
+        <div class="col-md-2 col-6">
+          {{ form.file.label_tag}}
+        </div>
+        <div class="col-md-7 col-6">
+          {{form.file}}
+        </div>
+      </div>
+      <!-- if video -->
+      <div class="row">
+        <div class="col-md-2 col-6">
+          {{ form.url.label_tag}}
+        </div>
+        <div class="col-md-7 col-6">
+          {{form.url}}
+        </div>
+      </div>
+
         {% csrf_token %}
-        <p><input type="submit" value={% trans "Save content" %}></p>
+        <div class="row">
+          <div class="col-md-10 col-6">
+            {{form.client_id}}
+          </div>
+          <div class="col-md-2 col-6">
+            <input class="btn btn-primary" type="submit" value="{% trans 'Save content' %}">
+          </div>
+        </div>
+  
+        <!-- <p>{{form.as_p}}</p> -->
     </form>
   </div>
 {% endblock content %}
