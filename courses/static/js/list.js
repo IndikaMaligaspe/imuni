@@ -94,9 +94,17 @@
     });  
     $('#dashboard').on('submit','#submit_add_content',function(e){
         e.preventDefault;
-         $.post($('#submit_add_content').attr('action'), $('#submit_add_content').serialize(),function(data){
-            $('#dashboard').html(data)
-        });
+        var img_data = $('#id_file').get(0).files[0];
+        formdata = new FormData();
+        formdata.append($('#submit_add_content').serialize());
+        formdata.apend(img_data);
+         $.post(
+             {url : $('#submit_add_content').attr('action'),
+             data: formdata,
+             success: function(data){
+                            $('#dashboard').html(data)
+             }
+         });
         return false;
      });  
      $('#dashboard').on('submit','#delete_module_content',function(e){

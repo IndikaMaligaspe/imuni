@@ -183,7 +183,7 @@ class ContentCreatUpdateView(TemplateResponseMixin, View):
     
     def post(self, request, module_id, model_name, id=None):
         client_id = admin.get_client_id('website', request)
-        logger.info(f'POST : ContentCreatUpdateView : {client_id} : {current_language} ')
+        logger.info(f'POST : ContentCreatUpdateView : {client_id} : {current_language} - file: {request.FILES} - post: {request.POST}')
         form = self.get_form(self.model,
                             instance=self.obj,
                             data=request.POST,
