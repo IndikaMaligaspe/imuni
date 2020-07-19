@@ -139,7 +139,11 @@
         });
         return false;
      }); 
-     
+     $('.list-group-item').click(function(e) {
+        e.preventDefault();
+        $('.list-group-item').removeClass('active');
+        $(this).addClass('active');
+      }); 
     $('#dashboard').on('click','#btn_add_module',function(e){
         e.preventDefault;
 
@@ -244,12 +248,17 @@ load_content=(e)=>{
     id = e.target.id;
     console.log('taregt_id:'+id)
     module_id = $('#id_modules-'+id+'-id').val();
-    url = '/course/module/'+module_id;
-    console.log(url); 
-    $('#dashboard').load(url);
-
+    load_content_page(module_id)
     return false;
 }
 
+load_content_select=(e)=>{
+   load_content_page(e.target.value)
+}
+load_content_page=(module_id)=>{
+    url = '/course/module/'+module_id;
+    $('#dashboard').load(url);
+    return false;   
+}
 
 // console.log(paid_filter);

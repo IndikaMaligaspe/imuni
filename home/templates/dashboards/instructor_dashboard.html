@@ -2,37 +2,23 @@
 {% load i18n %}
 
 {% block content %}
-  <div class="container">
-      <div class="welcome">
+  <div class="container-fluid">
+      <!-- <div class="welcome">
           <h5>{% trans 'welcome back' %} {{ instructor.first_name }} , {% trans "you last login was at" %}</h5>
-      </div>
+      </div> -->
       <div class="row">
           <div class="col-md-3 col-12">
-              <div class="container">
+              <div class="container-fluid">
                   <div class="row">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link  active " href="{% url 'loggedin' %}">{% trans "My Board" %}</a>
-                          </li>
-                        <li class="nav-item">
-                          <a class="nav-link  " href="">{% trans "My Profile" %}</a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link" href="#">{% trans "My Account" %}</a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link" href="#">{% trans "My Finances" %}</a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link" href="{% url 'manage_course_list' %}" id='dashboard_course_list'>{% trans "My Courses" %}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">{% trans "Get Support" %}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">{% trans "Invite Friends" %}</a>
-                      </li>
-                    </ul>
+                    <div class="list-group w-75 ml-0">
+   
+                      <a href="{% url 'loggedin' %}"  class="list-group-item active"><i class="fa fa-key"></i> <span>{% trans "My Board" %}</span></a>
+                      <a href="#" class="list-group-item"><i class="fa fa-credit-card"></i> <span>{% trans "Billing" %} </span></a>
+                      <a href="#" class="list-group-item"><i class="fa fa-question-circle"></i> <span>{% trans "Support" %} </span></a>
+                      <a href="{% url 'manage_course_list' %}" id='dashboard_course_list' class="list-group-item"><i class="fa fa-arrow-circle-o-left"></i> <span>{% trans "My Courses" %}</span></a>
+                      <a href="#" class="list-group-item"><i class="fa fa-book"></i> <span>{% trans 'My Account' %}</span></a>
+                      <a href="#" class="list-group-item"><i class="fa fa-compass"></i> <span>{% trans "Invite Friends" %}</span></a>
+                    </div>
                   </div>
               </div>
           </div>

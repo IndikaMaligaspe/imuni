@@ -5,8 +5,21 @@
 
 /* Setting up global variable */
 
+body{padding:20px;}
 
-
+.list-group {
+  margin:auto;
+  float:left;
+  padding-top:20px;
+ }
+ .lead {
+  
+  margin:auto;
+  left:0;
+  right:0;
+  padding-top:10%;
+ }
+ 
 :root{
   --light-grey:#2b3032a1;
   --prinmary-color:rgb(145, 205, 232);
