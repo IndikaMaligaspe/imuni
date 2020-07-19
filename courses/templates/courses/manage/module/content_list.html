@@ -6,7 +6,7 @@
      <div class="container"> 
        <div class="row">
          <div class="col-md-12">
-            <h5>{% trans "Course" %} : "{{ course.title }}"</h5>
+            <h5 class="header">{% trans "Course" %} : "{{ course.title }}"</h5>
          </div>
        </div>
     
@@ -37,7 +37,7 @@
           <h5>{% trans "Current Conttents:" %}</h5>
           <div>
               {% for content in module.content.all %}
-                  <div class="row">
+                  <div class="row p-1">
                     <div class="col-md-12" data-id="{{ content.id }}">
                       <div data-id="{{ content.id }}">
                         {% with item=content.item  %}

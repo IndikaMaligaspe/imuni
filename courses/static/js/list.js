@@ -57,7 +57,8 @@
     }); 
     $('#dashboard').on('submit','#delete_course_form',function(e){
        e.preventDefault;
-        $.get($('#delete_course_form').attr('action'), $('#delete_course_form').serialize(),function(data){
+        console.log($('#delete_course_form').attr('action'))
+        $.post($('#delete_course_form').attr('action'), $('#delete_course_form').serialize(),function(data){
            $('#dashboard').html(data)
        });
        return false;
@@ -91,20 +92,32 @@
         e.preventDefault;
         $('#dashboard').load($(this).attr('href'));
         return false;
-    });  
+    });
+    $('#dashboard').on('click','#load_dashboard',function(e){
+        e.preventDefault;
+        $('#dashboard').load($('#hid_load_dashboard').val());
+        return false;
+    });   
     $('#dashboard').on('submit','#submit_add_content',function(e){
         e.preventDefault;
-        var img_data = $('#id_file').get(0).files[0];
-        formdata = new FormData();
-        formdata.append($('#submit_add_content').serialize());
-        formdata.apend(img_data);
-         $.post(
-             {url : $('#submit_add_content').attr('action'),
-             data: formdata,
-             success: function(data){
-                            $('#dashboard').html(data)
-             }
-         });
+        let img_data = '';
+        let form = document.getElementById('submit_add_content');
+        
+        let formdata = new FormData(form);
+        try{
+             $.ajax(
+                 {
+                     url: $('#submit_add_content').attr('action'), 
+                     data: formdata,
+                     method: 'POST',
+                     contentType: false,
+                     processData: false,
+                     success: function(data){
+                 $('#dashboard').html(data)}
+             })
+        } catch (error) {
+                console.log(error)    
+        }
         return false;
      });  
      $('#dashboard').on('submit','#delete_module_content',function(e){

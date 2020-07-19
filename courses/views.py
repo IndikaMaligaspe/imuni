@@ -77,6 +77,7 @@ class CourseCreateView(PermissionRequiredMixin, View):
             course.owner = request.user
             course.save()
             messages.success(request, "Course Created Succesfully")
+            form = CourseForm()
             return render(request, 'courses/manage/course/form.html', {'action':'create','form':form, 'status':'saved', 'pk':course.pk})
         print(f'Errors - {form.errors}')
         return (render(request, 'courses/manage/course/form.html', {'action':'create','status':'failed', 'pk':'0'}))
@@ -111,6 +112,7 @@ class CourseDeleteView(PermissionRequiredMixin, View):
 
     def post(self, request, *args, **kwargs):
         instance = get_object_or_404(Course, pk=kwargs['pk'])
+        print(f'Instance - {instance}')
         if instance.delete():
             messages.success(request, "Course Deleted Succesfully")            
             return render(request, self.template_name, {'action':'delete','object':instance, 'status':'deleted','pk':kwargs['pk']})

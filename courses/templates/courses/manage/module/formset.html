@@ -57,7 +57,7 @@
                                 {{form.id}}
                                 
                                 {% if form.id %}
-                                    <a href="#" id="{{forloop.counter}}" onClick=load_content(event)> {% trans "Content" %}</a>    
+                                    <a href="#" id="{{forloop.counter0}}" onClick=load_content(event)> {% trans "Content" %}</a>    
                                 {% endif %}
                                     
                                 
@@ -78,7 +78,7 @@
               {% csrf_token %}
               <div class="row">
                   <div class="col-md-8 col-0"></div>
-                  <div class="col-md-2 col-6"><input type="button" id="btn_add_module" class="btn btn-primary" value="{% trans "Add modules" %}"></div>
+                  <div class="col-md-2 col-6"><input type="button" id="btn_add_module" class="btn btn-primary" value="{% trans "Add more" %}"></div>
                   <div class="col-md-2 col-6"><input type="submit" class="btn btn-primary" value="{% trans "Save modules" %}"></div>
               </div>
         </form>

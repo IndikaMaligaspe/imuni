@@ -2,18 +2,23 @@
 {% block content %}
   <div class="container">
       <div class="row">
-          <div class="col-md-8 col-12"><h3>{% trans "My Courses" %}</h3></div>
+          <div class="col-md-8 col-12"><h3 class="page-header">{% trans "My Courses" %}</h3></div>
           <div class="col-md-4 col-12">
-              <a href="{% url 'course_create' %}" id="create_course">{% trans "Create new course" %}</a>
+            <a href="{% url 'course_create' %}" id="create_course">{% trans "Create a new course" %}</a>
           </div>
       </div>
+      <div class="row w-100">
+        <div class="col-12 p-0">
+          <hr class="w-100">
+        </div>
+        
+      </div>
   </div>
-  <div class="module">
-      
+  
     <div class="container">
       {% for course in course_list %}
           <div class="row">
-            <div class="col-md-8 col-12">
+            <div class="col-md-8 col-12 bg-light">
                 <h5>{{ course.title }}</h5>
             </div>
             <div class="col-md-4 col-12">
@@ -22,10 +27,13 @@
                 <a href="{% url "course_module_update" course.id %}" id="edit_course_modules">{% trans "Edit Module's" %}</a>
             </div>
           </div>
-              
+          <div class="row">
+            <div class="col-md-12 col-12 p-0">
+                <hr>
+            </div>
+          </div>    
       {% empty %}
         <p>{% trans "You haven't created any courses yet." %} </p>
       {% endfor %}
     </div>
-  </div>
 {% endblock content %}

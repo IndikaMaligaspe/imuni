@@ -1,12 +1,50 @@
 {% load i18n %}
 
 {% block content %}
-  <h1>{% trans "Delete course" %} "{{ object.title }} {{ object.id }}"</h1> 
+   
+  {% if status == 'deleted'  %}
+     <div class="row w-100 ">
+          <div class="col-12">
+            {% for message in messages %}
+                {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {% else %}
+                  <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {% endif %}
+                   <span>{{ message }}</span>
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+            {% endfor %} 
+        </div>  
+      </div>
+    
+  {% else %}    
   <div class="module">
       <form action="{% url 'course_delete' pk %}" method="post" target="dashboard" id="delete_course_form">
           {% csrf_token %}
-          <p>{% trans "Are you sure you want to delete" %} "{{ object }}"</p>
-          <input type="submit" class="button" value={% trans "Confirm" %}>
+          <div class="row">
+            <div class="col-md-12">
+              <h1>{% trans "Course" %} : {% trans "delete" %} - "{{ object.title }}"</h1>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-8">
+                 <h5 class="heading">{% trans "Are you sure you want to delete" %} "{{ object }}"</h5>  
+            </div>
+             <div class="col-md-2">
+              <input type="submit" class="btn btn-danger w-100" value={% trans "Yes" %}>
+            </div>
+            <div class="col-md-2">
+               <input type="hidden" name="hid_load_dashboard" id="hid_load_dashboard" value="{% url 'manage_course_list' %}">
+              <input type="button" class="btn btn-info w-100" value={% trans "No" %} id='load_dashboard'>
+            </div>
+
+          </div>
+          <p></p>
+          
       </form>
   </div>
+  {% endif %}
 {% endblock content %}
