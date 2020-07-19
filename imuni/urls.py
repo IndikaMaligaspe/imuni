@@ -35,6 +35,7 @@ urlpatterns = i18n_patterns (
     path(_('course/'), include('courses.urls')),
     path(_('cart/'), include('cart.urls')),
     path(_(''), CourseListView.as_view(), name='course_list'),
+    path(_('staff/'), include('staff.urls')),
     path(_('students/'), include('students.urls')),
     path(_('orders/'), include('orders.urls')),
     path(_('payments/'), include('payments.urls')),

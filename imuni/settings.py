@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'payments.apps.PaymentsConfig',
     'orders.apps.OrdersConfig',
     'home.apps.HomeConfig',
+    'staff.apps.StaffConfig',
     'embed_video',
     'rest_framework',
     'mail_templated',
