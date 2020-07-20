@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Subject, Course, Module, Profiles, Content, CourseRating, SiteReview, InstructorRating
+from .models import Subject, Course, Module,  Content, CourseRating, SiteReview, InstructorRating
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
@@ -26,11 +26,6 @@ class CourseAdmin(admin.ModelAdmin):
    search_filter = ['title', 'overview'] 
    prepopulated_fields = {'slug': ('title',)}
    inlines = [ModuleInline]
-
-@admin.register(Profiles)
-class ProfileAdmin(admin.ModelAdmin):
-    list_display =['user','bio','photo']
-
 
 @admin.register(Content)
 class ContentAdmin(admin.ModelAdmin):

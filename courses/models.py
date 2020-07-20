@@ -146,18 +146,7 @@ class video(ItemBase):
     language = models.CharField(max_length=20, db_index=True, default='en')
     client_id= models.IntegerField(db_index=True, default=0)
 
-class Profiles(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    bio = models.TextField(_('bio'))
-    photo = models.ImageField(upload_to='users/%Y/%m/%d/',blank=True)
-    language = models.CharField(max_length=20, db_index=True, default='en')
-    client_id= models.IntegerField(db_index=True, default=0)
 
-    def __str__(self):
-        return 'Profile for user {}'.format(self.user.username)
-
-    # def get_absolute_url(self):
-    #     return reverse('images:detail',args=[self.id, self.slug])
 
 class CourseRating(models.Model):
     

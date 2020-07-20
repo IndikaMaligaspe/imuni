@@ -17,7 +17,8 @@ from django.contrib import messages
 import json
 import logging
 
-from courses.models import Course, Content, Module, Subject, Profiles, InstructorRating, CourseRating
+from courses.models import Course, Content, Module, Subject, InstructorRating, CourseRating
+from staff.models import  Profiles
 from .forms import ModuleFormSet, CourseForm
 from cart.forms import CartAddForm
 from cart.cart import Cart

@@ -138,6 +138,11 @@
             $('#dashboard').html(data)
         });
         return false;
+     });
+     $('#id_account_page').click(function(e){
+        e.preventDefault;
+        $('#dashboard').load($(this).attr('href'));
+           return false;
      }); 
      $('.list-group-item').click(function(e) {
         e.preventDefault();

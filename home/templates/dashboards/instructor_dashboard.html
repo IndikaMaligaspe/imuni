@@ -16,7 +16,7 @@
                       <a href="#" class="list-group-item"><i class="fa fa-credit-card"></i> <span>{% trans "Billing" %} </span></a>
                       <a href="#" class="list-group-item"><i class="fa fa-question-circle"></i> <span>{% trans "Support" %} </span></a>
                       <a href="{% url 'manage_course_list' %}" id='dashboard_course_list' class="list-group-item"><i class="fa fa-arrow-circle-o-left"></i> <span>{% trans "My Courses" %}</span></a>
-                      <a href="#" class="list-group-item"><i class="fa fa-book"></i> <span>{% trans 'My Account' %}</span></a>
+                      <a href="{% url 'instructor_create' %}" id="id_account_page" class="list-group-item"><i class="fa fa-book"></i> <span>{% trans 'My Account' %}</span></a>
                       <a href="#" class="list-group-item"><i class="fa fa-compass"></i> <span>{% trans "Invite Friends" %}</span></a>
                     </div>
                   </div>

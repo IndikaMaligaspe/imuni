@@ -22,6 +22,6 @@ import logging
 
 class InstructorCreateAccount(View):
     def get(self, request, *args, **kwargs):
-        return render(request,'Hello World')
+        return render(request,'instructor/profile.html')
 
 
