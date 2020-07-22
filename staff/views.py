@@ -18,10 +18,12 @@ from django.contrib import messages
 import json
 import logging
 
+from .forms import ProfileForm
 # Create your views here.
 
 class InstructorCreateAccount(View):
     def get(self, request, *args, **kwargs):
-        return render(request,'instructor/profile.html')
+        form = ProfileForm()
+        return render(request, 'instructor/profile.html',{'form':form})
 
 

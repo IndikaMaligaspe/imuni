@@ -23,7 +23,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='profiles',
             name='country',
-            field=models.CharField(db_index=True, default='en', max_length=50, verbose_name='country'),
+            field=models.CharField(db_index=True, default=1, max_length=50, verbose_name='country'),
         ),
         migrations.AddField(
             model_name='profiles',

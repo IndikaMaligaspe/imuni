@@ -1,0 +1,10 @@
+- model: home.Countries
+  pk: 1
+  fields:
+    country_code: LK
+    country_name: Sri Lanka
+- model: home.Countries
+  pk: 2
+  fields:
+    country_code: US
+    country_name: United States of America

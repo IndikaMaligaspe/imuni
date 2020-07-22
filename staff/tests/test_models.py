@@ -10,6 +10,7 @@ import pytest
 pytestmark = pytest.mark.django_db
 
 from .. import models
+from home.models import Countries
 
 class BaseTest(TestCase):
     client = Client()
@@ -40,9 +41,10 @@ class TestInstructor(BaseTest):
                                 first_name='JJJ',last_name='Martin',
                                 email='jj@martin.com',
                                 groups__name='Instructor')
+        country = mixer.blend(Countries,country_code='SL',country_name='Sri Lanka')                        
         profile = mixer.blend(models.Profiles, user=instructor, 
                               bio='test bio for JJ', photo=None,
-                              city='Colombo', country='SL',
+                              city='Colombo', country=country,
                               email_display='0',webpage='www.iceman.com',
                               phone='9999 0226', mobile= '0414 991 9921',
                               address='No. 04, Geethanjalee place, colombo 04',
