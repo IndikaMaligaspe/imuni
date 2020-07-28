@@ -1,5 +1,145 @@
 {% load i18n %}
 {% block content %}
-   <h5>Instructor Profile page</h5>
-   {{form.as_p}} 
+   <div class="continer w-100">
+      <div class="row">
+         <div class="col-md-2">
+            <img src="/media/{{request.user.profiles.photo}}"" alt="">
+         </div>
+         <div class="col-12">
+            <h3>{{request.user.first_name}} {{request.user.last_name}}</h3>
+         </div>
+      </div>
+      <form action="{% url 'instructor_create' %}" method="post" class="form" id="submit_account_form">
+      <div class="row">
+         <div class="col-10">
+            <div class="panel panel-primary">
+               <div class="panel-heading">
+                  <h3 class="panel-title">Profile</h3>
+               </div>  
+               <div class="panel-body">
+                  <div class="row">
+                     <div class="col-md-3 col-6">
+                        {{user_edit_form.first_name.label_tag}}
+                     </div>
+                     <div class="col-md-3 col-6">
+                        {{user_edit_form.first_name}}
+                     </div>
+                  </div> 
+                  <div class="row">
+                     <div class="col-md-3 col-6">
+                        {{user_edit_form.last_name.label_tag}}
+                     </div>
+                     <div class="col-md-3 col-6">
+                        {{user_edit_form.last_name}}
+                     </div>
+                  </div> 
+                  <div class="row">
+                     <div class="col-md-3 col-6">
+                        {{user_edit_form.email.label_tag}}
+                     </div>
+                     <div class="col-md-3 col-6">
+                        {{user_edit_form.email}}
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-md-3 col-6">
+                        {{profile_form.email_display.label_tag}}
+                     </div>
+                     <div class="col-md-3 col-6">
+                        {{profile_form.email_display}}
+                     </div>
+                  </div> 
+                  <div class="row">
+                     <div class="col-md-3 col-6">
+                        {{profile_form.bio.label_tag}}
+                     </div>
+                     <div class="col-md-3 col-6">
+                        {{profile_form.bio}}
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-md-3 col-6">
+                        {{profile_form.photo.label_tag}}
+                     </div>
+                     <div class="col-md-3 col-6">
+                        {{profile_form.photo}}
+                     </div>
+               </div> 
+               <div class="row">
+                  <div class="col-md-3 col-6">
+                     {{profile_form.language.label_tag}}
+                  </div>
+                  <div class="col-md-3 col-6">
+                     {{profile_form.language}}
+                  </div>
+            </div>           
+       
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="row">
+      <div class="col-10">
+         <div class="panel panel-primary">
+            <div class="panel-heading">
+               <h3 class="panel-title">Contact Info</h3>
+            </div>    
+            <div class="panel-body">
+               <div class="row">
+                  <div class="col-md-3 col-6">
+                     {{profile_form.phone.label_tag}}
+                  </div>
+                  <div class="col-md-3 col-6">
+                     {{profile_form.phone}}
+                  </div>
+                  <div class="col-md-1"></div>
+                  <div class="col-md-1 col-6">
+                     {{profile_form.mobile.label_tag}}
+                  </div>
+                  <div class="col-md-3 col-6">
+                     {{profile_form.mobile}}
+                  </div>
+
+               </div>
+
+               <div class="row">
+                  <div class="col-md-3 col-6">
+                     {{profile_form.address.label_tag}}
+                  </div>
+                  <div class="col-md-3 col-6">
+                     {{profile_form.address}}
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-md-3 col-6">
+                     {{profile_form.city.label_tag}}
+                  </div>
+                  <div class="col-md-3 col-6">
+                     {{profile_form.city}}
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-md-3 col-6">
+                     {{profile_form.country.label_tag}}
+                  </div>
+                  <div class="col-md-3 col-6">
+                     {{profile_form.country}}
+                  </div>
+               </div>
+
+            </div>           
+         </div>
+      </div>
+   </div>
+   <div class="row">
+      <div class="col-8">
+      </div>
+      <div class="col-2">
+         {% csrf_token %}
+         <input type="submit" value="Save" class="btn btn-primary w-100"> 
+      </div>
+   </div>
+</form>
+</div>
+   <!-- {{form.as_p}}  -->
 {% endblock content %}

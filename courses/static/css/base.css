@@ -95,16 +95,11 @@ header .fa{
   color:black;
 }
 
-
-/* .container-fluid .dropdown-menu,
-.container-fluid .dropdown-toggle,
-.container-fluid .dropdown-item
-{
-   font-size: 0.9em;
-   color:black;
-   background-color: var(--prinmary-color);
-   min-height: 10px;;
-} */
+/* Forms */
+.form .row {
+  padding-top:2px;
+  padding-bottom: 2px;
+}
 
 .navbar {
      background-color: var(--prinmary-color);

@@ -216,6 +216,13 @@
         $('#add_module_temp').prop("id","add_module");
         return false;
      }); 
+     $('#dashboard').on('submit','#submit_account_form',function(e){
+        e.preventDefault;
+         $.post($('#submit_account_form').attr('action'), $('#submit_account_form').serialize(),function(data){
+            $('#dashboard').html(data)
+        });
+        return false;
+     });
      $('#messageModel').modal({show:true});
     
     
